@@ -6,8 +6,8 @@
 <!--#include file="./include/kb_data-access_cls.asp"-->
 <!--#include file="./include/kb_user_cls.asp"-->
 <!--#include file="./include/kb_layout_cls.asp"-->
-<!--#include file="./include/kb_files_cls.asp"-->
-<!--#include file="./include/kb_file-data_cls.asp"-->
+<!--#include file="./include/kb_projects_cls.asp"-->
+<!--#include file="./include/kb_project-data_cls.asp"-->
 <!--#include file="./include/kb_contest_cls.asp"-->
 <%
 dim m_lSortID
@@ -29,8 +29,7 @@ IMG.SortArrow {	margin-left: 3px; }
 </style>
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
-<!--include file="./sundance/sundance_ad-upper-middle.inc"-->
+<!--#include file="./include/kb_header_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
 here
 </body>

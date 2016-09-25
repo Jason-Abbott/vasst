@@ -20,6 +20,7 @@ Class kbDatabase
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	4/4/03		JEA		Creation
+	'	4/30/03		JEA		Accomodate tics in query
 	'-------------------------------------------------------------------------
 	Public Sub SaveQuery(ByVal v_sQueryName, ByVal v_sSQL)
 		dim oData
@@ -27,8 +28,9 @@ Class kbDatabase
 		
 		sQuery = "INSERT INTO tblQueries (vsQueryName, vsSQL, lUserID) VALUES ('" _
 			& v_sQueryName & "', '" _
-			& Replace(v_sSQL, vbCrLf, " ") & "', " _
+			& Replace(Replace(v_sSQL, vbCrLf, " "), "'", "''") & "', " _
 			& GetSessionValue(g_USER_ID) & ")"
+		'response.write 
 		Set oData = New kbDataAccess
 		Call oData.ExecuteOnly(sQuery)
 		Set oData = Nothing
@@ -99,7 +101,7 @@ Class kbDatabase
 		Set oFileSys = nothing
 		
 		Set oData = New kbDataAccess
-		Call oData.LogActivity(IIf(v_bBackup, g_ACT_BACKUP_DATABASE, g_ACT_COMPACT_DATABASE), "", "", "", "", "")
+		Call oData.LogActivity(IIf(v_bBackup, g_ACT_BACKUP_DATABASE, g_ACT_COMPACT_DATABASE), "", "", "", "", "", "")
 		Set oData = Nothing
 	End Sub
 	

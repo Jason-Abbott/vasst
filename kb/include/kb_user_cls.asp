@@ -15,6 +15,8 @@ Const m_USER_IMAGE = 12
 Const m_USER_ABOUT = 13
 Const m_USER_WEB_URL = 14
 Const m_USER_PASSWORD = 15
+Const m_USER_SITE = 16
+Const m_USER_LAST_LOGIN = 17
 
 '-------------------------------------------------------------------------
 '	Name: 		kbUser class
@@ -22,6 +24,7 @@ Const m_USER_PASSWORD = 15
 'Modifications:
 '	Date:		Name:	Description:
 '	12/30/02	JEA		Creation
+'	4/29/03		JEA		Retrieve site id and last login date
 '-------------------------------------------------------------------------
 Class kbUser
 	Private m_sBaseSQL
@@ -34,10 +37,10 @@ Class kbUser
 		Set m_oData = New kbDataAccess
 		m_lDefaultSortID = g_SORT_DATE_DESC
 		m_lDefaultFormatID = g_FORMAT_NTSC
-		m_lItemsPerPage = 10
+		m_lItemsPerPage = g_ITEMS_PER_PAGE
 		m_sBaseSQL = "SELECT lUserID, vsFirstName, vsLastName, vsScreenName, lUserTypeID, lStatusID, " _
 			& "lDefaultSortID, lItemsPerPage, lDefaultFormatID, vsEmail, bPrivateEmail, " _
-			& "bEmailNews, vsUserImage, vsAboutMe, vsHomePageURL, vsPassword FROM tblUsers "
+			& "bEmailNews, vsUserImage, vsAboutMe, vsHomePageURL, vsPassword, lSiteID, dtLastLogin FROM tblUsers "
 	End Sub
 	
 	Private Sub Class_Terminate()
@@ -68,14 +71,15 @@ Class kbUser
 			If GoodStatus(aData(m_USER_STATUS, 0)) Then
 				' successful login
 				Call CreateUserSession(aData, v_lTimeShift, v_lSiteID)
-				Call m_oData.LogActivity(g_ACT_LOGIN, "", "", "", "", "")
+				Call UpdateLastLogin(aData(m_USER_ID, 0))
+				Call m_oData.LogActivity(g_ACT_LOGIN, "", "", "", "", "", "")
 				sMessage = ""
 			Else
 				sMessage = "That account is currently unavailable"
 			End If
 		Else
 			sMessage = "That username or password is incorrect "
-			Call m_oData.LogActivity(g_ACT_FAILED_LOGIN, "", "", "", v_sEmail, v_sPassword)
+			Call m_oData.LogActivity(g_ACT_FAILED_LOGIN, "", "", "", "", v_sEmail, v_sPassword)
 		End If
 		Login = sMessage
 	End Function
@@ -110,7 +114,8 @@ Class kbUser
 			If IsArray(aData) Then
 				If GoodStatus(aData(m_USER_STATUS, 0)) Then
 					Call CreateUserSession(aData, MakeNumber(Request.Cookies(g_sTIME_COOKIE)), v_lSiteID)
-					Call m_oData.LogActivity(g_ACT_COOKIE_LOGIN, "", "", "", "", "")
+					Call UpdateLastLogin(lUserID)
+					Call m_oData.LogActivity(g_ACT_COOKIE_LOGIN, "", "", "", "", "", "")
 					bSuccess = true
 				End If
 			End If
@@ -137,10 +142,19 @@ Class kbUser
 	'	12/24/02	JEA		Creation
 	'	12/31/02	JEA		Process client-server time difference
 	'	4/25/03		JEA		Add site to session and cookie
+	'	4/29/03		JEA		More fail-safes for retrieving site id
 	'-------------------------------------------------------------------------
 	Private Sub CreateUserSession(ByVal v_aData, ByVal v_lTimeShift, ByVal v_lSiteID)
 		dim sUserName
-		dim aSession(10)
+		dim sLastLogin
+		dim aSession(11)
+		
+		if IsVoid(v_lSiteID) then v_lSiteID = Request.Cookies(g_sSITE_COOKIE)
+		if IsVoid(v_lSiteID) then v_lSiteID = v_aData(m_USER_SITE, 0)
+		if IsVoid(v_lSiteID) then v_lSiteID = g_DEFAULT_SITE
+		
+		sLastLogin = v_aData(m_USER_LAST_LOGIN, 0)
+		If Not IsDate(sLastLogin) Then sLastLogin = Date()
 		
 		sUserName = Trim(v_aData(m_FIRST_NAME, 0) & " " & v_aData(m_LAST_NAME, 0))
 		aSession(g_USER_ID) = v_aData(m_USER_ID, 0)
@@ -153,7 +167,8 @@ Class kbUser
 		aSession(g_USER_FILE_FORMAT) = v_aData(m_USER_FILE_FORMAT, 0)
 		aSession(g_USER_TIME_SHIFT) = v_lTimeShift
 		aSession(g_USER_MSG) = "Welcome back " & sUserName
-		aSession(g_USER_SITE) = ReplaceNull(v_lSiteID, ReplaceNull(Request.Cookies(g_sSITE_COOKIE), 1))
+		aSession(g_USER_SITE) = v_lSiteID
+		aSession(g_USER_LAST_LOGIN) = sLastLogin
 		Session(g_sSESSION) = aSession
 		With Response
 			.Cookies(g_sUSER_COOKIE) = v_aData(m_USER_ID, 0)
@@ -163,6 +178,20 @@ Class kbUser
 			.Cookies(g_sSITE_COOKIE) = aSession(g_USER_SITE)
 			.Cookies(g_sSITE_COOKIE).expires = #1/1/2010 00:00:00#
 		End With
+	End Sub
+	
+	'-------------------------------------------------------------------------
+	'	Name: 		LastLogin()
+	'	Purpose: 	get last login and update with current date
+	'Modifications:
+	'	Date:		Name:	Description:
+	'	5/1/03		JEA		Creation
+	'-------------------------------------------------------------------------
+	Private Sub UpdateLastLogin(v_lUserID)
+		dim sQuery
+		sQuery = "UPDATE tblUsers SET dtLastLogin = " & g_sSQL_DATE_DELIMIT & Date() & g_sSQL_DATE_DELIMIT _
+			& " WHERE lUserID = " & v_lUserID
+		Call m_oData.ExecuteOnly(sQuery)
 	End Sub
 	
 	'-------------------------------------------------------------------------
@@ -194,10 +223,10 @@ Class kbUser
 		If IsArray(aData) Then
 			If aData(0,0) = v_sCode Then
 				Call UpdateUserStatus(v_lUserID)
-				Call m_oData.LogActivity(g_ACT_VALIDATE_REGISTRATION, "", "", "", "", "")
+				Call m_oData.LogActivity(g_ACT_VALIDATE_REGISTRATION, "", "", "", "", "", "")
 			Else
 				sMessage = g_sMSG_CODE_MISMATCH
-				Call m_oData.LogActivity(g_ACT_BAD_VALIDATION, "", "", "", "", "")
+				Call m_oData.LogActivity(g_ACT_BAD_VALIDATION, "", "", "", "", "", "")
 			End If
 		Else
 			sMessage = "Your registration could not be found.  Please try signing in again."
@@ -242,7 +271,7 @@ Class kbUser
 		dim oMail
 		dim oEncryrpt
 		dim lUserID
-		dim aData(8,0)
+		dim aData(17,0)
 		dim sMessage
 		dim sValidationCode
 		
@@ -250,12 +279,13 @@ Class kbUser
 	
 		If EmailExists(v_sEmail, "") Then
 			sMessage = "Someone has already registered with that e-mail address"
-			Call m_oData.LogActivity(g_ACT_REGISTER_DUPLICATE_EMAIL, "", "", "", v_sEmail, "")
+			Call m_oData.LogActivity(g_ACT_REGISTER_DUPLICATE_EMAIL, "", "", "", "", v_sEmail, "")
 		Else
 			sValidationCode = MakeValidationCode(g_VALIDATION_CODE_LENGTH)
 			lUserID = Insert(v_sFirstName, v_sLastName, v_sScreenName, v_sHomePage, v_sEmail, _
 				v_sPassword, v_bPrivacy, v_bNotify, m_lDefaultSortID, m_lDefaultFormatID, _
 				m_lItemsPerPage, "", sValidationCode, g_STATUS_PENDING, v_lSiteID)
+			
 			
 			' generate array for session creation
 			aData(m_USER_ID, 0) = lUserID
@@ -267,9 +297,10 @@ Class kbUser
 			aData(m_ITEM_SORT, 0) = m_lDefaultSortID
 			aData(m_ITEMS_PER_PAGE, 0) = m_lItemsPerPage
 			aData(m_USER_FILE_FORMAT, 0) = m_lDefaultFormatID
+			aData(m_USER_LAST_LOGIN, 0) = Null
 			
 			Call CreateUserSession(aData, v_lTimeShift, v_lSiteID)			
-			Call m_oData.LogActivity(g_ACT_REGISTER, "", "", "", "", "")
+			Call m_oData.LogActivity(g_ACT_REGISTER, "", "", "", "", "", "")
 
 			Set oMail = New kbMail
 			Call oMail.SendConfirmationMail(lUserID, v_sFirstName, v_sLastName, v_sEmail, sValidationCode)
@@ -320,19 +351,28 @@ Class kbUser
 	End Function
 	
 	'-------------------------------------------------------------------------
-	'	Name: 		GetUserFileData()
-	'	Purpose: 	get user information about file
+	'	Name: 		GetUserItemData()
+	'	Purpose: 	get user information about item
 	'	Return:		array
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/1/03		JEA		Creation
+	'	7/21/04		JEA		Abstract for different item types
 	'-------------------------------------------------------------------------
-	Public Function GetUserFileData(ByVal v_lFileID)
+	Public Function GetUserItemData(ByVal v_lItemID, ByVal v_lItemTypeID)
 		dim sQuery
-		sQuery = "SELECT U.vsFirstName, U.vsEmail, F.vsFileName, F.dtSubmitDate " _
-			& "FROM tblFiles F INNER JOIN tblUsers U ON F.lUserID = U.lUserID " _
-			& "WHERE lFileID = " & v_lFileID
-		GetUserFileData = m_oData.GetArray(sQuery)
+		
+		Select Case v_lItemTypeID
+			Case g_ITEM_PROJECT
+				sQuery = "SELECT U.vsFirstName, U.vsEmail, F.vsFileName, F.dtSubmitDate " _
+					& "FROM tblProjects F INNER JOIN tblUsers U ON F.lUserID = U.lUserID " _
+					& "WHERE lProjectID = " & v_lItemID
+			Case g_ITEM_SCRIPT
+				sQuery = "SELECT U.vsFirstName, U.vsEmail, S.vsFileName, S.dtSubmitDate " _
+					& "FROM tblScripts S INNER JOIN tblUsers U ON S.lUserID = U.lUserID " _
+					& "WHERE lScriptID = " & v_lItemID
+		End Select
+		GetUserItemData = m_oData.GetArray(sQuery)
 	End Function
 	
 	'-------------------------------------------------------------------------
@@ -379,6 +419,7 @@ Class kbUser
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/1/03		JEA		Creation
+	'	4/30/03		JEA		Show e-mail to admins
 	'-------------------------------------------------------------------------
 	Public Sub WriteUser(ByVal v_lUserID)
 		Const sFORM_NAME = "frmEmail"
@@ -405,12 +446,14 @@ Class kbUser
 				.write aData(m_LAST_NAME, 0)
 				.write "</nobr></div>"
 				' e-mail
-				if Not aData(m_USER_PRIVATE, 0) then
+				if (Not aData(m_USER_PRIVATE, 0)) Or g_bAdmin then
 					.write "<div class='Email'><a href='mailto:"
 					.write aData(m_USER_EMAIL, 0)
 					.write "'>"
 					.write aData(m_USER_EMAIL, 0)
-					.write "</a></div>"
+					.write "</a>"
+					if aData(m_USER_PRIVATE, 0) then .write "<sup>*</sup>"
+					.write "</div>"
 				end if
 				' web site
 				if Trim(aData(m_USER_WEB_URL, 0)) <> "" then
@@ -443,7 +486,7 @@ Class kbUser
 					.write "</a></div>"
 				end if
 				' e-mail form
-				If aData(m_USER_PRIVATE, 0) then
+				If aData(m_USER_PRIVATE, 0) And Not g_bAdmin Then
 					' write e-mailing form
 					.write "<br>"
 					Call oLayout.WriteTitleBoxTop("Send e-mail", "", "")
@@ -452,7 +495,7 @@ Class kbUser
 					.write sFORM_NAME
 					.write "' action='kb_user.asp?id="
 					.write aData(m_USER_ID, 0)
-					.write "' method='post' onSubmit=""return isValid('"
+					.write "' method='post' onSubmit=""return IsValid('"
 					.write sFORM_NAME
 					.write "', m_oFields);""><tr><td></td><td class='FormNote'>At their request, this member's address "
 					.write "is hidden</td><tr>"
@@ -471,7 +514,9 @@ Class kbUser
 					.write aData(m_USER_ID, 0)
 					.write "'></form></td></table>"
 					Call oLayout.WriteBoxBottom("")
-				end if
+				ElseIf g_bAdmin And aData(m_USER_PRIVATE, 0) Then
+					.write "<div class='FootNote'><sup>*</sup>This address is hidden from non-administrators</div>"
+				End If
 				.write "</td></table>"
 			end with
 			Set oLayout = Nothing
@@ -542,7 +587,7 @@ Class kbUser
 		dim sQuery
 		dim sMessage
 		dim sValidation
-		dim lFileID
+		dim lProjectID
 		dim bNewEmail
 		dim oEncrypt
 		dim sPictureName
@@ -600,7 +645,7 @@ Class kbUser
 			lUserID = Insert(sFirstName, sLastname, sScreenName, sURL, sEmail, sPassword, _
 				bPrivacy, bNotify, lSortID, lFormatID, lPageSize, sAbout, "", g_STATUS_APPROVED, _
 				GetSessionValue(g_USER_SITE))
-			Call m_oData.LogActivity(g_ACT_CREATE_USER, "", "", lUserID, "", "")
+			Call m_oData.LogActivity(g_ACT_CREATE_USER, "", "", "", lUserID, "", "")
 		End If
 		
 		If oForm.File.Exists(v_sPictureField) Then
@@ -677,7 +722,7 @@ Class kbUser
 		dim aData
 		dim oData
 		dim x
-		dim aReturn(15)
+		dim aReturn(17)
 		
 		If Not v_bNew Then
 			aReturn(m_USER_ID) = ReplaceNull(Trim(Request.QueryString("id")), GetSessionValue(g_USER_ID))
@@ -750,7 +795,7 @@ Class kbUser
 			.Fields("lStatusID") = v_lStatusID
 			.Fields("sValidationCode") = v_sCode
 			.Fields("vsAboutMe") = v_sAbout
-			.Fields("lSiteID") = v_lSiteID 'GetSessionValue(g_USER_SITE)
+			.Fields("lSiteID") = ReplaceNull(v_lSiteID, g_DEFAULT_SITE)
 			.Fields("dtDateRegistered") = Now()
 			.Update
 			lUserID = .Fields("lUserID")

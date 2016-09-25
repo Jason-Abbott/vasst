@@ -28,12 +28,13 @@ m_bAdmin = CBool(GetSessionValue(g_USER_TYPE) = CStr(g_USER_ADMIN))
 <link href="./style/<%=g_lSiteID%>/kb_site.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
-<!--include file="./sundance/sundance_ad-upper-middle.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
+<!--#include file="./include/kb_ads_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
 <center>
-<form name='<%=m_sFORM_NAME%>' action='kb_tutorial-edit.asp?id=<%=m_aData(m_TUTORIAL_ID)%>' method='post' onSubmit="return isValid('<%=m_sFORM_NAME%>',m_oFields);">
+<form name='<%=m_sFORM_NAME%>' action='kb_tutorial-edit.asp?id=<%=m_aData(m_TUTORIAL_ID)%>' method='post' onSubmit="return IsValid('<%=m_sFORM_NAME%>',m_oFields);">
 <% Call m_oLayout.WriteTitleBoxTop("Tutorial Submission", "", "") %>
 <table cellspacing='0' cellpadding='0' border='0'>
 <tr>

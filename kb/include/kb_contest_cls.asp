@@ -194,7 +194,7 @@ Class kbContest
 					Else
 						' all votes have been removed for this item
 						sQuery = "DELETE FROM tblComputedVotePoints WHERE lContestID = " _
-							& v_lContestID & " AND lFileID = " & v_aVote(ITEM_ID, x) _
+							& v_lContestID & " AND lProjectID = " & v_aVote(ITEM_ID, x) _
 							& " AND lItemTypeID = " & v_lItemTypeID
 					End If
 				else
@@ -310,12 +310,16 @@ Class kbContest
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/2/03		JEA		Creation
+	'	10/7/03		JEA		Return only items for current site
 	'-------------------------------------------------------------------------
 	Private Function GetUserContestItems(ByVal v_lContestID)
 		dim sQuery
 		dim oData
-		sQuery = "SELECT F.lFileID, F.vsFriendlyName, CI.lContestID FROM tblFiles F " _
-			& "LEFT JOIN tblContestItems CI ON CI.lItemID = F.lFileID " _
+		sQuery = "SELECT F.lProjectID, F.vsFriendlyName, CI.lContestID FROM (tblProjects F " _
+			& "INNER JOIN (SELECT lItemID FROM tblItemSites WHERE lItemTypeID = " _
+			& g_ITEM_PROJECT & " AND lSiteID = " & GetSessionValue(g_USER_SITE) _
+			& ") tIS ON tIS.lItemID = F.lProjectID) " _
+			& "LEFT JOIN tblContestItems CI ON CI.lItemID = F.lProjectID " _
 			& "WHERE F.lUserID = " & GetSessionValue(g_USER_ID) _
 			& " AND (CI.lContestID = " & v_lContestID & " OR CI.lContestID IS NULL) " _
 			& "AND F.lStatusID = " & g_STATUS_APPROVED _
@@ -538,7 +542,7 @@ Class kbContest
 		dim sFileList
 		
 		sQuery = "SELECT CI.lItemID, F.vsFriendlyName FROM tblContestItems CI " _
-			& "INNER JOIN tblFiles F ON F.lFileID = CI.lItemID WHERE CI.lContestID = " _
+			& "INNER JOIN tblProjects F ON F.lProjectID = CI.lItemID WHERE CI.lContestID = " _
 			& v_aData(m_CONTEST_ID) & " AND F.lStatusID = " & g_STATUS_APPROVED _
 			& " ORDER BY F.vsFriendlyName"
 		
@@ -714,7 +718,7 @@ Class kbContest
 			Set oRS = nothing
 		End If
 		Call SetSessionValue(g_USER_MSG, "The contest """ & r_aData(m_CONTEST_NAME) & """ has been saved")
-		Call oData.LogActivity(g_ACT_SAVE_CONTEST, "", r_aData(m_CONTEST_ID), "", "", "")
+		Call oData.LogActivity(g_ACT_SAVE_CONTEST, "", "", r_aData(m_CONTEST_ID), "", "", "")
 		Set oData = Nothing
 	End Sub
 
@@ -815,7 +819,7 @@ Class kbContest
 		dim sQuery
 		dim oData
 		sQuery = "SELECT CV.lItemID, F.vsFriendlyName, CV.lPoints FROM tblComputedVotePoints CV " _
-			& "INNER JOIN tblFiles F ON F.lFileID = CV.lItemID WHERE CV.lContestID = " _
+			& "INNER JOIN tblProjects F ON F.lProjectID = CV.lItemID WHERE CV.lContestID = " _
 			& v_lContestID & " ORDER BY CV.lPoints DESC"
 		Set oData = New kbDataAccess
 		GetContestPoints = oData.GetArray(sQuery)
@@ -889,9 +893,9 @@ Class kbContest
 		dim x
 		
 		sQuery = "SELECT TOP " & v_aData(m_CONTEST_WINNERS) _
-			& " F.lFileID, F.vsFriendlyName, U.lUserID, U.vsFirstName, U.vsLastName " _
-			& "FROM (tblComputedVotePoints CVP INNER JOIN tblFiles F " _
-			& "ON CVP.lItemID = F.lFileID) INNER JOIN tblUsers U " _
+			& " F.lProjectID, F.vsFriendlyName, U.lUserID, U.vsFirstName, U.vsLastName " _
+			& "FROM (tblComputedVotePoints CVP INNER JOIN tblProjects F " _
+			& "ON CVP.lItemID = F.lProjectID) INNER JOIN tblUsers U " _
 			& "ON U.lUserID = F.lUserID WHERE CVP.lContestID = " _
 			& v_aData(m_CONTEST_ID) & " ORDER BY CVP.lPoints DESC, U.vsFirstName"
 		Set oData = New kbDataAccess

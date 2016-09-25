@@ -56,10 +56,11 @@ DIV.About { margin-top: 4px; }
 </style>
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
-<!--include file="./sundance/sundance_ad-upper-middle.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
+<!--#include file="./include/kb_ads_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) : Set m_oLayout = Nothing %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) : Set m_oLayout = Nothing %>
 <center>
 <br>
 <% Set m_oUser = New kbUser : Call m_oUser.WriteUser(m_lUserID) : Set m_oUser = Nothing %>

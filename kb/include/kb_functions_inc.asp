@@ -710,4 +710,18 @@ Function SayNumber(ByVal v_lNumber)
 		SayNumber = v_lNumber
 	end if
 End Function
+
+'-------------------------------------------------------------------------
+'	Name: 		ToProperCase()
+'	Purpose: 	capitalize word
+'	Return: 	string
+'Modifications:
+'	Date:		Name:	Description:
+'	7/23/04		JEA		Creation
+'-------------------------------------------------------------------------
+Function ToProperCase(ByVal v_sString)
+	If Not IsVoid(v_sString) Then
+		ToProperCase = UCase(Left(v_sString, 1)) & LCase(Right(v_sString, Len(v_sString) - 1))
+	End If
+End Function
 %>

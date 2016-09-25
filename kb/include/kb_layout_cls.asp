@@ -29,15 +29,35 @@ Class kbLayout
 	'	Date:		Name:	Description:
 	'	12/30/02	JEA		Creation
 	'	4/26/03		JEA		Send Site ID for logout
+	'	5/29/03		JEA		Add link for KB change
+	'	7/20/04		JEA		Add scripts link and optional fifth element
 	'-------------------------------------------------------------------------
 	Private Function GetCommonMenuArray()
+		dim lSiteID
+		lSiteID = GetSessionValue(g_USER_SITE)
 		GetCommonMenuArray = Array( _
-			Array("kb_files.asp","Files", "_files", false), _
-			Array("kb_tutorials.asp","Tutorials", "_tutorials", false), _
-			Array("kb_forums.asp","Forums", "_forums", false), _
-			Array("kb_user-edit.asp","My Account", "_user-edit", false), _
-			Array("kb_login.asp?s=" & GetSessionValue(g_USER_SITE) & "&logout=yes","Sign out", "_login", false), _
-			Array("kb_admin-uploads.asp","Administration", "_admin", true))
+			Array("kb_projects.asp","Projects", "_projects", false, g_SITE_ALL), _
+			Array("kb_scripts.asp","Scripts", "_scripts", false, g_SITE_VEGAS), _
+			Array("kb_tutorials.asp","Tutorials", "_tutorials", false, g_SITE_ALL), _
+			Array("kb_reviews.asp","Reviews", "_reviews", false, g_SITE_VEGAS), _
+			Array("kb_forums.asp","Forums", "_forums", false, g_SITE_ULEAD), _
+			Array("kb_user-edit.asp","My Account", "_user-edit", false, g_SITE_ALL), _
+			Array("kb_login.asp?s=" & lSiteID & "&logout=yes","Sign out", "_login", false, g_SITE_ALL), _
+			Array("kb_admin-uploads.asp","Administration", "_admin", true, g_SITE_ALL))
+			'Array("kb_projects.asp?s=" & GetOtherSiteID(lSiteID),"Change KB", "_change", false), _
+	End Function
+	
+	'-------------------------------------------------------------------------
+	'	Name: 		GetOtherSiteID()
+	'	Purpose: 	get other site id (will need to be extended with more than 2 sites)
+	'	Return: 	number
+	'Modifications:
+	'	Date:		Name:	Description:
+	'	5/29/03		JEA		Creation
+	'-------------------------------------------------------------------------
+	Private Function GetOtherSiteID(ByVal v_lSiteID)
+		v_lSiteID = MakeNumber(v_lSiteID)
+		GetOtherSiteID = IIf((v_lSiteID = 1), 2, 1)
 	End Function
 	
 	'-------------------------------------------------------------------------
@@ -51,13 +71,13 @@ Class kbLayout
 	'-------------------------------------------------------------------------
 	Private Function GetAdminMenuArray()
 		GetAdminMenuArray = Array( _
-			Array("kb_admin-uploads.asp","Submissions", "_admin-uploads", true), _
-			Array("kb_admin-users.asp","Users", "_admin-users", true), _
-			Array("kb_admin-categories.asp","Categories", "_admin-categories", true), _
-			Array("kb_admin-activity.asp","Activity Log", "_admin-activity", true), _
-			Array("kb_admin-contests.asp","Contests", "_admin-contests", true), _
-			Array("kb_admin-cache.asp","Cache", "_admin-cache", true), _
-			Array("kb_admin-database.asp","Database", "_admin-database", true))
+			Array("kb_admin-uploads.asp","Submissions", "_admin-uploads", true, g_SITE_ALL), _
+			Array("kb_admin-users.asp","Users", "_admin-users", true, g_SITE_ALL), _
+			Array("kb_admin-categories.asp","Categories", "_admin-categories", true, g_SITE_ALL), _
+			Array("kb_admin-activity.asp","Activity Log", "_admin-activity", true, g_SITE_ALL), _
+			Array("kb_admin-contests.asp","Contests", "_admin-contests", true, g_SITE_ALL), _
+			Array("kb_admin-cache.asp","Cache", "_admin-cache", true, g_SITE_ALL), _
+			Array("kb_admin-database.asp","Database", "_admin-database", true, g_SITE_ALL))
 	End Function
 	
 	'-------------------------------------------------------------------------
@@ -66,12 +86,14 @@ Class kbLayout
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	12/29/02	JEA		Creation
+	'	7/20/04		JEA		Customize separator for VASST
 	'-------------------------------------------------------------------------
 	Public Sub WriteMenuBar(ByVal v_lMenuID)
 		Const LINK_URL = 0
 		Const LINK_NAME = 1
 		Const LINK_ID = 2
 		Const LINK_RESTRICT = 3		' only allow admin access
+		Const LINK_SITE = 4
 		dim sSeparator
 		dim sPage
 		dim sStyle
@@ -80,6 +102,7 @@ Class kbLayout
 		dim sClass
 		dim x
 		
+		g_lSiteID = MakeNumber(g_lSiteID)
 		sSeparator = "<span class='Separator'>&#119;</span>"
 		sPage = Request.ServerVariables("SCRIPT_NAME")
 		sPage = Right(sPage, Len(sPage) - InStrRev(sPage, "/"))
@@ -88,6 +111,7 @@ Class kbLayout
 			Case m_sMENU_COMMON
 				aLinks = GetCommonMenuArray()
 				sClass = "CommonMenuBar"
+				if g_lSiteID = g_SITE_VEGAS then sSeparator = "<img align='middle' src='./images/" & g_lSiteID & "/divider_grey.gif' class='Divider'>"
 			Case m_sMENU_ADMIN
 				aLinks = GetAdminMenuArray()
 				sClass = "AdminMenuBar"
@@ -106,8 +130,11 @@ Class kbLayout
 			.write "<div class='"
 			.write sClass
 			.write "'>"
+			if g_lSiteID = g_SITE_VEGAS then .write sSeparator
 			for x = 0 to UBound(aLinks)
-				If g_bAdmin Or aLinks(x)(LINK_RESTRICT) = false Then
+				If (aLinks(x)(LINK_SITE) = g_SITE_ALL Or aLinks(x)(LINK_SITE) = g_lSiteID) _
+					And (g_bAdmin Or aLinks(x)(LINK_RESTRICT) = false) Then
+				
 					bOnPage = CBool(InStr(sPage, aLinks(x)(LINK_ID)) > 0)
 					If Not bOnPage Then
 						.write "<a href='"
@@ -119,6 +146,7 @@ Class kbLayout
 					If x < UBound(aLinks) Then .write sSeparator
 				End If
 			next
+			if g_lSiteID = g_SITE_VEGAS then .write sSeparator
 			.write "</div>"
 		end with
 	End Sub
@@ -213,6 +241,7 @@ Class kbLayout
 	'	Date:		Name:	Description:
 	'	12/24/02	JEA		Creation
 	'	4/26/03		JEA		Customize by site
+	'	7/21/04		JEA		Align middle option
 	'-------------------------------------------------------------------------
 	Public Sub WriteToggleImage(ByVal v_sBaseImage, ByVal v_sPath, ByVal v_sAltText, _
 		ByVal v_sOptions, ByVal v_bInput)
@@ -229,7 +258,7 @@ Class kbLayout
 			.write "_on.gif';"" onMouseOut=""this.src='"
 			.write v_sPath
 			.write v_sBaseImage
-			.write ".gif';"""
+			.write ".gif';"" align='middle'"
 			if v_sAltText <> "" then
 				.write " alt='"
 				.write v_sAltText
@@ -281,6 +310,7 @@ Class kbLayout
 	'	12/30/02	JEA		Creation
 	'	1/1/03		JEA		Track sorting
 	'	1/9/03		JEA		Don't write for single page
+	'	7/21/04		JEA		Align current selected page icon to middle
 	'-------------------------------------------------------------------------
 	Public Sub WritePaging(ByVal v_lItemsPerPage, ByVal v_lItemCount, ByVal v_aFilter, _
 		ByVal v_sPageName, ByVal v_sItemName, ByRef r_oLayout)
@@ -297,6 +327,7 @@ Class kbLayout
 			with response
 				.write "<table width='100%' cellspacing='0' cellpadding='0'><tr><td class='Paging' width='20%'>"
 				if v_aFilter(g_FILTER_PAGE) = 1 then
+					' write summary page count
 					.write "<nobr>"
 					.write v_lItemCount + 1
 					.write " "
@@ -323,7 +354,7 @@ Class kbLayout
 						.write g_lSiteID
 						.write "/btn_"
 						.write x
-						.write "_on.gif' width='14' height='14'> "
+						.write "_on.gif' width='14' height='14' align='middle'> "
 					else
 						.write "<a href='"
 						.write v_sPageName
@@ -457,6 +488,7 @@ Class kbLayout
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/7/03		JEA		Creation
+	'	7/21/04		JEA		Add review and script item types
 	'-------------------------------------------------------------------------
 	Public Sub WriteOptionHead(ByVal v_lItemTypeID, ByVal v_aFilter, ByVal v_bRestricted)
 		
@@ -469,12 +501,13 @@ Class kbLayout
 		dim sURL
 		dim sAuthor
 		Select Case v_lItemTypeID
-			Case g_ITEM_FILE : sItemType = "File" : sURL = "submit-file" : sAuthor = "User"
+			Case g_ITEM_PROJECT : sItemType = "Project" : sURL = "project-submit" : sAuthor = "User"
+			Case g_ITEM_SCRIPT : sItemType = "Script" : sURL = "script-submit" : sAuthor = "User"
 			Case g_ITEM_TUTORIAL : sItemType = "Tutorial" : sURL = "tutorial-edit" : sAuthor = "Author"
 			Case g_ITEM_FORUM : sItemType = "Forum" : sURL = "forum-edit" : sAuthor = "User"
+			Case g_ITEM_REVIEW : sItemType = "Review" : sURL = "review-edit" : sAuthor = "Author"
 		End Select
 		sCatList = GetCategoryList(v_lItemTypeID)
-		sSoftwareList = GetSoftwareList(v_lItemTypeID)
 		sJSArray = "[" & Join(v_aFilter, ",") & "]"
 		
 		with response
@@ -503,16 +536,21 @@ Class kbLayout
 			.write sJSArray
 			.write ");""><option value=''>Any Category"
 			.write MakeSelected(sCatList, v_aFilter(g_FILTER_CATEGORY))
-			.write "</select> <select name='fldSoftware' class='TopOption' "
-			.write "onChange=""newFilter(this, '"
-			.write LCase(sItemType)
-			.write "s', "
-			.write g_FILTER_SOFTWARE
-			.write ", "
-			.write sJSArray
-			.write ");""><option value=''>Any Software"
-			.write MakeSelected(sSoftwareList, v_aFilter(g_FILTER_SOFTWARE))
-			.write "</select>"
+			.write "</select> "
+			If Not MatchesOne(v_lItemTypeID, Array(g_ITEM_TUTORIAL, g_ITEM_REVIEW), True) Then
+				sSoftwareList = GetSoftwareList(v_lItemTypeID)
+			
+				.write "<select name='fldSoftware' class='TopOption' "
+				.write "onChange=""newFilter(this, '"
+				.write LCase(sItemType)
+				.write "s', "
+				.write g_FILTER_SOFTWARE
+				.write ", "
+				.write sJSArray
+				.write ");""><option value=''>Any File Type"
+				.write MakeSelected(sSoftwareList, v_aFilter(g_FILTER_SOFTWARE))
+				.write "</select>"
+			End If
 			If (Not v_bRestricted) Or g_bAdmin Then
 				.write " &nbsp; <a href='kb_"
 				.write sURL
@@ -537,7 +575,7 @@ Class kbLayout
 		dim sQuery
 		dim sList
 		dim sKey
-		sKey = v_lItemTypeID & "_" & g_FILTER_CATEGORY
+		sKey = GetSessionValue(g_USER_SITE) & "-" & v_lItemTypeID & "_" & g_FILTER_CATEGORY
 		If Application(sKey) = "" Then
 			sQuery = "SELECT C.lCategoryID, C.vsCategoryName FROM tblCategories C " _
 				& "INNER JOIN tblCategoryItemTypes CIT ON CIT.lCategoryID = C.lCategoryID " _
@@ -550,21 +588,37 @@ Class kbLayout
 	
 	'-------------------------------------------------------------------------
 	'	Name: 		GetSoftwareList()
-	'	Purpose: 	get option list of software
+	'	Purpose: 	get option list of software used in item list
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/12/03		JEA		Creation
+	'	4/30/03		JEA		Make site specific
+	'	7/28/04		JEA		Make specific to item list
 	'-------------------------------------------------------------------------
 	Private Function GetSoftwareList(ByVal v_lItemTypeID)
 		dim sQuery
 		dim sList
 		dim sKey
-		sKey = v_lItemTypeID & "_" & g_FILTER_SOFTWARE
+		dim sItemName
+		
+		sKey = GetSessionValue(g_USER_SITE) & "-" & v_lItemTypeID & "_" & g_FILTER_SOFTWARE
 		If Application(sKey) = "" Then
-			sQuery = "SELECT SV.lVersionID, S.vsSoftwareName + ' ' + SV.vsVersionText " _
-				& "FROM tblSoftwareVersions SV INNER JOIN tblSoftware S " _
-				& "ON SV.lSoftwareID = S.lSoftwareID WHERE SV.lSoftwareID = " & g_SOFTWARE_VEGAS _
-				& " AND SV.vsVersionText IS NOT NULL AND SV.vsVersionText <> ''"
+			select case v_lItemTypeID
+				case g_ITEM_PROJECT : sItemName = "Project"
+				case g_ITEM_SCRIPT : sItemName = "Script"
+			end select
+				
+			sQuery = "SELECT * FROM (" _
+				& "SELECT DISTINCT SV.lVersionID, S.vsSoftwareName + ' ' + SV.vsVersionText " _
+				& "AS vsVersionName FROM ((tblSoftware S " _
+				& "INNER JOIN tblSoftwareVersions SV ON S.lSoftwareID = SV.lSoftwareID) " _
+				& "INNER JOIN tbl" & sItemName & "s P ON P.lSoftwareVersionID = SV.lVersionID) " _
+				& "INNER JOIN (SELECT lItemID FROM tblItemSites " _
+				& 	"WHERE lItemTypeID = " & v_lItemTypeID & " AND lSiteID = " & GetSessionValue(g_USER_SITE) _
+				&	") tIS ON tIS.lItemID = P.l" & sItemName & "ID " _
+				& "WHERE SV.vsVersionText IS NOT NULL AND SV.vsVersionText <> '') " _
+				& "ORDER BY vsVersionName"
+				
 			sList = MakeList(sQuery, "")
 			Application.Lock : Application(sKey) = sList : Application.Unlock
 		End If
@@ -577,22 +631,48 @@ Class kbLayout
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/12/03		JEA		Creation
+	'	4/30/03		JEA		Make site specific
+	'	7/21/04		JEA		Further generalize item type
 	'-------------------------------------------------------------------------
 	Private Function GetAuthorList(ByVal v_lItemTypeID, ByVal v_sItemType, ByVal v_sAuthor)
 		dim sQuery
 		dim sList
 		dim sKey
-		sKey = v_lItemTypeID & "_" & g_FILTER_AUTHOR
+		dim sFieldName
+		
+		sFieldName = GetKeyFieldName(v_lItemTypeID)
+		sKey = GetSessionValue(g_USER_SITE) & "-" & v_lItemTypeID & "_" & g_FILTER_AUTHOR
 		If Application(sKey) = "" Then
 			sQuery = "SELECT DISTINCT U.lUserID, " _
 				& "IIf(U.vsScreenName IS NULL, U.vsLastName + ', ' + U.vsFirstName, U.vsScreenName) " _
-				& "FROM tblUsers U INNER JOIN tbl" & v_sItemType & "s I ON I.l" & v_sAuthor & "ID = " _
-				& "U.lUserID WHERE I.lStatusID = 2 " _
+				& "FROM (tblUsers U " _
+				& "INNER JOIN tbl" & v_sItemType & "s I ON I.l" & v_sAuthor & "ID = U.lUserID) " _
+				& "INNER JOIN (" _
+				& 	"SELECT lItemID FROM tblItemSites " _
+				&	"WHERE lItemTypeID = " & v_lItemTypeID & " AND lSiteID = " & GetSessionValue(g_USER_SITE) _
+				& ") S ON S.lItemID = I." & sFieldName & " " _
+				& "WHERE I.lStatusID = 2 " _
 				& "ORDER BY IIf(U.vsScreenName IS NULL, U.vsLastName + ', ' + U.vsFirstName, U.vsScreenName)"
 			sList = MakeList(sQuery, "")
 			Application.Lock : Application(sKey) = sList : Application.Unlock
 		End If
 		GetAuthorList = Application(sKey)
+	End Function
+	
+	'-------------------------------------------------------------------------
+	'	Name: 		GetKeyFieldName()
+	'	Purpose: 	get key field in table for given item type
+	'Modifications:
+	'	Date:		Name:	Description:
+	'	7/21/04		JEA		Creation
+	'-------------------------------------------------------------------------
+	Private Function GetKeyFieldName(ByVal v_lItemTypeID)
+		Select Case v_lItemTypeID
+			Case g_ITEM_PROJECT : GetKeyFieldName = "lProjectID"
+			Case g_ITEM_SCRIPT : GetKeyFieldName = "lScriptID"
+			Case g_ITEM_TUTORIAL : GetKeyFieldName = "lTutorialID"
+			Case g_ITEM_REVIEW : GetKeyFieldName = "lReviewID"
+		End Select
 	End Function
 	
 	'-------------------------------------------------------------------------
@@ -631,6 +711,38 @@ Class kbLayout
 	End Sub
 	
 	'-------------------------------------------------------------------------
+	'	Name: 		WriteVersionList()
+	'	Purpose: 	write option list with software versions
+	'Modifications:
+	'	Date:		Name:	Description:
+	'	1/1/03		JEA		Creation
+	'	4/30/03		JEA		Make site specific
+	'	7/28/04		JEA		Make specific to other item types
+	'-------------------------------------------------------------------------
+	Public Sub WriteVersionList(ByVal v_sFieldName, ByVal v_lSelectedID, ByVal v_lItemTypeID)
+		dim sQuery
+	
+		sQuery = "SELECT SV.lVersionID, vsSoftwareName + ' ' + vsVersionText " _
+			& "FROM (((tblSoftware S " _
+			& "INNER JOIN tblSoftwareVersions SV ON S.lSoftwareID = SV.lSoftwareID) " _
+			& "INNER JOIN tblPublishers P ON P.lPublisherID = S.lPublisherID) " _
+			& "INNER JOIN tblPublisherItemTypes PIT ON PIT.lPublisherID = S.lPublisherID) " _
+			& "INNER JOIN (SELECT lItemID FROM tblItemSites " _
+			& 	"WHERE lItemTypeID = " & g_ITEM_PUBLISHER & " AND lSiteID = " & GetSessionValue(g_USER_SITE) _
+			&	") tIS ON tIS.lItemID = P.lPublisherID " _
+			& "WHERE PIT.lItemTypeID = " & v_lItemTypeID _
+			& " ORDER BY vsSoftwareName, vsVersionText"
+
+		with response
+			.write "<select name='"
+			.write v_sFieldName
+			.write "'><option value='0'>--select one--"
+			.write MakeList(sQuery, v_lSelectedID)
+			.write "</select>"
+		end with
+	End Sub
+	
+	'-------------------------------------------------------------------------
 	'	Name: 		WriteCategories()
 	'	Purpose: 	write plugins, if any
 	'Modifications:
@@ -655,5 +767,69 @@ Class kbLayout
 			end with
 		End If
 	End Sub
+	
+	'-------------------------------------------------------------------------
+	'	Name: 		WriteContent()
+	'	Purpose: 	write content to screen
+	'Modifications:
+	'	Date:		Name:	Description:
+	'	5/29/03		JEA		Created
+	'-------------------------------------------------------------------------
+	Public Sub WriteContent(ByVal v_sFileName, ByVal v_sCacheName)
+		response.write GetContent(v_sFileName, v_sCacheName)
+	End Sub
+	
+	'-------------------------------------------------------------------------
+	'	Name: 		GetContent()
+	'	Purpose: 	read site-specific content from cache or file
+	'Modifications:
+	'	Date:		Name:	Description:
+	'	5/29/03		JEA		Created
+	'-------------------------------------------------------------------------
+	Private Function GetContent(ByVal v_sFileName, ByVal v_sCacheName)
+		Const FOR_READING = 1
+		dim lSiteID
+		dim oFileSys
+		dim oFile
+		dim sFile
+		dim sContent
+		
+		lSiteID = GetSessionValue(g_USER_SITE)
+		sContent = Application(lSiteID & "_" & v_sCacheName)
+		If IsVoid(sContent) Then
+			' reload content
+			sFile = Server.MapPath("./" & GetSiteFolderName(lSiteID)) & "\" & v_sFileName
+			Response.Write("<!-- File: " & sFile & "-->")
+			Set oFileSys = Server.CreateObject(g_sFILE_SYSTEM_OBJECT)
+			If oFileSys.FileExists(sFile) Then
+				Set oFile = oFileSys.OpenTextFile(sFile, FOR_READING)
+				sContent = oFile.ReadAll
+				Set oFile = Nothing
+			End If
+			Set oFileSys = Nothing
+			Application(lSiteID & "_" & v_sCacheName) = sContent
+		End If
+		GetContent = sContent
+	End Function
+	
+	'-------------------------------------------------------------------------
+	'	Name: 		GetSiteFolderName()
+	'	Purpose: 	get site-specific include file name
+	'Modifications:
+	'	Date:		Name:	Description:
+	'	5/29/03		JEA		Created
+	'-------------------------------------------------------------------------
+	Private Function GetSiteFolderName(ByVal v_lSiteID)
+		Select Case MakeNumber(v_lSiteID)
+			Case 1
+				GetSiteFolderName = "vegas"
+			Case 2
+				GetSiteFolderName = "ulead"
+			Case 3
+				GetSiteFolderName = "adobe"
+			Case Else
+				GetSiteFolderName = "vegas"
+		End Select
+	End Function
 End Class
 %>

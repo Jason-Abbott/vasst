@@ -28,9 +28,11 @@ End With
 <link href="./style/<%=g_lSiteID%>/kb_site.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
+<!--#include file="./include/kb_ads_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) : Set m_oLayout = Nothing %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) : Set m_oLayout = Nothing %>
 <center>
 <% Call m_oTutorials.WritePublic() : Set m_oTutorials = Nothing %>
 </center>

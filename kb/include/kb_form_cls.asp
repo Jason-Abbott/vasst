@@ -19,7 +19,7 @@ Class kbForm
 	
 	Private Sub Class_Terminate()
 		File.RemoveAll() : Set File = Nothing
-		m_oFieldHash.RemoveAll() : Set Field = Nothing
+		m_oFieldHash.RemoveAll() : Set m_oFieldHash = Nothing
 	End Sub
 
 	'-------------------------------------------------------------------------

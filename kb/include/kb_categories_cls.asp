@@ -59,12 +59,14 @@ Class kbCategories
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/8/02		JEA		Creation
+	'	7/23/04		JEA		Add message
 	'-------------------------------------------------------------------------
 	Public Sub Save(ByVal v_lCategoryID, ByVal v_sCategoryName, ByVal v_sCategoryItems)
 		dim sQuery
 		dim oData
 		dim oRS
 		dim aItems
+		dim sMessage
 		dim x
 		
 		Set oData = New kbDataAccess
@@ -78,6 +80,8 @@ Class kbCategories
 			' clear old item associations
 			sQuery = "DELETE FROM tblCategoryItemTypes WHERE lCategoryID = " & v_lCategoryID
 			Call oData.ExecuteOnly(sQuery)
+			
+			sMessage = "The """ & v_sCategoryName & """ category has been updated"
 		Else
 			' insert new category
 			Set oRS = Server.CreateObject("ADODB.Recordset")
@@ -90,6 +94,8 @@ Class kbCategories
 				.Close
 			End With
 			Set oRS = nothing
+			
+			sMessage = "The category """ & v_sCategoryName & """ has been added"
 		End If
 		
 		aItems = Split(v_sCategoryItems, ",")
@@ -100,6 +106,7 @@ Class kbCategories
 		next
 		Call oData.CommitTrans()
 		Call ClearFilterCache(g_FILTER_CATEGORY)
+		Call SetSessionValue(g_USER_MSG, sMessage)
 		Set oData = Nothing
 	End Sub
 End Class

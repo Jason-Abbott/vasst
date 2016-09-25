@@ -13,23 +13,31 @@ function field(desc,type,req) {
 }
 
 /*------------------------------------------------------------------------
-	Name: 		isValid()
+	Name: 		IsValid()
 	Purpose: 	master validation function
 	Return:		boolean
 Modifications:
 	Date:		Name:	Description:
 	7/27/00		JEA		Creation
+	7/28/04		JEA		Special URL handling
 ------------------------------------------------------------------------*/
-function isValid(v_sForm, r_oFields) {
+function IsValid(v_sForm, r_oFields) {
 	var oForm = eval("document." + v_sForm);
-	var oErrors = new Array
+	var oErrors = new Array;
+	var bNeedToCheck;
 	var lCount = 0;
 	
 	for (var i in r_oFields) {
 		// pass every field to the appropriate validation function
 		var oField = eval("oForm." + i);
-		if (r_oFields[i].req || oField.value.length > 0) {
-			// only check fields that have a value or are required
+		
+		if (r_oFields[i].type == "URL" && oField.value == "http://") {
+			bNeedToCheck = false;
+		} else {
+			bNeedToCheck = (r_oFields[i].req || oField.value.length > 0);
+		}
+		
+		if (bNeedToCheck) {
 			if (!(eval("is" + r_oFields[i].type + "(oField)"))) {
 				oErrors[lCount] = r_oFields[i].desc;
 				lCount++;
@@ -312,3 +320,21 @@ function isInRange(r_oField) { return (r_oField.value >= m_lRangeLow && r_oField
 function isPhone(r_oField) { var sPhone = toNumeric(r_oField.value); return (sPhone.length == 10); }
 function isSSN(r_oField) { var sSSN = toNumeric(r_oField.value); return (sSSN.length == 9); }
 function isString(r_oField) { return (r_oField.value != ""); }
+
+/*------------------------------------------------------------------------
+	Name: 		IsValidType()
+	Purpose: 	check for valid upload type
+Modifications:
+	Date:		Name:	Description:
+	7/28/04		JEA		Creation
+------------------------------------------------------------------------*/
+function IsValidType(v_sTypeList, v_sFileName, v_sTypeName) {
+	var aTypes = v_sTypeList.split(",");
+	var sExtension = v_sFileName.substr(v_sFileName.lastIndexOf(".") + 1, v_sFileName.length);
+	
+	for (var x = 0; x < aTypes.length; x++) {
+		if (aTypes[x] == sExtension) { return true; }
+	}
+	alert("." + sExtension + " Files are not an allowed " + v_sTypeName + " type.\n\nPlease select a " + v_sTypeName + " file to upload.");
+	return false;
+}

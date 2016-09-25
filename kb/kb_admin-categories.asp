@@ -25,7 +25,7 @@ End With
 %>
 <html>
 <head>
-<title>Administration: Users</title>
+<title>Administration: Categories</title>
 <link href="./style/kb_common.css" rel="stylesheet" type="text/css">
 <link href="./style/<%=g_lSiteID%>/kb_site.css" rel="stylesheet" type="text/css">
 <link href="./style/<%=g_lSiteID%>/kb_admin.css" rel="stylesheet" type="text/css">
@@ -41,12 +41,13 @@ TD.CatData {
 </style>
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
 <% Call m_oLayout.WriteMenuBar(m_sMENU_ADMIN) %>
 <center>
-<form name='<%=m_sFORM_NAME%>' method='post' action='kb_admin-categories.asp' onSubmit="return isValid('<%=m_sFORM_NAME%>',m_oFields);">
+<form name='<%=m_sFORM_NAME%>' method='post' action='kb_admin-categories.asp' onSubmit="return IsValid('<%=m_sFORM_NAME%>',m_oFields);">
 <% Call m_oLayout.WriteTitleBoxTop("Categories", "", "") %>
 <table cellspacing='0' cellpadding='0' border='0'>
 <tr>
@@ -62,7 +63,7 @@ TD.CatData {
 	<td class='CatData'>
 	<table width='100%' cellspacing='0' cellpadding='0' border='0'>
 	<tr>
-		<td><select name='fldCatItems' multiple size='3'>
+		<td><select name='fldCatItems' multiple size='5'>
 		<%=MakeList("SELECT lItemTypeID, vsDescription FROM tblItemTypes ORDER BY vsDescription", "") %>
 		</select>
 		</td>

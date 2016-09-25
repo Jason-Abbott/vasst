@@ -6,39 +6,86 @@
 <!--#include file="./include/kb_functions_inc.asp"-->
 <!--#include file="./include/kb_data-access_cls.asp"-->
 <!--#include file="./include/kb_layout_cls.asp"-->
-<!--#include file="./include/kb_files_cls.asp"-->
-<!--#include file="./include/kb_file-data_cls.asp"-->
+<!--#include file="./include/kb_projects_cls.asp"-->
+<!--#include file="./include/kb_project-data_cls.asp"-->
+<!--#include file="./include/kb_scripts_cls.asp"-->
+<!--#include file="./include/kb_script-data_cls.asp"-->
 <!--#include file="./include/kb_tutorials_cls.asp"-->
 <!--#include file="./include/kb_tutorial-data_cls.asp"-->
+<!--#include file="./include/kb_reviews_cls.asp"-->
+<!--#include file="./include/kb_review-data_cls.asp"-->
+<!--#include file="./include/kb_file-system_cls.asp"-->
 <!--#include file="./include/kb_mail_cls.asp"-->
 <!--#include file="./include/kb_user_cls.asp"-->
 <%
-dim m_lItemID
 dim m_oLayout
-dim m_oFile
-dim m_oTutorial
 
-m_lItemID = Request.QueryString("id")
-If IsNumber(m_lItemID) Then
-	Set m_oFile = New kbFileData
-	Set m_oTutorial = New kbTutorialData
-	select case Request.QueryString("do")
-		case "approvefile"
-			Call m_oFile.ApprovePending(m_lItemID)
-		case "denyfile"
-			Call m_oFile.DenyPending(m_lItemID)
-		case "approvetut"
-			Call m_oTutorial.ApprovePending(m_lItemID)
-		case "denytut"
-			Call m_oTutorial.DenyPending(m_lItemID)
-	end select
-	Set m_oFile = Nothing
-	Set m_oTutorial = Nothing
-End If
+Call ProcessItem()
+
+'-------------------------------------------------------------------------
+'	Name: 		ProcessItem()
+'	Purpose: 	approve or deny given item
+'Modifications:
+'	Date:		Name:	Description:
+'	7/21/04		JEA		Created
+'-------------------------------------------------------------------------
+Sub ProcessItem()
+	dim lItemID
+	dim sAction
+	dim oItem
+
+	lItemID = Request.QueryString("id")
+	sAction = Request.QueryString("do")
+	
+	If IsNumber(lItemID) And Not IsVoid(sAction) Then
+		Select Case Right(sAction, 6)
+			Case "roject" : Set oItem = New kbProjectData
+			Case "script" : Set oItem = New kbScriptData
+			Case "torial" : Set oItem = New kbTutorialData
+			Case "review" : Set oItem = New kbReviewData
+		End Select
+		
+		If Left(sAction, 4) = "deny" then
+			oItem.DenyPending(lItemID)
+		Else
+			oItem.ApprovePending(lItemID)
+		End If
+		
+		Set oItem = Nothing
+	End If
+End Sub
+
+'-------------------------------------------------------------------------
+'	Name: 		WritePendingItems()
+'	Purpose: 	output all pendings items as HTML
+'Modifications:
+'	Date:		Name:	Description:
+'	7/21/04		JEA		Created
+'-------------------------------------------------------------------------
+Sub WritePendingItems()
+	dim oItem
+	dim sItem
+	dim aItemNames
+	
+	aItemNames = Array("Projects","Scripts","Tutorials","Reviews")
+	
+	with response
+		.Write "<center>"
+		for each sItem in aItemNames
+			.Write "<div class='Head'>"
+			.Write sItem
+			.Write "</div>"
+			Set oItem = Eval("New kb" & sItem)
+			Call oItem.WritePending()
+			Set oItem = Nothing
+		next
+		.Write "</center>"
+	end with
+End Sub
 %>
 <html>
 <head>
-<title>Administration: File Uploads</title>
+<title>Administration: Submissions</title>
 <link href="./style/kb_common.css" rel="stylesheet" type="text/css">
 <link href="./style/<%=g_lSiteID%>/kb_site.css" rel="stylesheet" type="text/css">
 <link href="./style/<%=g_lSiteID%>/kb_admin.css" rel="stylesheet" type="text/css">
@@ -96,21 +143,18 @@ DIV.Head {
 	font-family: Impact, Arial, Helvetica;
 	font-size: 18pt;
 	text-align: center;
+	margin-top: 10px;
 	color: <%=g_sCOLOR_EDGE%>;
 }
 </style>
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
 <% Call m_oLayout.WriteMenuBar(m_sMENU_ADMIN) : Set m_oLayout = Nothing %>
-<center>
-<div class='Head'>Files</div>
-<% Set m_oFile = New kbFiles : Call m_oFile.WritePending() : Set m_oFile = Nothing%>
-<div class='Head'>Tutorials</div>
-<% Set m_oTutorial = New kbTutorials : Call m_oTutorial.WritePending() : Set m_oTutorial = Nothing%>
-</center>
+<% Call WritePendingItems() %>
 <!--#include file="./include/kb_footer.inc"-->
 </body>
 </html>

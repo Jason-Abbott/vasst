@@ -86,13 +86,14 @@ TD.WeightData {
 <meta name="Microsoft Border" content="none, default">
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
 <% Call m_oLayout.WriteMenuBar(m_sMENU_ADMIN) %>
 <center>
 
-<form name='<%=m_sFORM_NAME%>' method='post' action='kb_admin-contests.asp?id=<%=m_aData(m_CONTEST_ID)%>' onSubmit="return isValid('<%=m_sFORM_NAME%>',m_oFields);">
+<form name='<%=m_sFORM_NAME%>' method='post' action='kb_admin-contests.asp?id=<%=m_aData(m_CONTEST_ID)%>' onSubmit="return IsValid('<%=m_sFORM_NAME%>',m_oFields);">
 <% Call m_oContest.WriteContestList("fldContests", m_aData(m_CONTEST_ID)) %>
 &nbsp;<a href='kb_admin-contests.asp?new=yes'><% Call m_oLayout.WriteToggleImage("btn_add-contest", "", "Add a new contest", "", false) %></a>
 &nbsp;<a href='javascript:ViewContest();'><% Call m_oLayout.WriteToggleImage("btn_view", "", "View contest", "", false) %></a>

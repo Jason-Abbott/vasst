@@ -27,10 +27,11 @@ m_sTitle = IIf(m_bNew, "Add User", "Account Settings")
 <link href="./style/<%=g_lSiteID%>/kb_site.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
-<!--include file="./sundance/sundance_ad-upper-middle.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
+<!--#include file="./include/kb_ads_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
 <center>
 <form name='<%=m_sFORM_NAME%>' action='kb_user-save.asp' method='post' onSubmit='return IsValidUser();' enctype="multipart/form-data">
 <% Call m_oLayout.WriteTitleBoxTop(m_sTitle, "", "") %>
@@ -132,7 +133,7 @@ var m_oFields = {
 	
 function IsValidUser() {
 	if (m_oForm.fldWebURL.value == "http://") { m_oForm.fldWebURL.value = ""; }
-	if (isValid('<%=m_sFORM_NAME%>', m_oFields)) {
+	if (IsValid('<%=m_sFORM_NAME%>', m_oFields)) {
 		if (m_oForm.fldPassword.value != m_oForm.fldConfirm.value) {
 			alert("the passwords do not match "); return false;
 		}

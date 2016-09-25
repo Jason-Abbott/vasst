@@ -13,11 +13,9 @@ Sub WriteMessage()
 	sMessage = GetSessionValue(g_USER_MSG)
 	if sMessage <> "" then
 		with response
-			.write "<table cellspacing='0' border='0' cellpadding='0' class='Message' align='center'>"
-			.write "<tr><td class='MessageSymbol' valign='middle'>&#118;</td>"
-			.write "<td class='Message' valign='top'>"
+			.write "<center><div class='Message'>"
 			.write sMessage
-			.write "</td></table>"
+			.write "</div></center>"
 		end with
 		Call SetSessionValue(g_USER_MSG, "")
 	end if

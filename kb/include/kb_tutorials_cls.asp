@@ -75,10 +75,12 @@ Class kbTutorials
 				.write "<table width='80%' cellspacing='0' cellpadding='0' border='0' class='List'>"
 				.write "<tr><td colspan='3'>"
 				Call oLayout.WriteOptionHead(g_ITEM_TUTORIAL, m_aFilter, false)
-				Call oLayout.WritePaging(lItemsPerPage, lItemCount, m_aFilter, sPAGE_NAME, "tutorials", oLayout)
 				.write "</td>"
 				Call oLayout.WriteItemListHead(sPAGE_NAME, m_aFilter)
-
+				.Write "<tr><td colspan='3' class='PagingRow'>"
+				Call oLayout.WritePaging(lItemsPerPage, lItemCount, m_aFilter, sPAGE_NAME, "tutorials", oLayout)
+				.Write "</td>"
+				
 				For x = lStart to lEnd
 					aData(m_TUTORIAL_RANK,x) = MakeNumber(aData(m_TUTORIAL_RANK,x))
 					.write "<tr><td rowspan='2' class='ItemName' valign='top'><a href='"
@@ -98,8 +100,10 @@ Class kbTutorials
 						Call oLayout.WriteStars(aData(m_TUTORIAL_RANK,x), true)
 					End If
 					.write "</a></div>"
+					' date
 					.write "</td><td align='center' class='ItemDate' valign='top'>"
 					.write FormatDate(DateAdd("s", GetSessionValue(g_USER_TIME_SHIFT), aData(m_TUTORIAL_DATE,x)))
+					' author
 					.write "</td><td align='center' class='ItemOwner' valign='top'><a href='kb_user.asp?id="
 					.write aData(m_TUTORIAL_AUTHOR_ID,x)
 					.write "'>"
@@ -108,10 +112,10 @@ Class kbTutorials
 					.write "<table width='100%' cellspacing='0' cellpadding='0' border='0'>"
 					.write "<tr><td class='ItemDescription'>"
 					.write FormatAsHTML(aData(m_TUTORIAL_TEXT,x))
-					.write "</td>"
+					.write "</td><td class='ItemDescription'>&nbsp;</td>"
 					.write "<tr><td class='ItemNotes'>"
 					Call oLayout.WriteCategories(aData(m_TUTORIAL_CATS,x))
-					.write "</td><td valign='bottom' class='ItemButton'>"
+					.write "&nbsp;</td><td valign='bottom' class='ItemButton'>"
 					If g_bAdmin Or _
 						MatchesOne(GetSessionValue(g_USER_ID), Array(aData(m_TUTORIAL_AUTHOR_ID,x), aData(m_TUTORIAL_SUBMITTER,x)), true) Then
 						
@@ -174,11 +178,11 @@ Class kbTutorials
 					.write "</a></td><td class='UploadFriendlyName'>"
 					.write aData(m_TUTORIAL_NAME,x)
 					.write "</td><td class='UploadAction' valign='middle' rowspan='2'>"
-					.write "<a href='kb_admin-uploads.asp?do=approvetut&id="
+					.write "<a href='kb_admin-uploads.asp?do=approvetutorial&id="
 					.write aData(m_TUTORIAL_ID,x)
 					.write "'>"
 					Call oLayout.WriteToggleImage("btn_approve", "", "Approve", "", false)
-					.write "</a> <a href='kb_admin-uploads.asp?do=denytut&id="
+					.write "</a> <a href='kb_admin-uploads.asp?do=denytutorial&id="
 					.write aData(m_TUTORIAL_ID,x)
 					.write "'>"
 					Call oLayout.WriteToggleImage("btn_deny", "", "Approve", "", false)
@@ -200,6 +204,7 @@ Class kbTutorials
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/4/03		JEA		Creation
+	'	7/21/04		JEA		Changed layout
 	'-------------------------------------------------------------------------
 	Public Sub WriteAsHeader(ByVal v_lTutorialID)
 		dim aTutorial
@@ -217,15 +222,15 @@ Class kbTutorials
 			If IsArray(aTutorial) Then
 				' file info
 				aTutorial(m_TUTORIAL_RANK, 0) = MakeNumber(aTutorial(m_TUTORIAL_RANK, 0))
-				.write "<table cellspacing='0' cellpadding='3' border='0' width='450'>"
+				.write "<table cellspacing='0' cellpadding='3' border='0' width='450'><tr>"
 				.write "<td valign='top'><div class='ItemName'><nobr>"
 				.write aTutorial(m_TUTORIAL_NAME, 0)
 				.write "</nobr></div><div class='ItemOwner'>by <a href='kb_user.asp?id="
 				.write aTutorial(m_TUTORIAL_AUTHOR_ID, 0)
 				.write "'>"
 				.write aTutorial(m_TUTORIAL_AUTHOR_NAME, 0)
-				.write "</a></div></td><td rowspan='2' class='ItemText' valign='top'>"
-				.write aTutorial(m_TUTORIAL_TEXT, 0)
+				.write "</a></div></td><tr><td class='ItemText' valign='top'>"
+				.write FormatAsHTML(aTutorial(m_TUTORIAL_TEXT, 0))
 				.write "</td><tr><td class='ItemRank' valign='bottom'>"
 				if aTutorial(m_TUTORIAL_RANK, 0) > 0 then
 					Set oLayout = New kbLayout
@@ -234,7 +239,7 @@ Class kbTutorials
 				end if
 				.write "</td></table>"
 			Else
-				.redirect "kb_files.asp"
+				.redirect "kb_projects.asp"
 			End If
 		end with
 	End Sub

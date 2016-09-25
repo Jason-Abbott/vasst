@@ -16,21 +16,36 @@ Class kbMail
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	12/24/02	JEA		Creation
+	'	10/27/04	JEA		Updated to use CDO
 	'-------------------------------------------------------------------------
 	Private Function SendMail(ByVal v_sMailFrom, ByVal v_sMailTo, ByVal v_sSubject, ByVal v_sBody)
 		dim oMail
 		Set oMail = Server.CreateObject(g_sEMAIL_OBJECT)
-		SendMail = CBool(oMail.SendMail(g_sEMAIL_SERVER, v_sMailTo, v_sMailFrom, v_sSubject, v_sBody) = "")
-		'With oMail
-		'	.From = v_sMailFrom
-		'	.to = v_sMailTo
-		'	.Subject = v_sSubject
-		'	.BodyFormat = CdoBodyFormatHTML
-		'	.Body = v_sBody
-		'	.Send
-		'End With
-		'SendMail = true
+		'SendMail = CBool(oMail.SendMail(g_sEMAIL_SERVER, v_sMailTo, v_sMailFrom, v_sSubject, v_sBody) = "")
+		
+		With oMail
+			.From = v_sMailFrom
+			.to = v_sMailTo
+			.Subject = v_sSubject
+			.TextBody = v_sBody
+			'.HTMLBody = v_sBody
+		End With
+		
+		With oMail.Configuration.Fields
+			.Item(cdoSchema & "sendusing") = cdoSendUsingPort
+			.Item(cdoSchema & "smtpserver") = g_sEMAIL_SERVER
+			.Item(cdoSchema & "smtpauthenticate") = cdoBasic
+			.Item(cdoSchema & "sendusername") = g_sEMAIL_USERNAME
+			.Item(cdoSchema & "sendpassword") = g_sEMAIL_PASSWORD
+			.Item(cdoSchema & "smtpserverport") = 25
+			.Item(cdoSchema & "smtpusessl") = False
+			.Item(cdoSchema & "smtpconnectiontimeout") = 60
+			.Update
+		End With
+		
+		oMail.Send
 		Set oMail = Nothing
+		SendMail = true
 	End Function
 
 	'-------------------------------------------------------------------------
@@ -40,6 +55,7 @@ Class kbMail
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	12/24/02	JEA		Creation
+	'	10/27/04	JEA		Added extra logging parameter
 	'-------------------------------------------------------------------------
 	Public Function SendPasswordEmail(ByVal v_sEmail)
 		Const FIRST_NAME = 0
@@ -60,7 +76,7 @@ Class kbMail
 					& aData(PASSWORD, 0) & "." & vbCrLf & vbCrLf & g_sORG_NAME)
 			If bSuccess Then
 				Set oData = New kbDataAccess
-				Call oData.LogActivity(g_ACT_EMAILED_PASSWORD, "", "", "", aData(EMAIL, 0), aData(PASSWORD, 0))
+				Call oData.LogActivity(g_ACT_EMAILED_PASSWORD, "", "", "", "", aData(EMAIL, 0), aData(PASSWORD, 0))
 				Set oData = Nothing
 			End If
 		End If
@@ -132,11 +148,12 @@ Class kbMail
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	12/24/02	JEA		Creation
+	'	7/21/04		JEA		Abstract for various item types
 	'-------------------------------------------------------------------------
-	Public Sub SendApprovalEmail(ByVal v_lFileID)
+	Public Sub SendApprovalEmail(ByVal v_lItemID, ByVal v_lItemTypeID)
 		Const FIRST_NAME = 0
 		Const EMAIL = 1
-		Const FILE_NAME = 2
+		Const ITEM_NAME = 2
 		Const SUBMIT_DATE = 3
 		dim oUser
 		dim sQuery
@@ -144,7 +161,7 @@ Class kbMail
 		dim bSuccess
 
 		Set oUser = New kbUser
-		aData = oUser.GetUserFileData(v_lFileID)
+		aData = oUser.GetUserItemData(v_lItemID, v_lItemTypeID)
 		Set oUser = Nothing
 
 		If IsArray(aData) Then
@@ -152,7 +169,7 @@ Class kbMail
 				aData(EMAIL, 0), _
 				"Your submission to " & g_sORG_NAME, _
 				aData(FIRST_NAME, 0) & "," & vbCrLf & vbCrLf & "The file you submitted on " _
-					& FormatDate(aData(SUBMIT_DATE, 0)) & ", " & aData(FILE_NAME, 0) & ", has been " _
+					& FormatDate(aData(SUBMIT_DATE, 0)) & ", " & aData(ITEM_NAME, 0) & ", has been " _
 					& "approved.  Thank you again for your submission." & vbCrLf & vbCrLf & g_sORG_NAME)
 			If Not bSuccess Then
 				Call SetSessionValue(g_USER_MSG, "Sorry, an error was encountered while trying to send e-mail")

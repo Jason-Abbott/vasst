@@ -45,9 +45,11 @@ DIV.ItemAction {
 </style>
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
+<!--#include file="./include/kb_ads_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) : Set m_oLayout = Nothing %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) : Set m_oLayout = Nothing %>
 <center>
 <% Call m_oForums.WritePublic() : Set m_oForums = Nothing %>
 </center>

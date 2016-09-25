@@ -6,7 +6,7 @@
 <!--#include file="./include/kb_functions_inc.asp"-->
 <!--#include file="./include/kb_data-access_cls.asp"-->
 <!--#include file="./include/kb_layout_cls.asp"-->
-<!--#include file="./include/kb_files_cls.asp"-->
+<!--#include file="./include/kb_projects_cls.asp"-->
 <!--#include file="./include/kb_user_cls.asp"-->
 <!--#include file="./include/kb_database_cls.asp"-->
 <%
@@ -41,7 +41,7 @@ end select
 <link href="./style/<%=g_lSiteID%>/kb_admin.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<!--#include file="./include/kb_header_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
 <% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
 <% Call m_oLayout.WriteMenuBar(m_sMENU_ADMIN) %>

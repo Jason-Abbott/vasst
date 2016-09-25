@@ -52,6 +52,7 @@ Class kbDataAccess
 	'	12/24/02	JEA		Created
 	'-------------------------------------------------------------------------
 	Public Sub ExecuteOnly(ByVal v_sQuery)
+		'response.Write v_sQuery : response.flush
 		Connection.Execute v_sQuery, , adExecuteNoRecords
 	End Sub
 	
@@ -116,11 +117,13 @@ Class kbDataAccess
 	'	12/23/02	JEA		Created
 	'-------------------------------------------------------------------------
 	Private Function NewRecordSet(ByVal v_sQuery)
+		'on error resume next
 		dim oRS
 		Set oRS = Server.CreateObject("ADODB.Recordset")
 		Set oRS.ActiveConnection = Connection
 		oRS.CursorLocation = adUseClient
 		oRS.Open v_sQuery, , adOpenForwardOnly, adLockReadOnly, adCmdText
+		'response.Write v_squery & "<p>" : response.flush
 		Set oRS.ActiveConnection = nothing
 		Set NewRecordSet = oRS
 		Set oRS = nothing
@@ -162,9 +165,10 @@ Class kbDataAccess
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	12/24/02	JEA		Creation
+	'	7/21/04		JEA		Log script ID
 	'-------------------------------------------------------------------------
-	Public Sub LogActivity(ByVal v_lActivityID, ByVal v_lFileID, ByVal v_lContestID, _
-		ByVal v_lAffectedUserID, ByVal v_sEmail, ByVal v_sPassword)
+	Public Sub LogActivity(ByVal v_lActivityID, ByVal v_lProjectID, ByVal v_lScriptID, _
+		ByVal v_lContestID, ByVal v_lAffectedUserID, ByVal v_sEmail, ByVal v_sPassword)
 		dim sQuery
 		dim lUserID
 		dim sIPAddress
@@ -177,19 +181,20 @@ Class kbDataAccess
 			sIPAddress = Request.ServerVariables("REMOTE_ADDR")
 		End If
 		
-		sQuery = "INSERT INTO tblLog (lUserID, lActivityID, lFileID, lContestID, lAffectedUserID, " _
+		sQuery = "INSERT INTO tblLog (lUserID, lActivityID, lProjectID, lScriptID, " _
+			& "lContestID, lAffectedUserID, " _
 			& "vsEmail, vsPassword, dtActivityDate, vsIPAddress, lSiteID) VALUES (" _
 			& lUserID & ", " _
 			& v_lActivityID & ", " _
-			& MakeNumber(v_lFileID) & ", " _
+			& MakeNumber(v_lProjectID) & ", " _
+			& MakeNumber(v_lScriptID) & ", " _
 			& MakeNumber(v_lContestID) & ", " _
 			& MakeNumber(v_lAffectedUserID) & ", '" _
 			& v_sEmail & "', '" _
 			& v_sPassword & "', '" _
 			& Now() & "', '" _
 			& sIPAddress & "', " _
-			& GetSessionValue(g_USER_SITE) & ")"
-	
+			& MaybeNull(GetSessionValue(g_USER_SITE)) & ")"
 		Call ExecuteOnly(sQuery)
 	End Sub
 End Class

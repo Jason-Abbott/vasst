@@ -11,7 +11,7 @@ A {
 	text-decoration: none;
 }
 A:hover {
-	color: #ed6c2c;
+	color: #dd0000;
 	text-decoration: underline;
 }
 A.ItemHead { color: #000000; }
@@ -94,14 +94,14 @@ DIV.ItemAction {
 DIV.ItemEdit { margin-left: 10px; margin-top: 10px; margin-bottom: 4px; }
 TD.BoxBody { background-color: #eeeeee; font-size: 9pt; font-family: Tahoma, Arial, Helvetica; }
 TD.BoxCorner { height: 10px; width: 10px; }
-TD.BoxTop { border-top: 1px solid #ed6c2c; background-color: #eeeeee; }
-TD.BoxLeft { border-left: 1px solid #ed6c2c; background-color: #eeeeee; }
-TD.BoxRight { border-right: 1px solid #ed6c2c; background-color: #eeeeee; }
-TD.BoxBottom { border-bottom: 1px solid #ed6c2c; background-color: #eeeeee; }
-TD.BoxTitleCorner { height: 20px; width: 10px; border-bottom: 1px solid #ed6c2c; }
+TD.BoxTop { border-top: 1px solid #ff0000; background-color: #eeeeee; }
+TD.BoxLeft { border-left: 1px solid #ff0000; background-color: #eeeeee; }
+TD.BoxRight { border-right: 1px solid #ff0000; background-color: #eeeeee; }
+TD.BoxBottom { border-bottom: 1px solid #ff0000; background-color: #eeeeee; }
+TD.BoxTitleCorner { height: 20px; width: 10px; border-bottom: 1px solid #ff0000; }
 TD.BoxTitleTop {
-	border-top: 1px solid #ed6c2c;
-	border-bottom: 1px solid #ed6c2c;
+	border-top: 1px solid #ff0000;
+	border-bottom: 1px solid #ff0000;
 	background-color: #4679df;
 	font-family: Tahoma, Arial, Helvetica;
 	font-weight: bold;

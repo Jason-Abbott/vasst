@@ -57,14 +57,14 @@ DIV.Note {
 <meta name="Microsoft Border" content="none, default">
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
-<!--include file="./sundance/sundance_ad-upper-middle.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
 <div class='AppName'><%=g_sORG_NAME%>&nbsp;<%=g_sAPP_NAME%></div>
 <center>
-<form name="<%=m_sFORM_NAME%>" action="kb_validate.asp?url=<%=m_sURL%>" method="post" onSubmit="return isValid('<%=m_sFORM_NAME%>', m_oFields);">
+<form name="<%=m_sFORM_NAME%>" action="kb_validate.asp?url=<%=m_sURL%>" method="post" onSubmit="return IsValid('<%=m_sFORM_NAME%>', m_oFields);">
 
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteBoxTop("", "") %>
+<% Call m_oLayout.WriteBoxTop("", "") %>
 
 <table cellspacing='0' cellpadding='0' border='0'>
 <tr>

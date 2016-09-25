@@ -24,6 +24,6 @@ Sub goLogin()
 	Set oUser = New kbUser
 	bCookieLogin = oUser.LoginWithCookie(lSiteID)
 	Set oUser = nothing
-	If Not bCookieLogin Then response.redirect "kb_login.asp?s=" & lSiteID & "&url=" & GetURL(false)
+	If Not bCookieLogin Then response.redirect "kb_login.asp?s=" & ReplaceNull(lSiteID, g_DEFAULT_SITE) & "&url=" & GetURL(false)
 End Sub
 %>

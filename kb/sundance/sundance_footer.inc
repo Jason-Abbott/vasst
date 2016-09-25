@@ -1,4 +1,4 @@
 <div class='SundanceFooter'>
-Copyright &copy; <%=Year(Date)%>&nbsp;<%=g_sORG_NAME%><br>unless otherwise noted<br>
-<a href='http://www.sundancemediagroup.com/contact.htm'>Contact Us</a>
+Copyright &copy; <%=Year(Date)%>&nbsp;<a href="http://www.vasst.com">Sundance Media Group</a><br>unless otherwise noted<br>
+<a href='http://www.vasst.com/contactus.htm'>Contact Us</a>
 </div>

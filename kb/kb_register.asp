@@ -65,13 +65,14 @@ End If
 <link href="./style/<%=g_lSiteID%>/kb_site.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
 <div class='AppName'><%=g_sORG_NAME%>&nbsp;<%=g_sAPP_NAME%></div>
 <center>
 <form name="<%=m_sFORM_NAME%>" action="kb_register.asp?s=<%=g_lSiteID%>&url=<%=Request.QueryString("url")%>" method="post" onSubmit='return SignUp();'>
 <br>
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteTitleBoxTop(g_sAPP_NAME & " Sign Up", "", "") %>
+<% Call m_oLayout.WriteTitleBoxTop(g_sAPP_NAME & " Sign Up", "", "") %>
 <br>
 <table cellspacing='0' cellpadding='0' border='0'>
 <tr>
@@ -138,14 +139,15 @@ var m_oFields = {
 	fldLastName:{desc:"Last Name",type:"Name",req:1},
 	fldEmail:{desc:"e-mail address",type:"Email",req:1},
 	fldPassword:{desc:"Password",type:"Password",req:1},
-	fldConfirm:{desc:"Password Confirmation",type:"Password",req:1}};
+	fldConfirm:{desc:"Password Confirmation",type:"Password",req:1},
+	fldHomePage:{desc:"Web Page",type:"URL",req:0}};
 
 m_oForm.fldClientTime.value = GetClientTime();
 	
 if (m_sMessage != "") { alert(m_sMessage); }
 
 function SignUp() {
-	if (isValid('<%=m_sFORM_NAME%>', m_oFields)) {
+	if (IsValid('<%=m_sFORM_NAME%>', m_oFields)) {
 		if (m_oForm.fldPassword.value.length < <%=g_MIN_PASSWORD_LENGTH%>) {
 			alert("Your password must be at least six characters in length  "); return false;
 		}

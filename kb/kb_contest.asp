@@ -25,11 +25,11 @@ With Request
 	Select Case MakeNumber(.Form("fldAction"))
 		Case m_sACT_VOTE
 			Call m_oContest.CastVote(m_aData(m_CONTEST_ID), m_aData(m_CONTEST_WEIGHT), _
-				m_aData(m_CONTEST_VOTES), .Form("fldVotes"), g_ITEM_FILE)
+				m_aData(m_CONTEST_VOTES), .Form("fldVotes"), g_ITEM_PROJECT)
 		Case m_sACT_ADD
-			Call m_oContest.AddItem(m_aData(m_CONTEST_ID), .Form("fldFiles"), g_ITEM_FILE)
+			Call m_oContest.AddItem(m_aData(m_CONTEST_ID), .Form("fldFiles"), g_ITEM_PROJECT)
 		Case m_sACT_REMOVE
-			Call m_oContest.RemoveItem(m_aData(m_CONTEST_ID), .Form("fldInContest"), g_ITEM_FILE)
+			Call m_oContest.RemoveItem(m_aData(m_CONTEST_ID), .Form("fldInContest"), g_ITEM_PROJECT)
 	End Select
 End With
 %>
@@ -111,16 +111,18 @@ DIV.EditButton {
 </style>
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
+<!--#include file="./include/kb_ads_inc.asp"-->
 <!--#include file="./include/kb_message.inc"-->
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
+<% Call m_oLayout.WriteMenuBar(m_sMENU_COMMON) %>
 <center>
 <% if m_bExpired then %>
 	<% Call m_oContest.WriteConclusion(m_aData) %>
 	<p>
 <% else %>
 
-<form name='<%=m_sFORM_NAME%>' action='kb_contest.asp?id=<%=m_aData(m_CONTEST_ID)%>' method='post' onSubmit='return isValidVote();'>
+<form name='<%=m_sFORM_NAME%>' action='kb_contest.asp?id=<%=m_aData(m_CONTEST_ID)%>' method='post' onSubmit='return IsValidVote();'>
 <table>
 <tr>
 	<td valign='top'>
@@ -148,7 +150,7 @@ DIV.EditButton {
 <script language='javascript'>
 var m_oForm = document.<%=m_sFORM_NAME%>;
 
-function isValidVote() {
+function IsValidVote() {
 	var oField;
 	var lValue;
 	var bValid = false;

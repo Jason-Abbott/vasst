@@ -165,11 +165,13 @@ Class kbTutorialData
 	'	Date:		Name:	Description:
 	'	1/8/03		JEA		Creation
 	'	4/25/03		JEA		Save site
+	'	7/23/04		JEA		Different message when new/update
 	'-------------------------------------------------------------------------
 	Public Sub Save(ByVal v_aData)
 		dim oRS
 		dim sQuery
 		dim lTutorialID
+		dim sMessage
 		
 		lTutorialID = v_aData(m_TUTORIAL_ID)
 		Call m_oData.BeginTrans()
@@ -184,6 +186,8 @@ Class kbTutorialData
 				& "WHERE lTutorialID = " & lTutorialID
 			Call m_oData.ExecuteOnly(sQuery)
 			Call ClearCache(g_ITEM_TUTORIAL)
+			
+			sMessage = "The tutorial has been saved"
 		Else
 			' insert new
 			Set oRS = Server.CreateObject("ADODB.Recordset")
@@ -209,11 +213,13 @@ Class kbTutorialData
 				& g_ITEM_TUTORIAL & ", " _
 				& lTutorialID & ")"
 			Call m_oData.ExecuteOnly(sQuery)
+			
+			sMessage = "The tutorial has been submitted for approval"
 		End If
 		
 		Call SaveCategories(lTutorialID, Trim(v_aData(m_TUTORIAL_CATS)), g_ITEM_TUTORIAL)
 		Call m_oData.CommitTrans()
-		Call SetSessionValue(g_USER_MSG, "The tutorial has been saved")
+		Call SetSessionValue(g_USER_MSG, sMessage)
 		response.redirect "kb_tutorials.asp"
 	End Sub
 	

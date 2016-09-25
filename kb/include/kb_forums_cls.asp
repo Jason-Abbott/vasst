@@ -3,7 +3,7 @@ Class kbForums
 	Private m_aFilter(4)
 	
 	'Private Sub Class_Initialize()
-	'	Set m_oFileData = New kbFileData
+	'	Set m_oFileData = New kbProjectData
 	'End Sub
 	
 	'Private Sub Class_Terminate()
@@ -56,9 +56,9 @@ Class kbForums
 		aData = oForumData.GetPublic(m_aFilter)
 		Set oForumData = Nothing
 		
+		Set oLayout = New kbLayout
 		with response
 			If IsArray(aData) Then
-				Set oLayout = New kbLayout
 				lItemCount = UBound(aData, 2)
 				If lEnd > lItemCount Then lEnd = lItemCount
 				
@@ -116,12 +116,16 @@ Class kbForums
 				.write "<tr><td colspan='3'><div class='ListBottom'>"
 				Call oLayout.WritePaging(lItemsPerPage, lItemCount, m_aFilter, sPAGE_NAME, "forums", oLayout)
 				.write "</div></td></table>"
-				
-				Set oLayout = Nothing
 			Else
-				.write "No forums were found"
+				.write "<p>No forums were found"
+				If g_bAdmin Then
+					.write " <a href='kb_forum-edit.asp'>"
+					Call oLayout.WriteToggleImage("btn_add-forum", "", "Add " & g_ITEM_FORUM, "", false)
+					.write "</a>"
+				End If
 			End If
 		end with
+		Set oLayout = Nothing
 	End Sub
 	
 	'-------------------------------------------------------------------------
@@ -130,6 +134,7 @@ Class kbForums
 	'Modifications:
 	'	Date:		Name:	Description:
 	'	1/10/03		JEA		Creation
+	'	4/29/03		JEA		Make site-specific arrow
 	'-------------------------------------------------------------------------
 	Private Sub WriteItemListHead(ByVal v_sPageURL, ByVal v_lSortID)
 		Const NAME = 0
@@ -143,7 +148,7 @@ Class kbForums
 			Array("Host", g_SORT_OWNER_ASC, g_SORT_OWNER_DESC), _
 			Array("Name", g_SORT_NAME_ASC, g_SORT_NAME_DESC))
 
-		sArrow = "<img class='SortArrow' src='./images/arrow_" & IIf((v_lSortID Mod 2), "down", "up") & "-white.gif'>"
+		sArrow = "<img class='SortArrow' src='./images/" & g_lSiteID & "/arrow_" & IIf((v_lSortID Mod 2), "down", "up") & ".gif'>"
 		with response
 			.write "<tr>"
 			for x = 0 to UBound(aHeadings)

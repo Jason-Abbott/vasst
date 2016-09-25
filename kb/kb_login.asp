@@ -64,14 +64,15 @@ TD.LoginSignup { font-size: 9pt; border-left: 1px solid #6699FF; }
 </style>
 </head>
 <body>
-<!--#include file="./sundance/sundance_header.inc"-->
+<% Set m_oLayout = New kbLayout %>
+<!--#include file="./include/kb_header_inc.asp"-->
 <div class='AppName'><%=g_sORG_NAME%>&nbsp;<%=g_sAPP_NAME%></div>
 <center>
 <p>
-<% Set m_oLayout = New kbLayout : Call m_oLayout.WriteBoxTop("width='70%'", "") %>
+<% Call m_oLayout.WriteBoxTop("width='70%'", "") %>
 
 <table width='100%' cellpadding='0' cellspacing='0' border='0'>
-<form name="<%=m_sFORM_NAME%>" action="kb_login.asp?s=<%=g_lSiteID%>&url=<%=m_sURL%>" method="post" onSubmit="return isValid('<%=m_sFORM_NAME%>', m_oFields);">
+<form name="<%=m_sFORM_NAME%>" action="kb_login.asp?s=<%=g_lSiteID%>&url=<%=m_sURL%>" method="post" onSubmit="return IsValid('<%=m_sFORM_NAME%>', m_oFields);">
 <tr>
 	<td width='50%' align='center' valign='top'>
 	<div class='LoginTitle'>Sign in</div>

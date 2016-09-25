@@ -9,10 +9,14 @@ Const g_sAPP_NAME = "Knowledge Base"
 Const g_VALIDATION_CODE_LENGTH = 16
 Const g_MIN_PASSWORD_LENGTH = 6		' minimum password length
 Const g_PURGE_TEMP_AFTER = 1		' hours after which temp folders may be deleted
-Const g_MAX_FILE_KB = 150			' maximum size of uploaded file in kilobytes
+Const g_MAX_FILE_KB = 250			' maximum size of uploaded file in kilobytes
 Const g_MAX_PICTURE_KB = 30			' maximum size of user picture
+Const g_ITEMS_PER_PAGE = 20			' default items per page
 Const g_bFREE_PLUGINS_ONLY = false	' allow use of free plugins only?
 Const g_sREPLACE_SPACE_WITH = "_"	' replace spaces in uploaded file names with this character
+Const g_SHOW_AS_NEW_DAYS = 4
+Const g_sPROJECT_TYPES = "zip,veg,c3d,png,xls,bmp"	' allowed project extension for upload
+Const g_sSCRIPT_TYPES = "zip,js"					' allowed script extension for upload
 
 ' files and directories
 Const g_sDB_LOCATION = "data/kb.mdb"
@@ -21,20 +25,23 @@ Const g_sFILES_DIR = "files"		' disable http read access or obfuscate name
 Const g_sDOWNLOAD_DIR = "download"
 Const g_sDELETE_DIR = "deleted"		' under files dir
 Const g_sDENY_DIR = "denied"		' under files dir
-Const g_sDEFAULT_PAGE = "kb_files.asp"
+Const g_sDEFAULT_PAGE = "kb_projects.asp"
+Const g_DEFAULT_SITE = 1			' Vegas site
 
 ' object properties
 Const g_sDEFAULT_HEADER = "<embed width='494' height='102' src='/images/sundancemenu.swf'><noembed>You'll need FLASH to view this menu</noembed>"
 Const g_sSQL_DATE_DELIMIT = "#"		' Access uses #, MSSSQL uses '
 Const g_sDB_CONNECT = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
 Const g_sFILE_SYSTEM_OBJECT = "Scripting.FileSystemObject"
-Const g_sEMAIL_OBJECT =  "ASPMAIL.ASPMailCtrl.1" '"CDONTS.NewMail"
+Const g_sEMAIL_OBJECT = "CDO.Message" '"ASPMAIL.ASPMailCtrl.1" "CDONTS.NewMail"
 Const g_sEMAIL_SERVER = "mail.sisna.com" '"mail.webott.com"
+Const g_sEMAIL_USERNAME = "tayazo"
+Const g_sEMAIL_PASSWORD = "hello"
 Const g_sUSER_COOKIE = "userid"
 Const g_sTIME_COOKIE = "offset"
 Const g_sSITE_COOKIE = "site"
 
-' Error Messages ---------------------------------------------------------
+' Client Messages ---------------------------------------------------------
 
 Const g_sMSG_FILE_EXISTS = "A file with that name already exists"
 Const g_sMSG_NO_UPLOAD_DIR = "The upload directory does not exist"
@@ -50,11 +57,16 @@ Const g_sMSG_HTML_LIMIT = "Only basic HTML is allowed: <b>bold</b>, <i>italic</i
 Const g_sMSG_ADMIN_ADD_USER = "The user has been added"
 Const g_sMSG_MULTI_SELECT = "hold Ctrl while clicking to select multiple"
 Const g_sMSG_MEDIA_HINT = "If several files used, combine into single .zip file"
+Const g_sMSG_ABOUT_CACHE = "To improve performance, frequently viewed parts of the Knowledge Base are kept in memory (cached) rather than being repeatedly read from the database or file system.<p>Item lists from the database refresh their cache automatically. Items from the file system, such as banners, need to have their cache refreshed manually to display new content.<p>This form may be used to force a refresh of any cached item."
 
 ' Session Variables ------------------------------------------------------
 
-Const g_sCACHE_HEADER = "kbHeader"
-Const g_sCACHE = "kbFiles"
+' caching
+Const g_sCACHE_HEADER = "HeaderCache"
+Const g_sCACHE_BANNERS = "BannerCache"
+Const g_sCACHE_CATEGORIES = "CategoryCache"
+Const g_sCACHE = "kbProjects"
+
 Const g_sSESSION = "user"
 Const g_USER_ID = 0
 Const g_USER_TYPE = 1
@@ -67,8 +79,11 @@ Const g_USER_TIME_SHIFT = 7
 Const g_USER_FILE_FORMAT = 8
 Const g_USER_MSG = 9
 Const g_USER_SITE = 10
+Const g_USER_LAST_LOGIN = 11
 
 ' Database ID values -----------------------------------------------------
+
+Const g_CATEGORY_SCRIPT = 20
 
 Const g_USER_ADMIN = 4
 Const g_USER_VERIFIED = 3
@@ -90,12 +105,20 @@ Const g_SORT_DATE_DESC = 4
 Const g_SORT_OWNER_ASC = 5
 Const g_SORT_OWNER_DESC = 6
 
-Const g_ITEM_FILE = 1
+Const g_ITEM_PROJECT = 1
 Const g_ITEM_TUTORIAL = 2
 Const g_ITEM_FORUM = 3
 Const g_ITEM_PLUGIN = 4
+Const g_ITEM_PUBLISHER = 5
+Const g_ITEM_SCRIPT = 6
+Const g_ITEM_REVIEW = 7
 
 Const g_SOFTWARE_VEGAS = 1
+
+Const g_SITE_ALL = 0
+Const g_SITE_VEGAS = 1
+Const g_SITE_ULEAD = 2
+Const g_SITE_ADOBE = 3
 
 ' logged activities
 Const g_ACT_APPROVE_UPLOAD = 1
@@ -147,6 +170,12 @@ Const g_FILTER_SORT = 1
 Const g_FILTER_CATEGORY = 2
 Const g_FILTER_SOFTWARE = 3
 Const g_FILTER_AUTHOR = 4
+
+' Post-back Actions ------------------------------------------------------
+
+Const g_ACT_FILE_ADD = 1
+Const g_ACT_FILE_UPDATE = 2
+Const g_ACT_FILE_DELETE = 3
 
 ' ADO Constants ----------------------------------------------------------
 	
@@ -212,12 +241,20 @@ Const adLongVarBinary = 205
 
 ' CDO Constants ----------------------------------------------------------
 
+Const cdoSendUsingPickup = 1
+Const cdoSendUsingPort = 2
+Const cdoAnonymous = 0
+Const cdoBasic = 1
+Const cdoNTLM = 2
+
 ' format (.BodyFormat)
-Const CdoBodyFormatHTML = 0
-Const CdoBodyFormatText = 1
+Const cdoBodyFormatHTML = 0
+Const ddoBodyFormatText = 1
 
 ' priority (.Importance)
-Const CdoLow = 0
-Const CdoNormal = 1
-Const CdoHigh = 2
+Const cdoLow = 0
+Const cdoNormal = 1
+Const cdoHigh = 2
+
+Const cdoSchema = "http://schemas.microsoft.com/cdo/configuration/"
 %>

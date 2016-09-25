@@ -1,6 +1,6 @@
 <%
 '-------------------------------------------------------------------------
-'	Name: 		kbFiles class
+'	Name: 		kbProjects class
 '	Purpose: 	encapsulate activity logging functions
 'Modifications:
 '	Date:		Name:	Description:
@@ -24,28 +24,34 @@ Class kbLog
 	'	Date:		Name:	Description:
 	'	12/24/02	JEA		Creation
 	'	4/25/03		JEA		Allow site ID filter
+	'	7/28/04		JEA		Get script info
 	'-------------------------------------------------------------------------
 	Private Function GetActivity(ByVal v_sStartDate, ByVal v_sEndDate, ByVal v_lActivityID, _
-		ByVal v_lUserID, ByVal v_lFileID, ByVal v_lSiteID)
+		ByVal v_lUserID, ByVal v_lProjectID, ByVal v_lScriptID, ByVal v_lSiteID)
 		
 		dim sQuery
 		dim aData
 	
-		sQuery = "SELECT L.lUserID, L.lFileID, L.lContestID, L.dtActivityDate, L.vsEmail, " _
+		sQuery = "SELECT L.lUserID, L.lProjectID, L.lScriptID, L.lContestID, L.dtActivityDate, L.vsEmail, " _
 			& "L.vsPassword, L.vsIPAddress, LA.vsActivityName, U.vsFirstName, U.vsLastName, " _
-			& "F.vsFriendlyName, F.vsPath, F.vsFileName, C.vsContestName, S.vsSiteName " _
-			& "FROM ((((tblLog L " _
+			& "IIf(P.lProjectID IS NULL, Sc.vsFriendlyName, P.vsFriendlyName), " _
+			& "IIf(P.lProjectID IS NULL, Sc.vsPath, P.vsPath), " _
+			& "IIf(P.lProjectID IS NULL, Sc.vsFileName, P.vsFileName), " _
+			& "C.vsContestName, S.vsSiteName " _
+			& "FROM (((((tblLog L " _
 			& "INNER JOIN tblLoggedActivities LA ON L.lActivityID = LA.lActivityID) " _
 			& "INNER JOIN tblSite S ON S.lSiteID = L.lSiteID) " _
 			& "LEFT JOIN tblUsers U ON U.lUserID = L.lUserID) " _
-			& "LEFT JOIN tblFiles F ON F.lFileID = L.lFileID) " _
+			& "LEFT JOIN tblProjects P ON P.lProjectID = L.lProjectID) " _
+			& "LEFT JOIN tblScripts Sc ON Sc.lScriptID = L.lScriptID) " _
 			& "LEFT JOIN tblContests C ON C.lContestID = L.lContestID " _
 			& "WHERE (L.dtActivityDate BETWEEN " & g_sSQL_DATE_DELIMIT _
 			& v_sStartDate & g_sSQL_DATE_DELIMIT & " AND " & g_sSQL_DATE_DELIMIT _
 			& v_sEndDate & g_sSQL_DATE_DELIMIT & ")"
 		if v_lActivityID <> 0 then sQuery = sQuery & " AND LA.lActivityID = " & v_lActivityID
 		if v_lUserID <> 0 then sQuery = sQuery & " AND U.lUserID = " & v_lUserID
-		if v_lFileID <> 0 then sQuery = sQuery & " AND F.lFileID = " & v_lFileID
+		if v_lProjectID <> 0 then sQuery = sQuery & " AND P.lProjectID = " & v_lProjectID
+		if v_lScriptID <> 0 then sQuery = sQuery & " AND Sc.lScriptID = " & v_lScriptID
 		if v_lSiteID <> 0 then sQuery = sQuery & " AND S.lSiteID = " & v_lSiteID
 		sQuery = sQuery	& " ORDER BY L.dtActivityDate DESC"
 		GetActivity = m_oData.GetArray(sQuery)
@@ -60,23 +66,24 @@ Class kbLog
 	'	4/25/03		JEA		Write Site name
 	'-------------------------------------------------------------------------
 	Public Sub WriteActivity(ByVal v_sStartDate, ByVal v_sEndDate, ByVal v_lActivityID, _
-		ByVal v_lUserID, ByVal v_lFileID, ByVal v_lSiteID)
+		ByVal v_lUserID, ByVal v_lProjectID, ByVal v_lScriptID, ByVal v_lSiteID)
 		
 		Const USER_ID = 0
-		Const FILE_ID = 1
-		Const CONTEST_ID = 2
-		Const ACTIVITY_DATE = 3
-		Const EMAIL = 4
-		Const PASSWORD = 5
-		Const IP_ADDRESS = 6
-		Const ACTIVITY_NAME = 7
-		Const FIRST_NAME = 8
-		Const LAST_NAME = 9
-		Const FRIENDLY_FILE_NAME = 10
-		Const FILE_PATH = 11
-		Const FILE_NAME = 12
-		Const CONTEST_NAME = 13
-		Const SITE_NAME = 14
+		Const PROJECT_ID = 1
+		Const SCRIPT_ID = 2
+		Const CONTEST_ID = 3
+		Const ACTIVITY_DATE = 4
+		Const EMAIL = 5
+		Const PASSWORD = 6
+		Const IP_ADDRESS = 7
+		Const ACTIVITY_NAME = 8
+		Const FIRST_NAME = 9
+		Const LAST_NAME = 10
+		Const FRIENDLY_FILE_NAME = 11
+		Const FILE_PATH = 12
+		Const FILE_NAME = 13
+		Const CONTEST_NAME = 14
+		Const SITE_NAME = 15
 		dim aData
 		dim sDate
 		dim sShiftedDate
@@ -88,11 +95,11 @@ Class kbLog
 		Else
 			Exit Sub
 		End If
-		aData = GetActivity(v_sStartDate, v_sEndDate, v_lActivityID, v_lUserID, v_lFileID, v_lSiteID)
+		aData = GetActivity(v_sStartDate, v_sEndDate, v_lActivityID, v_lUserID, v_lProjectID, v_lScriptID, v_lSiteID)
 		sDate = ""
 		With Response
 			If IsArray(aData) Then
-				.write "<table cellspacing='0' cellpadding='0' border='0'><tr>"
+				.write "<table cellspacing='0' cellpadding='0' border='0' class='Log'><tr>"
 				.write "<td class='LogHead'>Time</td><td class='LogHead'>User</td>"
 				.write "<td class='LogHead'>Activity</td><td class='LogHead'>Site</td>"
 				.write "<td class='LogHead'>IP</td>"
@@ -126,13 +133,22 @@ Class kbLog
 					' activity
 					.write "</a></td><td class='LogActivity'>"
 					.write aData(ACTIVITY_NAME, x)
-					If IsNumber(aData(FILE_ID, x)) And aData(FILE_ID, x) > 0 Then
-						.write " (<a href='kb_download.asp?id="
-						.write aData(FILE_ID,x)
+					If IsNumber(aData(PROJECT_ID, x)) And aData(PROJECT_ID, x) > 0 Then
+						' project download
+						.write " (<a href='kb_project-download.asp?id="
+						.write aData(PROJECT_ID,x)
+						.write "'>"
+						.write aData(FRIENDLY_FILE_NAME, x)
+						.write "</a>)"
+					ElseIf IsNumber(aData(SCRIPT_ID, x)) And aData(SCRIPT_ID, x) > 0 Then
+						' script download
+						.write " (<a href='kb_script-download.asp?id="
+						.write aData(SCRIPT_ID,x)
 						.write "'>"
 						.write aData(FRIENDLY_FILE_NAME, x)
 						.write "</a>)"
 					ElseIf IsNumber(aData(CONTEST_ID, x)) And aData(CONTEST_ID, x) > 0 Then
+						' contest activity
 						.write " (<a href='kb_contest.asp?id="
 						.write aData(CONTEST_ID,x)
 						.write "'>"
