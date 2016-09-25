@@ -2,9 +2,8 @@ DIV.AdminMenuBar {
 	text-align: center;
 	font-size: 9pt;
 	font-weight: bold;
-	border-bottom: 1px solid #6699FF;
-	margin-bottom: 4px;
-	background-color: #444444;
+	border-bottom: 1px solid #444499;
+	background-color: #ccccff;
 }
 TD.dbAction {
 	text-align: right;
@@ -13,13 +12,13 @@ TD.dbAction {
 }
 TD.dbInfo {
 	font-size: 9pt;
-	background-color: #444444;
-	border-top: 1px solid #feb800;
+	background-color: #eeeeee;
+	border-top: 1px solid #ed6c2c;
 }
 TD.QueryCell {
 	font-size: 8pt;
 	text-align: left;
-	border-bottom: 1px solid <%=g_sCOLOR_EDGE%>;
+	border-bottom: 1px solid #ed6c2c;
 	border-right: 1px solid #aaaaaa;
 	padding: 3px;
 }
@@ -27,6 +26,6 @@ TD.QueryHead {
 	font-size: 9pt;
 	font-weight: bold;
 	padding: 4px;
-	border-right: 1px solid <%=g_sCOLOR_TITLE%>;
-	border-bottom: 2px solid <%=g_sCOLOR_TITLE%>;
+	border-right: 1px solid #4679df;
+	border-bottom: 2px solid #4679df;
 }
