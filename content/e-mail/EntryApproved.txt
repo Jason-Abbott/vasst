@@ -1,0 +1,8 @@
+Dear <name>,
+
+Thank you for entering the "<contestTitle>" contest.  Your entry, "<entryTitle>", has been approved.  You may link directly to the contest with this address:
+
+<contestUrl>
+
+The VASST team
+http://VASST.com

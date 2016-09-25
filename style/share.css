@@ -1,0 +1,34 @@
+fieldset.wizard {  padding-top: 6px; margin-top: 0; position: relative; }
+legend.title { color: #fff; font-size: 16pt; font-family: Trebuchet MS, Tahoma, Arial; }
+.error { border-color: #f00 !important; }
+a.listAction { vertical-align: top; margin-left: 6px; }
+.nav { text-align: right; padding-top: 10px; margin-left: 9px; }
+.nav input, .nav img { margin: 0; }
+
+/* step 1 */
+#TermsConditions {
+	display: none;
+	overflow: auto;
+	height: 50px;
+	margin-top: 5px;
+	padding: 5px;
+	border: 1px solid #357;
+}
+.terms { margin: 5px 0px 5px 0px; }
+#or { font-size: 11pt; font-weight: bold; text-align: center; }
+
+/* step 2 */
+.links input { width: 70%; }
+#description { text-align: center; }
+#description .note { padding: 0; margin: 0; }
+#description textarea {
+	height: 5em;
+	background-image: url(../images/gradient.aspx?c1=333&c2=012&w=1&h=110&d=ttb);
+	padding: 2px;
+}
+/* step 3 */
+.categories, .plugins, .sections { width: 45%;	margin-top: -6px; }
+.categories select, .plugins select, .sections select { width: 100%; }
+.categories { float: left; }
+.plugins { float: right; }
+#multinote { clear: both; text-align: right; margin: 4px 0 0 0; }

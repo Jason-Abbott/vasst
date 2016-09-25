@@ -1,0 +1,3 @@
+Categories help customers find what they're looking for.  Categories can be made visible for different sections of the site and for the different sorts of things available on the site.
+
+For example, a "3D Effect" category may not make sense for an audio section of the site.

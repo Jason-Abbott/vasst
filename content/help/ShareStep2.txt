@@ -1,0 +1,3 @@
+Enter a title, indicate what software you intend it for, and describe your resource.
+
+Optionally, enter the address of this resource rendered to video, or to additional media files needed to use the resource.

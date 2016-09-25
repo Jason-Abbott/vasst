@@ -1,0 +1,3 @@
+To add a new permission to a role, drag it from the list on the right to the role on the left.
+
+To remove a permission from a role, drag it from beneath the role back to the list of permissions on the right.

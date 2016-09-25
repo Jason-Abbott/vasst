@@ -1,0 +1,82 @@
+#list { width: 100%; margin-top: 10px; }
+
+#listMatches {
+	display: block;
+	font-family: Trebuchet MS, Tahoma, Arial;
+	font-size: 20pt;
+	color: #468;
+}
+.bottom { padding: 3px 0px 5px 0px; border-bottom: 1px solid #357; }
+.top { padding-top: 3px; }
+
+/* left column --------------------------------------------------- */
+
+#list td.left {
+	width: 100px;
+	_width: 150px;							/* IE exception */
+	vertical-align: top;
+	position: relative;
+	text-align: right;
+}
+/* type color specified in webpart.css */
+#list td.left .type {
+	_white-space: nowrap;					/* IE exception */
+	font-size: 8pt;
+	opacity: 0.5;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
+}
+#list td.left .views { margin-top: 3px;	font-size: 8pt;	color: #777; }
+#list td.left .button {	position: relative;	right: 4px; }
+#list td.left .title {
+	font-family: Trebuchet MS, Tahoma, Arial;
+	font-size: 12pt;
+	line-height: 14pt;
+}
+#list .left .title a:hover { color: #fff; }
+#list .left .rating { text-align: right; }
+
+/* right column -------------------------------------------------- */
+
+#list td.right {
+	_width: 70%;							/* IE exception */
+	vertical-align: top;
+	padding-left: 8px;
+	font-size: 9pt;
+	position: relative;
+}
+#list td.right .date { display: inline; margin-left: 20px; color: #d93; }
+#list td.right .author { float: right; font-weight: bold; _padding-bottom: 1px; }
+#list td.right .action { margin-top: 5px; float: right; text-align: right; }
+#list td.right .action .button { float: none; margin-bottom: 3px; }
+#list td.right .description { font-size: 9pt; margin: 8px 0px 4px 0px; }
+#list td.right .button { float: right; }
+#list td.right .list {
+	text-indent: -1.5em;	
+	margin-left: 1.5em;
+	_text-indent: 0;						/* IE exception */
+	_margin-left: 0;
+	_padding-bottom: 1px;
+	color: #8ac;
+	width: 80%;
+}
+#list td.right .list .item a, #list td.right .list .item {
+	color: #db9;
+	white-space: nowrap;	
+}
+.highlight { color: #ff6; }
+
+/* tip */
+.tip {
+	font-family: Trebuchet MS, Tahoma, Arial;
+	display: block;
+	border: 1px solid #ff6;
+	margin: 10px 30px 0 30px;
+	line-height: 1em;
+	padding: 4px;
+	background-image: url(../images/solid.aspx?c=ff0&a=15);
+	_background-image: url(../images/blank.gif);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/solid.aspx?c=ff0&a=15', sizingMethod='scale');
+}
+.tip #line1 { margin-left: 1em; font-weight: bold; color: #ffd; font-size: 14pt; }
+.tip #line2 { margin-left: 3em; color: #ff4; }
+.tip #line3 { margin-left: 2em; }

@@ -1,0 +1,32 @@
+#categories {
+	position: relative;
+	width: auto;
+	_width: 100px;							/* IE exception */
+	float: left;
+}
+#categoryBox {
+	border-top: 1px solid #357;
+	overflow: auto;
+	height: 300px;
+}
+#categoryBox input {
+	width: 150px;
+	position: relative;
+	display: block;
+	border: none;
+	border-bottom: 1px solid #357;
+	margin: 0;
+	padding: 1px 0px 1px 2px;
+	background-image: none;
+	background-color: transparent;
+	color: #fb5;
+	cursor: pointer;
+}
+#categoryBox input:hover { background-color: #68b; color: #fff; }
+input#new {	color: #fff; text-align: center; }
+#categoryBox input.active { background-color: #68b;	color: #fff; }
+#categoryBox input.pending { background-color: #800; color: #fff; }
+#categoryBox input.saved { background-color: #080; color: #fff; }
+input.edit:hover { cursor: text; background-color: transparent; }
+#sections { float: right; }
+#entities div div { margin-left: 10px; }

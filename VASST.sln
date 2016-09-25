@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VASST", "http://localhost/VASST/5.0/VASST.vbproj", "{A776452B-2FC4-4195-8863-A4F047457545}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 1
+		SccProjectUniqueName0 = http://localhost/VASST/5.0/VASST.vbproj
+		SccProjectName0 = \u0022$/VASST/5.0\u0022,\u0020EEAAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = false
+		SccProjectEnlistmentChoice0 = 2
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{A776452B-2FC4-4195-8863-A4F047457545}.Debug.ActiveCfg = Debug|.NET
+		{A776452B-2FC4-4195-8863-A4F047457545}.Debug.Build.0 = Debug|.NET
+		{A776452B-2FC4-4195-8863-A4F047457545}.Release.ActiveCfg = Release|.NET
+		{A776452B-2FC4-4195-8863-A4F047457545}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

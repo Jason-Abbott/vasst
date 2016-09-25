@@ -1,0 +1,24 @@
+Dear [First Name] [Last Name],
+
+Thank you for registering for the [Seminar Name]. We have received your registration for the seminar in [Seminar City] on [Seminar Date]. Please review the information below and reply to this email if any of the information is incorrect. The seminar will begin at [Seminar Start Time] and end at approximately [Seminar End Time]. You will receive more details about the event one week prior to your scheduled seminar.
+
+Detailed payment information can be found at the bottom of this message. Thank you again for your registration. We look forward to seeing you in [Seminar City] on [Seminar Date].
+
+Kind regards,
+
+VASST Tour Registration
+http://www.vasst.com/aboutus.htm 
+
+
+Name: [First Name] [Last Name]
+Company: [Company Name]
+Address: [Address]
+
+Phone: [Phone Number]
+Email: [Email Address]
+
+Seminar Name: [Seminar Name]
+Seminar City: [Seminar City]
+Seminar Date(s): [Seminar Date]
+
+Questions or concerns about your registration? Please email mannie@sundancemediagroup.com.

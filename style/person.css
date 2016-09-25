@@ -1,0 +1,33 @@
+img.picture { float: right; border: 1px solid #357; margin-top: 15px; }
+#name {	margin-bottom: 10px; margin-top: -30px; }
+#name h1 { }
+#name h2 { line-height: 1em; }
+#name .role { font-size: 9pt; margin-left: 12px; color: #fb0; }
+#links { margin-left: 10px; font-size: 10pt; }
+#links .email { display: block; }
+#links .website { display: block; color: #999; }
+.description { display: block; margin-top: 20px; }
+.resourceLabel {
+	display: block;
+	margin: 10px 0px 3px 10px;
+	font-size: 10pt;
+	color: #666;
+	width: 175px;
+}
+.resources {
+	margin-left: 10px;
+	padding-top: 2px;
+	overflow: auto;
+	height: auto;
+	font-size: 8pt;
+	border: 1px solid #357;
+	border-bottom: none;
+	width: 175px;
+}
+.resource {
+	margin-bottom: 0px;
+	padding: 0px 3px 2px 3px;
+	border-bottom: 1px solid #357;
+}
+.resource a { border-bottom: none; }
+.resource a:hover { color: white; }

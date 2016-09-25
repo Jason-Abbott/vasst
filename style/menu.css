@@ -1,0 +1,54 @@
+DIV.menu {
+	display: none;
+	background-color: #357;
+	position: absolute;
+	border-left: 1px solid #1a1a1a;
+	border-right: 1px solid #1a1a1a;
+	border-bottom: 1px solid #1a1a1a;
+	z-index: 6;
+}
+#menuBack {	position: relative;	margin-left: 51px; }
+#menu {
+	position: absolute;
+	padding: 0px;
+	border: none;
+	margin: 0px;
+	display: block;
+	height: inherit;
+	width: 80%;
+}
+#menuStrip > #menu { margin-left: 51px;	}
+.menuItem {
+	color: #bde;
+	background-color: #579;
+	cursor: pointer;
+	border-right: 1px solid #357;
+	border-left: 1px solid #79b;
+}
+.hover {
+	background-color: #bde !important;
+	color: #579 !important;
+}
+.rootItem {
+	height: inherit;
+	float: left;
+	display: inline;
+	padding: 0px 10px 0px 10px;
+	text-align: center;
+	margin-right: 2px;
+	border: none;
+}
+.subItem {
+	display: block;
+	padding: 1px 10px 1px 5px;
+	border-bottom: 1px solid #357;
+	z-index: 0;
+}
+.section { border-top: 1px solid #9bd; }
+
+/* Opera exceptions ---------------------------------------------- */
+
+@media all and (min-width: 0px) {
+	#menu { height: 20px; }
+}
+

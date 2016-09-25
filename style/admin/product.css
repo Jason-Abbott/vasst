@@ -1,0 +1,27 @@
+#classification {
+	float: right;
+	position: relative;
+	margin-top: -16px;
+	_margin-top: -20px;						/* IE exception */
+	_margin-left: 4px;
+	_width: 32%;
+	text-align: center;
+}
+#classification fieldset { padding-top: 5px; width: 90%; }
+#classification fieldset select { width: 100%; _margin-top: 4px; }
+#dates { padding-bottom: 2px; margin-right: 5px; }
+#dates input { width: 6em; text-align: right; }
+#description {
+	position: relative;
+	text-align: center;
+	padding-top: 6px;
+	padding-bottom: 0px;
+	margin-right: 5px;
+}
+#description legend { _margin-bottom: 5px; }
+#description textarea {
+	width: 96%;
+	_width: 93%;							/* IE exception */
+	_height: 100px;
+	padding-right: 5px;
+}

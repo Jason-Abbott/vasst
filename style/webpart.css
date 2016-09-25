@@ -1,0 +1,124 @@
+/* default web part styles -------------------------------------------- */
+.webPart {
+	font-size: 10pt;
+	margin-bottom: 0px;
+}
+.webPart .titleBar {
+	background-repeat: repeat-y;
+	height: 17px;
+	white-space: nowrap;
+	border-bottom: 1px solid #000;
+	background-image: url(../images/gradient.aspx?c1=468&w=220&h=1);
+	_background-image: url(../images/blank.gif);	/* WinIE hack */
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/gradient.aspx?c1=468&w=220&h=1', sizingMethod='scale');
+}
+.webPart .titleBar img {
+	display: inline;
+	cursor: pointer;
+	margin: 3px 0px 0px 3px;
+	float: left;
+}
+.webPart .titleBar .title {
+	display: inline;
+	font-size: 14px;
+	margin-left: 3px;
+}
+.webPart .body {
+	padding: 2px 0px 3px 3px;
+	border-left: 1px dotted #468;
+	_border-left: none;
+	overflow: hidden;
+	margin-right: 6px;
+	margin-left: 8px;
+}
+
+/* new assets --------------------------------------------------------- */
+
+.newAssets .name { display: inline; border: none; }
+.newAssets a { color: #fff; border: none; }
+.newAssets a:hover { color: #fff; border-bottom: none; }
+.newAssets .row {
+	position: relative;
+	font-size: 8pt;
+	padding-bottom: 2px;
+}
+.newAssets .date {
+	float: right;
+	color: #357;
+	text-align: right;
+}
+.assetType1, .assetType1 a { color: #fb6; }		/* project */
+.assetType2, .assetType2 a { color: #caf; }		/* tutorial */
+.assetType4, .assetType4 a { color: #f99; }		/* script */
+.assetType8, .assetType8 a { color: #add; }		/* review */
+.assetType16, .assetType16 a { color: #9fa; }	/* preset */
+
+/* contests ----------------------------------------------------------- */
+
+#contests { margin: 0px 0px 0px 5px; padding-left: 10px; }
+#contests li { padding-bottom: 5px; }
+#contests li .notice { color: #555; font-size: 8pt; margin-left: 1em; }
+#contests li .notice .date { color: #999; }
+
+/* statistics --------------------------------------------------------- */
+
+#statistics dl { margin: 0px; }
+#statistics dt {
+	width: 60px;
+	display: block;
+	float: left;
+	margin: 0px 4px 2px 0px;
+	text-align: right;
+	color: #666;
+}
+#statistics dd {
+	display: block;
+	margin: 0px 4px 2px 0px;
+}
+#statistics .section {
+	text-align: center;
+	color: #8ac;
+	margin-top: 4px;
+	border: none;
+	background-color: #222;
+}
+#dataFile { text-align: center; }
+
+/* quotes ------------------------------------------------------------- */
+
+.quote {
+	position: relative;
+	margin: 0px 12px 4px 12px;
+	float: right;
+	width: 170px;
+}
+.quote .border { border: 1px solid #8ac; margin: 6px; }
+.quote .body {
+	position: relative;
+	margin: 3px;
+	background-color: #246;
+	font-family: Times New Roman, Times;
+	font-size: 16pt;
+	text-align: center;
+	padding: 2px;
+	background-image: url(../images/gradient.aspx?c1=579&c2=246&w=170&h=85&d=sunset);
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+.quote .body .author {
+	font-family: Tahoma, Arial, Helvetica;
+	text-align: right;
+	font-size: 8pt;
+	margin-right: 18px;
+	color: #9bd;
+	font-weight: bold;
+}
+.quote .body .author .from { color: #68a; font-weight: normal; }
+.quote img.open { left: 0px; position: absolute; z-index: 5; }
+.quote img.close { position: absolute; right: 0px; bottom: 0px;	z-index: 5; }
+
+/* task list ---------------------------------------------------------- */
+
+#tasks { margin: 0 0 4px 0; }
+#tasks li { margin-left: -15px; font-size: 8pt; color: #4f4; _margin-left: 15px; }
+#tasks li a { color: #f33; }

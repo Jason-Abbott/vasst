@@ -1,0 +1,6 @@
+Dear <name>,
+
+Thank you for offering to share your creativity with the VASST community.  Unfortunately, your resource, "<resource>", could not be approved.  This may be due to copyright concerns, a technical problem with the file or a judgment made about its appropriateness for our users.  Please contact us if you have any questions about this decision.
+
+The VASST team
+http://VASST.com

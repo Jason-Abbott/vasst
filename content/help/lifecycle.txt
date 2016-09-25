@@ -1,0 +1,39 @@
+Global_BeginRequest
+Global_AuthenticateRequest
+Global_AuthorizeRequest
+Global_ResolveRequestCache
+Global_Session_Start
+Global_AcquireRequestState
+Global_PreRequestHandlerExecute
+	Page_DeterminePostBackMode
+	Page_AddParsedSubObject  -- ?
+		Control_OnInit
+		Control_LoadViewState
+	Page_OnInit
+	Page_LoadViewState
+	Page_ProcessPostData
+		Control_LoadPostData
+	Page_OnLoad
+		Control_OnLoad
+	Page_EnsureChildControls
+	Page_CreateChildControls
+	Page_ProcessPostData (second time for loaded controls)
+	Page_OnPreRender
+		Control_EnsureChildControls
+		Control_CreateChildControls
+		Control_OnPreRender
+	Page_SaveViewState
+		Control_SaveViewState
+	Page_Render
+	Page_RenderChildren
+		Control_Render
+		Control_RenderChildren
+		Control_OnUnload
+	Page_OnUnload
+Global_PostRequestHandlerExecute
+Global_ReleaseRequestState
+Global_UpdateRequestCache
+Global_EndRequest
+Global_PreSendRequestHeaders
+Global_PreSendRequestContent
+Global_PreSendRequestContent

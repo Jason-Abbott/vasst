@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="LegacyDataSet" targetNamespace="http://tempuri.org/LegacyDataSet.xsd" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns="http://tempuri.org/LegacyDataSet.xsd" xmlns:mstns="http://tempuri.org/LegacyDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xs:element name="LegacyDataSet" msdata:IsDataSet="true">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="tblUsers">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lUserID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsFirstName" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsLastName" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsEmail" type="xs:string" minOccurs="0" />
+                            <xs:element name="bPrivateEmail" type="xs:boolean" minOccurs="0" />
+                            <xs:element name="bEmailNews" type="xs:boolean" minOccurs="0" />
+                            <xs:element name="vspassword" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsHomePageURL" type="xs:string" minOccurs="0" />
+                            <xs:element name="lUserTypeID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lStatusID" type="xs:int" minOccurs="0" />
+                            <xs:element name="sValidationCode" type="xs:string" minOccurs="0" />
+                            <xs:element name="lDefaultFormatID" type="xs:short" minOccurs="0" />
+                            <xs:element name="lDefaultSortID" type="xs:short" minOccurs="0" />
+                            <xs:element name="lItemsPerPage" type="xs:short" minOccurs="0" />
+                            <xs:element name="vsUserImage" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtDateRegistered" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="vsAboutMe" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsScreenName" type="xs:string" minOccurs="0" />
+                            <xs:element name="lSiteID" type="xs:int" minOccurs="0" />
+                            <xs:element name="dtLastLogin" type="xs:dateTime" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblUserTypes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lUserTypeID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsUserTypeName" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblSoftware">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lSoftwareID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="lPublisherID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsSoftwareName" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblSoftwareVersions">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lVersionID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="lSoftwareID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsVersionText" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsIcon" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblTutorials">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lTutorialID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsTutorialURL" type="xs:string" minOccurs="0" />
+                            <xs:element name="lAuthorID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lSubmitterID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsTutorialName" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsDescription" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtSubmitDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="dtApproveDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="lStatusID" type="xs:int" minOccurs="0" />
+                            <xs:element name="bLocalFile" type="xs:boolean" minOccurs="0" />
+                            <xs:element name="AssetID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblSite">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lSiteID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsSiteName" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblStatusCodes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lStatusID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsStatusName" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblPublishers">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lPublisherID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsPublisherName" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsPublisherLogo" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsPublisherURL" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblRankings">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lItemID" type="xs:int" />
+                            <xs:element name="lItemTypeID" type="xs:int" />
+                            <xs:element name="lUserID" type="xs:int" />
+                            <xs:element name="lRank" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsComment" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtRankDate" type="xs:dateTime" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblReviews">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lReviewID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsReviewURL" type="xs:string" minOccurs="0" />
+                            <xs:element name="lAuthorID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsAuthorName" type="xs:string" minOccurs="0" />
+                            <xs:element name="lSubmitterID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsReviewName" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsDescription" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtSubmitDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="dtApproveDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="lStatusID" type="xs:int" minOccurs="0" />
+                            <xs:element name="bLocalFile" type="xs:boolean" minOccurs="0" />
+                            <xs:element name="AssetID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblScripts">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lScriptID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="lUserID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsPath" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsFileName" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtSubmitDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="dtApproveDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="vsFriendlyName" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsDescription" type="xs:string" minOccurs="0" />
+                            <xs:element name="lStatusID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lFormatID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lScriptSize" type="xs:int" minOccurs="0" />
+                            <xs:element name="lSoftwareVersionID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsRequiredMediaURL" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtVersionDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="lVersionCount" type="xs:int" minOccurs="0" />
+                            <xs:element name="lDownloads" type="xs:int" minOccurs="0" />
+                            <xs:element name="AssetID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblProjects">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lProjectID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="lUserID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsPath" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsFileName" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtSubmitDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="dtApproveDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="vsFriendlyName" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsDescription" type="xs:string" minOccurs="0" />
+                            <xs:element name="lStatusID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lFormatID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lFileSize" type="xs:int" minOccurs="0" />
+                            <xs:element name="lSoftwareVersionID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsRenderedURL" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsRequiredMediaURL" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtVersionDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="lVersionCount" type="xs:int" minOccurs="0" />
+                            <xs:element name="lDownloads" type="xs:int" minOccurs="0" />
+                            <xs:element name="AssetID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblFormats">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lFormatID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsFormatDescription" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblItemTypes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lItemTypeID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsDescription" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblProjectPlugins">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lProjectID" type="xs:int" />
+                            <xs:element name="lPluginID" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblPlugins">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lPluginID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="lPluginPackageID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsPluginName" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblPluginPackages">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lPluginPackageID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsPluginPackageName" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsPluginPackageURL" type="xs:string" minOccurs="0" />
+                            <xs:element name="lPluginTypeID" type="xs:int" minOccurs="0" />
+                            <xs:element name="bFree" type="xs:boolean" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblPluginTypes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lPluginTypeID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsPluginTypeName" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblPublisherItemTypes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lPublisherID" type="xs:int" />
+                            <xs:element name="lItemTypeID" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblCategories">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lCategoryID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsCategoryName" type="xs:string" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblItemSites">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lSiteID" type="xs:int" />
+                            <xs:element name="lItemID" type="xs:int" />
+                            <xs:element name="lItemTypeID" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblCategoryItemTypes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lCategoryID" type="xs:int" />
+                            <xs:element name="lItemTypeID" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblContests">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lContestID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="vsContestName" type="xs:string" minOccurs="0" />
+                            <xs:element name="dtStartDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="dtEndDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="dtVoteByDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="vsDescription" type="xs:string" minOccurs="0" />
+                            <xs:element name="lWinners" type="xs:short" minOccurs="0" />
+                            <xs:element name="lVotesAllowed" type="xs:short" minOccurs="0" />
+                            <xs:element name="lWeightFactor" type="xs:short" minOccurs="0" />
+                            <xs:element name="lMaxEntries" type="xs:short" minOccurs="0" />
+                            <xs:element name="bFreePluginsOnly" type="xs:boolean" minOccurs="0" />
+                            <xs:element name="bNoExternalMedia" type="xs:boolean" minOccurs="0" />
+                            <xs:element name="lSiteID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblContestVotes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lContestID" type="xs:int" />
+                            <xs:element name="lItemID" type="xs:int" />
+                            <xs:element name="lItemTypeID" type="xs:int" />
+                            <xs:element name="lVoterID" type="xs:int" />
+                            <xs:element name="lRank" type="xs:int" minOccurs="0" />
+                            <xs:element name="dtDateVoted" type="xs:dateTime" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblContestItems">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lContestID" type="xs:int" />
+                            <xs:element name="lItemID" type="xs:int" />
+                            <xs:element name="lItemTypeID" type="xs:int" />
+                            <xs:element name="dtAddedDate" type="xs:dateTime" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblItemCategories">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lCategoryID" type="xs:int" />
+                            <xs:element name="lItemID" type="xs:int" />
+                            <xs:element name="lItemTypeID" type="xs:int" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tblLog">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="lLogID" msdata:AutoIncrement="true" type="xs:int" />
+                            <xs:element name="lUserID" type="xs:int" minOccurs="0" />
+                            <xs:element name="dtActivityDate" type="xs:dateTime" minOccurs="0" />
+                            <xs:element name="lActivityID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lProjectID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lScriptID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lContestID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lTutorialID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lAffectedUserID" type="xs:int" minOccurs="0" />
+                            <xs:element name="vsEmail" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsPassword" type="xs:string" minOccurs="0" />
+                            <xs:element name="vsIPAddress" type="xs:string" minOccurs="0" />
+                            <xs:element name="lSiteID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lItemTypeID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="AssetItems">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="AssetID" type="xs:int" minOccurs="0" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" />
+                            <xs:element name="lItemID" type="xs:int" minOccurs="0" />
+                            <xs:element name="lItemTypeID" type="xs:int" minOccurs="0" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+        <xs:unique name="LegacyDataSetKey1" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblUsers" />
+            <xs:field xpath="mstns:lUserID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey2" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblUserTypes" />
+            <xs:field xpath="mstns:lUserTypeID" />
+        </xs:unique>
+        <xs:keyref name="UserTypesToUsers" refer="LegacyDataSetKey2">
+            <xs:selector xpath=".//mstns:tblUsers" />
+            <xs:field xpath="mstns:lUserTypeID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey3" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblSoftware" />
+            <xs:field xpath="mstns:lSoftwareID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey4" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblSoftwareVersions" />
+            <xs:field xpath="mstns:lVersionID" />
+        </xs:unique>
+        <xs:keyref name="SoftwareToSoftwareVersions" refer="LegacyDataSetKey3">
+            <xs:selector xpath=".//mstns:tblSoftwareVersions" />
+            <xs:field xpath="mstns:lSoftwareID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey5">
+            <xs:selector xpath=".//mstns:tblTutorials" />
+            <xs:field xpath="mstns:lTutorialID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey7" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblSite" />
+            <xs:field xpath="mstns:lSiteID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey8" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblStatusCodes" />
+            <xs:field xpath="mstns:lStatusID" />
+        </xs:unique>
+        <xs:keyref name="StatusCodesToUsers" refer="LegacyDataSetKey8">
+            <xs:selector xpath=".//mstns:tblUsers" />
+            <xs:field xpath="mstns:lStatusID" />
+        </xs:keyref>
+        <xs:keyref name="SiteToUsers" refer="LegacyDataSetKey7">
+            <xs:selector xpath=".//mstns:tblUsers" />
+            <xs:field xpath="mstns:lSiteID" />
+        </xs:keyref>
+        <xs:keyref name="StatusCodesToTutorials" refer="LegacyDataSetKey8">
+            <xs:selector xpath=".//mstns:tblTutorials" />
+            <xs:field xpath="mstns:lStatusID" />
+        </xs:keyref>
+        <xs:keyref name="UsersToTutorialsAuthor" refer="LegacyDataSetKey1">
+            <xs:selector xpath=".//mstns:tblTutorials" />
+            <xs:field xpath="mstns:lAuthorID" />
+        </xs:keyref>
+        <xs:keyref name="UsersToTutorialsSubmitter" refer="LegacyDataSetKey1">
+            <xs:selector xpath=".//mstns:tblTutorials" />
+            <xs:field xpath="mstns:lSubmitterID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey9" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblPublishers" />
+            <xs:field xpath="mstns:lPublisherID" />
+        </xs:unique>
+        <xs:keyref name="PublishersToSoftware" refer="LegacyDataSetKey9">
+            <xs:selector xpath=".//mstns:tblSoftware" />
+            <xs:field xpath="mstns:lPublisherID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey10" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblRankings" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+            <xs:field xpath="mstns:lUserID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey11">
+            <xs:selector xpath=".//mstns:tblReviews" />
+            <xs:field xpath="mstns:lReviewID" />
+        </xs:unique>
+        <xs:keyref name="UsersToReviewsAuthor" refer="LegacyDataSetKey1">
+            <xs:selector xpath=".//mstns:tblReviews" />
+            <xs:field xpath="mstns:lAuthorID" />
+        </xs:keyref>
+        <xs:keyref name="StatusCodesToReviews" refer="LegacyDataSetKey8">
+            <xs:selector xpath=".//mstns:tblReviews" />
+            <xs:field xpath="mstns:lStatusID" />
+        </xs:keyref>
+        <xs:keyref name="UsersToReviewsSubmitter" refer="LegacyDataSetKey1">
+            <xs:selector xpath=".//mstns:tblReviews" />
+            <xs:field xpath="mstns:lSubmitterID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey12">
+            <xs:selector xpath=".//mstns:tblScripts" />
+            <xs:field xpath="mstns:lScriptID" />
+        </xs:unique>
+        <xs:keyref name="UsersToScripts" refer="LegacyDataSetKey1">
+            <xs:selector xpath=".//mstns:tblScripts" />
+            <xs:field xpath="mstns:lUserID" />
+        </xs:keyref>
+        <xs:keyref name="StatusCodesToScripts" refer="LegacyDataSetKey8">
+            <xs:selector xpath=".//mstns:tblScripts" />
+            <xs:field xpath="mstns:lStatusID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey13">
+            <xs:selector xpath=".//mstns:tblProjects" />
+            <xs:field xpath="mstns:lProjectID" />
+        </xs:unique>
+        <xs:keyref name="UsersToProjects" refer="LegacyDataSetKey1">
+            <xs:selector xpath=".//mstns:tblProjects" />
+            <xs:field xpath="mstns:lUserID" />
+        </xs:keyref>
+        <xs:keyref name="StatusCodesToProjects" refer="LegacyDataSetKey8">
+            <xs:selector xpath=".//mstns:tblProjects" />
+            <xs:field xpath="mstns:lStatusID" />
+        </xs:keyref>
+        <xs:keyref name="SoftwareVersionsToProjects" refer="LegacyDataSetKey4">
+            <xs:selector xpath=".//mstns:tblProjects" />
+            <xs:field xpath="mstns:lSoftwareVersionID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey14" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblFormats" />
+            <xs:field xpath="mstns:lFormatID" />
+        </xs:unique>
+        <xs:keyref name="FormatsToProjects" refer="LegacyDataSetKey14">
+            <xs:selector xpath=".//mstns:tblProjects" />
+            <xs:field xpath="mstns:lFormatID" />
+        </xs:keyref>
+        <xs:keyref name="FormatsToScripts" refer="LegacyDataSetKey14">
+            <xs:selector xpath=".//mstns:tblScripts" />
+            <xs:field xpath="mstns:lFormatID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey15" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblItemTypes" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey16" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblProjectPlugins" />
+            <xs:field xpath="mstns:lProjectID" />
+            <xs:field xpath="mstns:lPluginID" />
+        </xs:unique>
+        <xs:keyref name="ProjectsToProjectPlugins" refer="LegacyDataSetKey13">
+            <xs:selector xpath=".//mstns:tblProjectPlugins" />
+            <xs:field xpath="mstns:lProjectID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey17" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblPlugins" />
+            <xs:field xpath="mstns:lPluginID" />
+        </xs:unique>
+        <xs:keyref name="PluginsToProjectPlugins" refer="LegacyDataSetKey17">
+            <xs:selector xpath=".//mstns:tblProjectPlugins" />
+            <xs:field xpath="mstns:lPluginID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey18" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblPluginPackages" />
+            <xs:field xpath="mstns:lPluginPackageID" />
+        </xs:unique>
+        <xs:keyref name="PluginPackagesToPlugins" refer="LegacyDataSetKey18">
+            <xs:selector xpath=".//mstns:tblPlugins" />
+            <xs:field xpath="mstns:lPluginPackageID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey19" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblPluginTypes" />
+            <xs:field xpath="mstns:lPluginTypeID" />
+        </xs:unique>
+        <xs:keyref name="PluginTypesToPluginPackages" refer="LegacyDataSetKey19">
+            <xs:selector xpath=".//mstns:tblPluginPackages" />
+            <xs:field xpath="mstns:lPluginTypeID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey20" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblPublisherItemTypes" />
+            <xs:field xpath="mstns:lPublisherID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey21" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblCategories" />
+            <xs:field xpath="mstns:lCategoryID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey22" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblItemSites" />
+            <xs:field xpath="mstns:lSiteID" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:unique>
+        <xs:keyref name="UsersToRankings" refer="LegacyDataSetKey1">
+            <xs:selector xpath=".//mstns:tblRankings" />
+            <xs:field xpath="mstns:lUserID" />
+        </xs:keyref>
+        <xs:keyref name="ItemTypesToRankings" refer="LegacyDataSetKey15">
+            <xs:selector xpath=".//mstns:tblRankings" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey23" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblCategoryItemTypes" />
+            <xs:field xpath="mstns:lCategoryID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:unique>
+        <xs:keyref name="CategoriesToCategoryItemTypes" refer="LegacyDataSetKey21">
+            <xs:selector xpath=".//mstns:tblCategoryItemTypes" />
+            <xs:field xpath="mstns:lCategoryID" />
+        </xs:keyref>
+        <xs:keyref name="ItemTypesToCategoryItemTypes" refer="LegacyDataSetKey15">
+            <xs:selector xpath=".//mstns:tblCategoryItemTypes" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:keyref name="PublishersToPublisherItemTypes" refer="LegacyDataSetKey9">
+            <xs:selector xpath=".//mstns:tblPublisherItemTypes" />
+            <xs:field xpath="mstns:lPublisherID" />
+        </xs:keyref>
+        <xs:keyref name="ItemTypesToPublisherItemTypes" refer="LegacyDataSetKey15">
+            <xs:selector xpath=".//mstns:tblPublisherItemTypes" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey24" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblContests" />
+            <xs:field xpath="mstns:lContestID" />
+        </xs:unique>
+        <xs:unique name="LegacyDataSetKey25" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblContestVotes" />
+            <xs:field xpath="mstns:lContestID" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+            <xs:field xpath="mstns:lVoterID" />
+        </xs:unique>
+        <xs:keyref name="SiteToItemSites" refer="LegacyDataSetKey7">
+            <xs:selector xpath=".//mstns:tblItemSites" />
+            <xs:field xpath="mstns:lSiteID" />
+        </xs:keyref>
+        <xs:keyref name="ItemTypesToItemSites" refer="LegacyDataSetKey15">
+            <xs:selector xpath=".//mstns:tblItemSites" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:keyref name="UsersToContestVotes" refer="LegacyDataSetKey1">
+            <xs:selector xpath=".//mstns:tblContestVotes" />
+            <xs:field xpath="mstns:lVoterID" />
+        </xs:keyref>
+        <xs:keyref name="SiteToContests" refer="LegacyDataSetKey7">
+            <xs:selector xpath=".//mstns:tblContests" />
+            <xs:field xpath="mstns:lSiteID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey26" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblContestItems" />
+            <xs:field xpath="mstns:lContestID" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:unique>
+        <xs:keyref name="ContestsToContestItems" refer="LegacyDataSetKey24">
+            <xs:selector xpath=".//mstns:tblContestItems" />
+            <xs:field xpath="mstns:lContestID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey27" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblItemCategories" />
+            <xs:field xpath="mstns:lCategoryID" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:unique>
+        <xs:keyref name="CategoriesToItemCategories" refer="LegacyDataSetKey21">
+            <xs:selector xpath=".//mstns:tblItemCategories" />
+            <xs:field xpath="mstns:lCategoryID" />
+        </xs:keyref>
+        <xs:unique name="LegacyDataSetKey28" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblLog" />
+            <xs:field xpath="mstns:lLogID" />
+        </xs:unique>
+        <xs:key name="LegacyDataSetKey30">
+            <xs:selector xpath=".//mstns:AssetItems" />
+            <xs:field xpath="mstns:AssetID" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:key>
+        <xs:key name="LegacyDataSetKey32">
+            <xs:selector xpath=".//mstns:tblTutorials" />
+            <xs:field xpath="mstns:lTutorialID" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:key name="LegacyDataSetKey33">
+            <xs:selector xpath=".//mstns:tblReviews" />
+            <xs:field xpath="mstns:lReviewID" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:key name="LegacyDataSetKey34">
+            <xs:selector xpath=".//mstns:tblProjects" />
+            <xs:field xpath="mstns:lProjectID" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:key name="LegacyDataSetKey35">
+            <xs:selector xpath=".//mstns:tblScripts" />
+            <xs:field xpath="mstns:lScriptID" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:key name="LegacyDataSetKey36">
+            <xs:selector xpath=".//mstns:AssetItems" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:key>
+        <xs:keyref name="AssetItemsToProjects" refer="LegacyDataSetKey41">
+            <xs:selector xpath=".//mstns:tblProjects" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:keyref>
+        <xs:keyref name="AssetItemsToScripts" refer="LegacyDataSetKey41">
+            <xs:selector xpath=".//mstns:tblScripts" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:keyref>
+        <xs:keyref name="AssetItemsToTutorials" refer="LegacyDataSetKey41">
+            <xs:selector xpath=".//mstns:tblTutorials" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:keyref>
+        <xs:keyref name="AssetItemsToReviews" refer="LegacyDataSetKey41">
+            <xs:selector xpath=".//mstns:tblReviews" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:keyref>
+        <xs:keyref name="SoftwareVersionsToScripts" refer="LegacyDataSetKey4">
+            <xs:selector xpath=".//mstns:tblScripts" />
+            <xs:field xpath="mstns:lSoftwareVersionID" />
+        </xs:keyref>
+        <xs:keyref name="AssetItemsToRankings" refer="LegacyDataSetKey36">
+            <xs:selector xpath=".//mstns:tblRankings" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:key name="LegacyDataSetKey37" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblProjects" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:key name="LegacyDataSetKey38" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblScripts" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:key name="LegacyDataSetKey39" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblTutorials" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:key name="LegacyDataSetKey40" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:tblReviews" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:keyref name="AssetItemsToContestItems" refer="LegacyDataSetKey36">
+            <xs:selector xpath=".//mstns:tblContestItems" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:keyref name="AssetItemsToContestVotes" refer="LegacyDataSetKey36">
+            <xs:selector xpath=".//mstns:tblContestVotes" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:keyref name="AssetItemsToItemSite" refer="LegacyDataSetKey36">
+            <xs:selector xpath=".//mstns:tblItemSites" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:key name="LegacyDataSetKey41" msdata:PrimaryKey="true">
+            <xs:selector xpath=".//mstns:AssetItems" />
+            <xs:field xpath="mstns:AssetID" />
+        </xs:key>
+        <xs:keyref name="ContestItemsToContestVotes" refer="LegacyDataSetKey26">
+            <xs:selector xpath=".//mstns:tblContestVotes" />
+            <xs:field xpath="mstns:lContestID" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+        <xs:keyref name="AssetItemsToItemCategories" refer="LegacyDataSetKey36">
+            <xs:selector xpath=".//mstns:tblItemCategories" />
+            <xs:field xpath="mstns:lItemID" />
+            <xs:field xpath="mstns:lItemTypeID" />
+        </xs:keyref>
+    </xs:element>
+</xs:schema>

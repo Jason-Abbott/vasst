@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema targetNamespace='urn:http://www.amp.com/schemas'
+        elementFormDefault='qualified'
+        xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+        xmlns='urn:http://www.amp.com/schemas'
+        xmlns:vs='http://schemas.microsoft.com/Visual-Studio-Intellisense'
+               vs:friendlyname='AMP Controls'
+               vs:ishtmlschema='false'
+               vs:iscasesensitive='false'
+               vs:requireattributequotes='true'>
+
+<xsd:annotation>
+    <xsd:documentation>
+    ASP Controls schema.
+    </xsd:documentation>
+</xsd:annotation>
+
+<!-- Top-level elements ==========================================-->
+<xsd:element name="Ballot" type="BallotType" />
+<xsd:element name="Field" type="FieldType" />
+<xsd:element name="EnumCheckbox" type="EnumCheckboxType" />
+<xsd:element name="Upload" type="UploadType" />
+<xsd:element name="Validation" type="ValidationType" />
+<xsd:element name="Content" type="ContentType" />
+<xsd:element name="ContentWebPart" type="ContentWebPartType" />
+<xsd:element name="Image" type="ImageType" />
+<xsd:element name="Button" type="ButtonType" />
+<xsd:element name="Quote" type="QuoteType" />
+<xsd:element name="NewAssets" type="NewAssetsType" />
+<xsd:element name="Statistics" type="WebPartType" />
+<xsd:element name="TaskList" type="WebPartType" />
+<xsd:element name="Contests" type="ContestsType" />
+<xsd:element name="Tours" type="ToursType" />
+<xsd:element name="Results" type="ResultsType" />
+<xsd:element name="Rating" type="RatingType" />
+<xsd:element name="ListBox" type="ListBoxType" />
+<xsd:element name="EnumList" type="EnumListType" />
+<xsd:element name="SoftwareList" type="SoftwareListType" />
+<xsd:element name="EntityList" type="EntityListType" />
+<xsd:element name="SignInUp" type="SignInUpType" />
+<xsd:element name="PermissionBox" type="HtmlControlType" />
+<xsd:element name="RoleTree" type="HtmlControlType" />
+
+
+<!-- Server Controls =============================================-->
+<!-- <amp:Ballot -->
+<xsd:complexType name="BallotType">
+	<xsd:attribute name="Votes" type="xsd:integer" />
+	<xsd:attribute name="ContestID" type="xsd:integer" />
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Field -->
+<xsd:complexType name="FieldType">
+	<xsd:attribute name="Note" type="xsd:string" />
+	<xsd:attribute name="MaxLength" type="xsd:integer" />
+	<xsd:attribute name="Checked" type="xsd:boolean" />
+	<xsd:attribute name="Inline" type="xsd:boolean" />
+	<xsd:attribute name="Resx" type="xsd:string" />
+	<xsd:attribute name="Value" type="xsd:string" />
+	<xsd:attribute name="Validate" type="validation" />
+	<xsd:attribute name="Type" type="InputType" />
+	<xsd:attribute name="Label" type="xsd:string" />
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:complexType>
+
+<!-- <amp:EnumCheckbox -->
+<xsd:complexType name="EnumCheckboxType">
+	<xsd:attribute name="Group" type="xsd:boolean" />
+	<xsd:attributeGroup ref="EnumAttributes" />
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:complexType>
+
+<!-- <amp:ListBox -->
+<xsd:complexType name="ListBoxType">
+	<xsd:attribute name="ShowNote" type="xsd:boolean" />
+	<xsd:attributeGroup ref="SelectAttributes" />
+	<xsd:attributeGroup ref="AspListBoxAttributes" />
+</xsd:complexType>
+
+<!-- <amp:EnumList -->
+<xsd:complexType name="EnumListType">
+	<xsd:attributeGroup ref="EnumAttributes" />
+	<xsd:attributeGroup ref="SelectAttributes" />
+</xsd:complexType>
+
+<!-- <amp:SoftwareList -->
+<xsd:complexType name="SoftwareListType">
+	<xsd:attributeGroup ref="SelectAttributes" />
+</xsd:complexType>
+
+<!-- <amp:EntityList -->
+<xsd:complexType name="EntityListType">
+	<xsd:attribute name="IncludeChildren" type="xsd:boolean" />
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Upload -->
+<xsd:complexType name="UploadType"> 
+	<xsd:attribute name="Folder" type="xsd:string" />
+	<xsd:attribute name="MaxFileSize" type="xsd:integer" />
+	<xsd:attribute name="Note" type="xsd:string" />
+	<xsd:attribute name="Inline" type="xsd:boolean" />
+	<xsd:attribute name="Resx" type="xsd:string" />
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Validation -->
+<xsd:complexType name="ValidationType">
+	<xsd:attribute name="Message" type="xsd:string" />
+	<xsd:attribute name="Resx" type="xsd:string" />
+	<xsd:attribute name="Type" type="validation" />
+	<xsd:attribute name="Required" type="xsd:boolean" />
+	<xsd:attribute name="Target" type="xsd:string" />
+</xsd:complexType>
+
+<!-- <amp:Content -->
+<xsd:complexType name="ContentType">
+	<xsd:attribute name="MaxFiles" type="xsd:integer" />
+	<xsd:attribute name="DaysOld" type="xsd:integer" />
+	<xsd:attribute name="File" type="xsd:string" />
+	<xsd:attribute name="StartDate" type="xsd:string" />
+	<xsd:attribute name="EndDate" type="xsd:string" />
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Button -->
+<xsd:complexType name="ButtonType">
+	<xsd:attribute name="Url" type="xsd:string" />
+	<xsd:attribute name="Text" type="xsd:string" />
+	<xsd:attribute name="Resx" type="xsd:string" />
+	<xsd:attribute name="ForceNew" type="xsd:boolean" />
+	<xsd:attributeGroup ref="ImageAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Rating -->
+<xsd:complexType name="RatingType">
+	<xsd:attribute name="Button" type="xsd:boolean" />
+	<xsd:attribute name="Rating" type="xsd:double" />
+	<xsd:attribute name="Sharpness" type="xsd:double" />
+	<xsd:attribute name="Points" type="NonNegative" />
+	<xsd:attribute name="ForceNew" type="xsd:boolean" />
+	<xsd:attribute name="Radius" type="NonNegative" />
+	<xsd:attribute name="Color" type="xsd:string" />
+	<xsd:attribute name="BurstColor" type="xsd:string" />
+	<xsd:attribute name="BorderColor" type="xsd:string" />
+	<xsd:attribute name="BorderWidth" type="NonNegative" />
+	<xsd:attributeGroup ref="ImageAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Image -->
+<xsd:complexType name="ImageType">
+	<xsd:attributeGroup ref="ImageAttributes" />
+</xsd:complexType>
+
+<!-- <amp:HtmlControl -->
+<xsd:complexType name="HtmlControlType">
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:complexType>
+
+<!-- User Controls ===============================================-->
+<!-- <amp:Quote -->
+<xsd:complexType name="QuoteType">
+	<xsd:attributeGroup ref="BaseAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Contests -->
+<xsd:complexType name="ContestsType">
+	<xsd:attribute name="Section" type="xsd:string" />
+	<xsd:attributeGroup ref="WebPartAttributes" />
+</xsd:complexType>
+
+<!-- <amp:ContentWebPart -->
+<xsd:complexType name="ContentWebPartType">
+	<xsd:attribute name="File" type="xsd:string" />
+	<xsd:attribute name="Title" type="xsd:string" />
+	<xsd:attributeGroup ref="WebPartAttributes" />
+</xsd:complexType>
+
+<!-- <amp:SignInUp -->
+<xsd:complexType name="SignInUpType">
+	<xsd:attribute name="Redirect" type="xsd:boolean" />
+	<xsd:attribute name="Title" type="xsd:string" />
+	<xsd:attributeGroup ref="BaseAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Tours -->
+<xsd:complexType name="ToursType">
+	<xsd:attribute name="NewerThan" type="xsd:string" />
+	<xsd:attributeGroup ref="WebPartAttributes" />
+</xsd:complexType>
+
+<!-- <amp:Results (for search) -->
+<xsd:complexType name="ResultsType">
+	<xsd:attributeGroup ref="WebPartAttributes" />
+</xsd:complexType>
+
+<!-- <amp:NewAssets -->
+<xsd:complexType name="NewAssetsType">
+	<xsd:attribute name="Count" type="NonNegative" />
+	<xsd:attribute name="NewerThan" type="xsd:string" />
+	<xsd:attribute name="Section" type="xsd:string" />
+	<xsd:attributeGroup ref="WebPartAttributes" />
+</xsd:complexType>
+
+<!-- no properties -->
+<xsd:complexType name="WebPartType">
+	<xsd:attributeGroup ref="WebPartAttributes" />
+</xsd:complexType>
+
+<!-- Attributes ==================================================-->
+<!-- WebPart -->
+<xsd:attributeGroup name="WebPartAttributes">
+	<xsd:attribute name="Minimized" type="xsd:boolean" />
+	<xsd:attribute name="Minimizable" type="xsd:boolean" />
+	<xsd:attribute name="Maximizable" type="xsd:boolean" />
+	<xsd:attribute name="MaximizedURL" type="xsd:string" />
+	<xsd:attribute name="Height" type="xsd:string" />
+	<xsd:attribute name="Width" type="xsd:string" />
+	<xsd:attribute name="CssClass" type="xsd:string" />
+	<xsd:attribute name="Title" type="xsd:string" />
+	<xsd:attributeGroup ref="BaseAttributes" />
+</xsd:attributeGroup>
+
+<!-- Image -->
+<xsd:attributeGroup name="ImageAttributes">
+	<xsd:attribute name="SubmitForm" type="xsd:boolean" />
+	<xsd:attribute name="AlternateText" type="xsd:string" />
+	<xsd:attribute name="Src" type="xsd:string" />
+	<xsd:attribute name="Alt" type="xsd:string" />
+	<xsd:attribute name="Width" type="xsd:integer" />
+	<xsd:attribute name="Height" type="xsd:integer" />
+	<xsd:attribute name="Rollover" type="xsd:string" />
+	<xsd:attribute name="Transparency" type="xsd:boolean" />
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:attributeGroup>
+
+<!-- HtmlControl -->
+<xsd:attributeGroup name="AmpControlAttributes">
+	<xsd:attribute name="Required" type="xsd:boolean" />
+	<xsd:attribute name="ShowNote" type="xsd:boolean" />
+	<xsd:attribute name="CssClass" type="xsd:string" />
+	<xsd:attribute name="OnBlur" type="xsd:string" />
+	<xsd:attribute name="OnChange" type="xsd:string" />
+	<xsd:attribute name="OnFocus" type="xsd:string" />
+	<xsd:attribute name="OnClick" type="xsd:string" />
+	<xsd:attribute name="OnMouseOver" type="xsd:string" />
+	<xsd:attribute name="OnMouseOut" type="xsd:string" />
+	<xsd:attributeGroup ref="BaseAttributes" />
+</xsd:attributeGroup>
+
+<!-- Select List -->
+<xsd:attributeGroup name="SelectAttributes">
+	<xsd:attribute name="Selected" type="xsd:string" />
+	<xsd:attribute name="ShowLink" type="xsd:boolean" />
+	<xsd:attribute name="Multiple" type="xsd:boolean" />
+	<xsd:attribute name="TopSelection" type="xsd:string" />
+	<xsd:attribute name="Posted" type="xsd:boolean" />
+	<xsd:attribute name="Rows" type="NonNegative" />
+	<xsd:attributeGroup ref="AmpControlAttributes" />
+</xsd:attributeGroup>
+
+<!-- Enumerations -->
+<xsd:attributeGroup name="EnumAttributes">
+	<xsd:attribute name="Selected" type="xsd:integer" />
+</xsd:attributeGroup>
+
+<!-- ASP ListBox -->
+<xsd:attributeGroup name="AspListBoxAttributes">
+	<xsd:attribute name="DataTextField" type="xsd:string" />
+	<xsd:attribute name="SelectionMode" type="ListSelectionMode" />
+	<xsd:attribute name="DataValueField" type="xsd:string" />
+	<xsd:attribute name="Rows" type="NonNegative" />
+	<xsd:attributeGroup ref="BaseAttributes" />
+</xsd:attributeGroup>
+
+<!-- Base -->
+<xsd:attributeGroup name="BaseAttributes">
+	<xsd:attribute name="ID" type="xsd:string" />
+	<xsd:attribute name="Name" type="xsd:string" />
+	<xsd:attribute name="Style" type="xsd:string" />
+	<xsd:attribute name="Visible" type="xsd:boolean" />
+	<xsd:attribute name="Runat">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+				<xsd:enumeration value="server" />
+			</xsd:restriction>
+		</xsd:simpleType>
+	</xsd:attribute>
+</xsd:attributeGroup>
+
+<!-- Data Types ==================================================-->
+<xsd:simpleType name="NonNegative">
+	<xsd:restriction base="xsd:nonNegativeInteger">
+		<xsd:minInclusive value="0" />
+		<xsd:maxInclusive value="4294967295" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="boolean">
+	<xsd:restriction base="xsd:string">
+		<xsd:enumeration value="True" />
+		<xsd:enumeration value="False" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="ListSelectionMode">
+	<xsd:restriction base="xsd:string">
+		<xsd:enumeration value="Single" />
+		<xsd:enumeration value="Multiple" />
+	</xsd:restriction>
+</xsd:simpleType>
+
+<!-- Field Types -->
+<xsd:simpleType name="InputType">
+  <xsd:union>
+    <xsd:simpleType>
+		<xsd:restriction base="xsd:NMTOKEN">
+		<xsd:enumeration value="checkbox" />
+		<xsd:enumeration value="text" />
+		<xsd:enumeration value="password" />
+      </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string" />
+    </xsd:simpleType>
+  </xsd:union>
+</xsd:simpleType>
+
+<!-- Validation Types -->
+<xsd:simpleType name="validation">
+  <xsd:union>
+    <xsd:simpleType>
+		<xsd:restriction base="xsd:NMTOKEN">
+		<xsd:enumeration value="ActiveURL" />
+		<xsd:enumeration value="BirthDate" />
+		<xsd:enumeration value="CCExpire" />
+		<xsd:enumeration value="CCN" />
+		<xsd:enumeration value="CVV" />
+		<xsd:enumeration value="Date" />
+		<xsd:enumeration value="Email" />
+		<xsd:enumeration value="File" />
+		<xsd:enumeration value="Image" />
+		<xsd:enumeration value="Money" />
+		<xsd:enumeration value="Name" />
+		<xsd:enumeration value="NonZero" />
+		<xsd:enumeration value="Numeric" />
+		<xsd:enumeration value="Password" />
+		<xsd:enumeration value="Phone" />
+		<xsd:enumeration value="PlainText" />
+		<xsd:enumeration value="Posting" />
+		<xsd:enumeration value="Radio" />
+		<xsd:enumeration value="Select" />
+		<xsd:enumeration value="URL" />
+		<xsd:enumeration value="SSN" />
+		<xsd:enumeration value="String" />
+		<xsd:enumeration value="Zip" />
+		<xsd:enumeration value="Zip4" />
+      </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string" />
+    </xsd:simpleType>
+  </xsd:union>
+</xsd:simpleType>
+
+</xsd:schema>

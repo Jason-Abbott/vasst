@@ -1,0 +1,35 @@
+#sections {
+	float: right;
+	margin-top: 0px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	width: 120px;
+}
+#sections fieldset { margin-top: -17px; }
+#sections fieldset label { margin-top: 0px; padding-top: 0px; }
+#sections fieldset input { border: none; }
+#sections fieldset .note { margin-top: 4px; display: block; }
+#credentials { padding-bottom: 3px; margin: -8px 5px 8px 0; }
+#errata { clear: both; _clear: left; }
+/* credentials */
+#emailNote
+#repeat, #confirm { display: none; }
+#password input { width: 6em; }
+#description {
+	position: relative;
+	text-align: center;
+	padding-top: 6px;
+	padding-bottom: 0px;
+}
+#description legend { _margin-bottom: 5px; }
+#description textarea {
+	width: 96%;
+	padding-right: 5px;
+	height: 5em;
+	/*background-image: url(../../images/gradient.aspx?c1=222&c2=012&w=1&h=100&d=ttb);*/
+}
+.container div.checkbox {
+	margin: 8px 0px 8px 87px;
+	_margin-left: 83px;						/* IE exception */
+	font-size: 9pt;
+}

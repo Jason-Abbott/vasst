@@ -1,0 +1,1 @@
+<%@ Control Language="vb" AutoEventWireup="false" Codebehind="TaskList.ascx.vb" Inherits="AMP.Controls.TaskList" TargetSchema="http://schemas.microsoft.com/intellisense/ie5" %>

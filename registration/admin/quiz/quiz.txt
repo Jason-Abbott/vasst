@@ -1,0 +1,28 @@
+# QUIZ FILE
+
+[Configuration]
+send_confirm_email = syntax@sisna.com
+send_mail_server = mail.sisna.com
+
+#########################
+# Question Section
+# ----------------
+# You begin each question by a 'Question = ' statement marking the beginning of the question.
+# You can type as long as you want
+# Directly below the 'Question = ' section, you will need to do the answer type by doing '
+
+
+[Questions]
+(Question) What is your favorite color?
+(Type) choice
+(Answer) = Orange
+Answer = Blue
+Answer = Green
+Answer = Red
+Answer = Purple
+
+Question = What is your name?
+Type = line
+
+Question = What is your favorite vacation?
+Type = essay

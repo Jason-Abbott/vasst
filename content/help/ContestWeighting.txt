@@ -1,0 +1,3 @@
+The "weight" setting controls how multiple user votes are counted, if allowed.
+
+If the value is one then all vote choices count the same.  A higher value makes the first choice count more than the last.

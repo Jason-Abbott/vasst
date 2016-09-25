@@ -1,0 +1,8 @@
+Dear <name>,
+
+Thank you for using VASST.com.  Please enter the code below to continue signing up:
+
+<code>
+
+The VASST team
+http://VASST.com

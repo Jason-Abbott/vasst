@@ -1,0 +1,26 @@
+/*
+fieldset {
+	border: 1px solid #456;
+	_border: 2px groove #357;
+	padding: 10px;
+}
+legend {
+	color: #79b;
+	padding: 0px 5px 0px 5px;
+	border-left: 1px solid #357;
+	border-right: 1px solid #357;
+	background-image: url(../images/solid.aspx?c=357&a=30);
+	_background-image: url(../images/blank.gif);	/* WinIE hack *//*
+	_margin-bottom: 5px;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='./images/solid.aspx?c=357&a=30', sizingMethod='scale');
+}
+label {
+	display: block;
+	float: left;
+	width: 100px;
+	color: #fff;
+	text-align: right;
+	white-space: nowrap;
+	padding-right: 4px;
+}
+*/

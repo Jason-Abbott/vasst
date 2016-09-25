@@ -1,0 +1,126 @@
+h2.form {
+	line-height: 0.7em;
+	margin-left: 17px;
+	_margin-left: 23px;					/* IE exception */
+	_margin-bottom: -5px;
+	font-size: 13pt;
+	font-weight: normal;
+}
+fieldset {
+	position: relative;
+	font-size: 10pt;
+	padding: 4px 5px 7px 5px;
+}
+* > fieldset {
+	border: 1px solid #456;
+	background-image: url(../images/solid.aspx?c=357&a=15);
+}
+fieldset legend {
+	color: #fff;
+	font-size: 16pt;
+	font-family: Trebuchet MS, Tahoma, Arial;
+}	
+fieldset fieldset legend, legend.smaller {
+	font-size: 10pt;
+	color: #79b;
+	_padding-right: 6px;				/* IE exception */
+	_padding-bottom: 4px;
+}
+label {
+	display: block;
+	float: left;
+	width: 100px;
+	color: #fff;
+	text-align: right;
+	white-space: nowrap;
+	padding-right: 4px;
+	cursor: pointer;
+}
+fieldset fieldset { _margin: 1px; padding: 3px 5px 4px 5px; }
+fieldset fieldset label { width: 92px; }
+fieldset div.checkbox {	margin: 2px 0px 2px 87px; _margin-left: 83px; }
+fieldset fieldset div.checkbox { margin-left: 80px; _margin-left: 75px; }
+
+input, select, textarea {
+	background-color: #111;
+	border: 1px solid #579;
+	color: #fff;
+	font-family: Tahoma, Arial, Helvetica;
+	font-size: 9pt;
+	margin: 0px;
+	padding: 0px 2px 0px 2px;
+}
+input {
+	background-image: url(../images/gradient.aspx?c1=333&c2=012&w=1&h=15&d=ttb);
+	background-repeat: repeat-x;
+	margin-bottom: 3px;
+}
+input.file {
+	border: 2px inset #357;
+	padding: 1px 0px 1px 0px;
+	font-size: 8pt;
+	_padding: 0px 2px 0px 2px;			/* IE exception */
+	_border: 1px solid #579;
+}
+select {
+	background-color: #222;
+	margin-bottom: 3px;
+	/*background-image: url(../images/gradient.aspx?c1=333&c2=012&w=1&h=80&d=ttb);*/
+}
+textarea { overflow: auto; }
+option {
+	/*background-color: #111; #579;*/
+	border-bottom: 1px solid #333;
+	cursor: pointer;
+	margin: 0px;
+}
+option.choose {
+	text-align: center;	
+	font-weight: bold;
+	border-bottom: 1px solid #fff;
+	background-color: #357;
+}
+
+/* custom classes ------------------------------------------------ */
+
+.error { border: 1px solid red; }
+.required {	color: #fa0; }
+img.button, input.button { border: none; }
+div.enum input {
+	margin: 0px 4px 1px 0px;
+	_margin: 0px 4px 0px 0px;			/* IE exception */
+	border: none;
+}
+div.checkbox { white-space: nowrap; margin: 0; }
+div.checkbox input, input.cbx {
+	border: none;
+	vertical-align: middle;
+	margin-right: 4px;
+	background: none;
+	_margin: 0px 4px 0px 0px;			/* IE exception */
+}
+div.checkbox label, div.enum label {
+	display: inline;
+	float: none;
+	width: auto;
+	text-align: left;
+}
+
+/* form notes ---------------------------------------------------- */
+
+.note {	padding-left: 4px; font-size: 8pt; color: #888; }
+div.note {
+	margin-top: -3px;
+	margin-left: 100px;
+	_margin-left: 104px;				/* IE exception */
+	margin-bottom: 6px;
+}
+fieldset fieldset div.note { margin-left: 92px; _margin-left: 96px; }
+span.note {	vertical-align: top; }
+td .note { margin-left: 0px !important; }
+
+/* Opera exceptions ---------------------------------------------- */
+
+@media all and (min-width: 0px) {
+	input[type="text"], input[type="password"], input[type="file"] { height: 15px; }
+}

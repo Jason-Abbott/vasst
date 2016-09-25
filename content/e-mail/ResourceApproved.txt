@@ -1,0 +1,8 @@
+Dear <name>,
+
+Thank you for sharing your creativity with others in the VASST community.  Your resource, "<resource>", has been approved.  You may link directly to it with this address:
+
+<resourceUrl>
+
+The VASST team
+http://VASST.com

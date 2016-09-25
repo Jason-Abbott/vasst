@@ -1,0 +1,56 @@
+.container { margin-top: 4px; position: relative; }
+#dates { padding-bottom: 2px; _margin-top: -8px; }
+#dates input { width: 6em; text-align: right; }
+#voting { margin-top: 6px; }
+#voting input { width: 2em; }
+#restrictions {
+	padding-top: 1px;
+	padding-bottom: 5px;
+	vertical-align: top;
+}
+#restrictions legend { margin-bottom: 5px; }
+/* rules */
+#rules {
+	float: right;
+	padding-bottom: 3px;
+	margin-top: -12px;
+	text-align: center;
+	_margin-top: -18px;						/* IE exception */
+	_width: 180px;
+}
+#rules textarea { width: 15em; height: 8em; }
+#rules .note { margin: 0; }
+/* prizes */
+#prizes {
+	padding-bottom: 3px;
+	text-align: center;
+	margin-left: 7px;
+	_margin-left: 5px;						/* IE exception */
+	_height: 130px;
+	float: right;
+	width: 150px;
+}
+#prizes textarea { height: 6em; width: auto; _width: 95%; }
+#prizes .note { margin: 0; padding: 0; _width: 100%; }
+/* description */
+#description {
+	position: relative;
+	text-align: center;
+	padding-top: 6px;
+}
+#description legend { _margin-bottom: 5px; }
+#description textarea {
+	width: 98%;
+	_width: 96%;							/* IE exception */
+	padding-right: 5px;
+	height: 8em;
+	/*background-image: url(../../images/gradient.aspx?c1=222&c2=012&w=1&h=100&d=ttb);*/
+}
+#sections {	float: right; padding-bottom: 3px; margin-left: 5px; _margin-top: -8px; }
+#checkboxes div { margin-left: 5px; }
+#checkboxes div label { white-space: normal; }
+#forProjects { display: block; }
+.select { margin: 8px 0px 0px 10px; }
+
+/* entries */
+#entries div { border-bottom: 1px solid #357; padding-bottom: 4px; }

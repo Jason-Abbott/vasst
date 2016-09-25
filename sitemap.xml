@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<siteMap>
+	<!--<siteMapNode title="Home" url="default.aspx" description="Home" />-->
+    <siteMapNode title="Products" url="">
+        <siteMapNode title="Books" url="http://www.VASST.com/printproducts/bookmenu.htm" />
+        <siteMapNode title="Plugins" url="http://www.vasst.com/plugins.htm" />
+        <siteMapNode title="Training Videos" url="http://www.VASST.com/dvdproducts/DVDproducts.htm" />
+    </siteMapNode>
+    <siteMapNode title="Training" url="">
+		<siteMapNode title="Videos" url="http://www.VASST.com/dvdproducts/DVDproducts.htm" />
+		<siteMapNode title="Tours" url="http://www.VASST.com/training_tours.htm" />
+		<siteMapNode title="Tutorials" url="~/search.aspx?type=2" />
+		<siteMapNode title="Personalized" url="http://www.VASST.com/custom_training.htm" />
+    </siteMapNode>
+    <siteMapNode title="HDV" url="">
+		<siteMapNode title="Book" url="http://www.vasst.com/printproducts/hdv.htm" />
+		<siteMapNode title="FAQ" url="http://vasst.com/hdv/hdv-FAQ.htm" />
+		<siteMapNode title="Glossary" url="http://vasst.com/hdv/hdv_glossary.htm" />
+		<siteMapNode title="Z1U versus FX1" url="http://www.hdvinfo.net/articles/sonyhdrfx1/compare.php" />
+    </siteMapNode>
+    <!-- types should match AssetCollection enum -->
+    <siteMapNode title="Free Resources" url="">
+		<siteMapNode title="Newest" url="search.aspx?sort=date"/>
+		<siteMapNode title="Most Popular" url="~/search.aspx?sort=popularity" />
+		<siteMapNode title="Most Highly Ranked" url="~/search.aspx?sort=rank" />
+		<siteMapNode title="Tutorials" url="~/search.aspx?type=2" newSection="true" />
+		<siteMapNode title="Project Files" url="~/search.aspx?type=1" />
+		<siteMapNode title="Plugin Presets" url="~/search.aspx?type=16" />
+		<siteMapNode title="Product Reviews" url="~/search.aspx?type=8" />
+		<siteMapNode title="Automation Scripts" url="~/search.aspx?type=4" />
+		<siteMapNode title="Vegas Gateway!" url="~/sony/default.aspx" newSection="true" />
+		<siteMapNode title="Share Yours" url="~/share.aspx" newSection="true" />
+    </siteMapNode>
+    <siteMapNode title="Your Stuff" url="">
+		<siteMapNode title="Cart" url="http://www.VASST.com/cart/index.asp?function=cart" />
+		<siteMapNode title="Sign-in/out" url="~/signin.aspx?action=out" />
+		<siteMapNode title="Account" url="~/account.aspx" />
+    </siteMapNode>
+    <siteMapNode title="About Us" url="">
+		<siteMapNode title="Staff" url="http://www.VASST.com/personnel.htm" />
+		<siteMapNode title="History" url="http://www.VASST.com/aboutus.htm" />
+		<siteMapNode title="Contact" url="http://www.VASST.com/contactus.htm" />
+    </siteMapNode>
+    <!--<siteMapNode title="Mission" url="about.aspx?" />-->
+</siteMap>

@@ -1,0 +1,56 @@
+The following web server permissions are required by VASST.com.  Please note
+that these permissions must be applied to the folders themselves, not just to
+the files within the specified folders, in order for the permissions to
+propagate to future folder content.
+
+NECESSARY FILE SYSTEM PERMISSIONS ---------------------------------------------
+
+	Default for all folders (some of which have their own ASP classic
+	requirements) except
+
+	/data
+	/files
+	/images/generated
+	/images/person
+	
+	For these, including any sub-folders, the ASP.NET machine account needs
+		modify, execute, list, read, write
+
+NECESSARY HTTP PERMISSIONS ----------------------------------------------------
+
+	Default for all folders except
+
+	/content
+	/files
+	/data
+
+	Disable both read and write HTTP access for these folders.
+		
+	Explanation:
+		Files within these folders are utilized by the application and not
+		intended for direct client access.  For example, we want to deny
+		access if a user attempts http://vasst.com/data/anyfile.txt.
+
+DEFINITIONS -------------------------------------------------------------------
+
+	File system permissions:
+		Permissions held in NTFS Access Control Lists (ACLS), usually managed
+		by right-clicking a file or folder within Windows Explorer and
+		selecting Properties/Security tab.
+
+	HTTP permissions:
+		Permissions held in the IIS Metabase, usually managed through the IIS
+		console by right-clicking a file or folder within the web site node
+		and selecting Properties/Directory tab, then setting read/write
+		access checkboxes.
+
+	ASP.NET machine account:
+		The Windows account under which ASP.NET applications run, typically
+		named "ASPNET" (NOT to be confused with the ASP.NET Web Admin
+		account, WADM_<Machine Name>).
+
+	IIS process account:
+		The Windows account used to launch IIS processes, typically named 
+		"IWAM_<Machine Name>" where <Machine Name> is the name assigned to
+		the computer.
+

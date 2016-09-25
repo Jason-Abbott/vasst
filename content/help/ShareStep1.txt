@@ -1,0 +1,3 @@
+Select a file on your computer or enter the public web address of an article to share.
+
+If uploading a Vegas project, go to Files/Properties/Summary in the application and fill out the Title and Comments, and we'll automatically read them in here so you don't have to type them again.

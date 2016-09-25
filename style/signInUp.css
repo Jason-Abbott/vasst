@@ -1,0 +1,22 @@
+#fldPasswordAgain { display: none; }
+#signup { display: none; }
+#fldPasswordAgain { }
+#password input { width: 6em; }
+#passwordNote { clear: both; }
+#name { margin: -10px 0 7px 0; }
+#name input { width: 8em; }
+#links { float: left; font-size: 10pt; margin: 3px 0 0 4px;	_padding-bottom: 2px; }
+/* tips */
+#signUpTips div, #signInTips div { display: none; }
+.warning {					/* primarily for Opera */
+	position: relative;
+	display: block;
+	margin: 20px 30px 10px 30px;
+	border: 1px solid red;
+	float: left;
+	clear: both;
+	background-image: url(../images/solid.aspx?c=f00&a=10);
+	background-repeat: repeat;
+	padding: 4px;
+	font-size: 9pt;
+}

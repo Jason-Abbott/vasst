@@ -1,0 +1,95 @@
+#tree { width: 100%; font-size: 10pt; margin-right: 10px; }
+.roleLabel { cursor: pointer; }
+.roleLabel:hover { color: #9bd; }
+.roleLabel img { margin-right: 3px; }
+#roleAdmin { margin-top: -10px; }
+#roles { position: relative; _width: 45%; }
+#permissions {
+	margin-left: 20px;
+	float: right;
+	width: 200px;
+	_width: 45%;							/* IE exception */
+	_margin-left: 0px;
+}
+*>fieldset#roleAdmin, *>fieldset#roles { border-bottom: none; } /* ff bug */
+.permissions {
+	color: #fb5;
+	display: none;
+	margin-left: 5px;
+	border-left: 1px dotted #999;
+}
+.permissions div {
+	margin-left: 6px;
+	padding-left: 2px;
+	border-bottom: 1px solid #357;
+	cursor: pointer;
+}
+.permissions div:hover {
+	background-color: #68b;	
+	color: #fff;
+}
+.add {
+	display: inherit !important;
+	background-color: inherit;
+	position: inherit !important;
+	opacity: auto;
+	left: auto;
+	top: auto;
+	margin-left: 6px;
+	padding-left: 2px;
+	border-bottom: 1px solid #357;
+}
+.inherit {
+	margin-left: 5px;
+	padding-left: 5px;
+	display: none;
+	border-left: 1px dotted #999;
+}
+.inherit div {
+	
+}
+.inherit div .permissions div {
+	color: #ddd;
+	border-bottom: 1px solid #666;
+	cursor: auto;
+}
+.inherit div .permissions div:hover {
+	color: auto;
+	background-color: transparent;
+}
+#permissionsBox {
+	position: relative;
+	font-size: 10pt;
+	border-top: 1px solid #357;
+	border-bottom: 1px solid #357;
+	height: 250px;
+	overflow: auto;
+}
+#permissionsBox div {
+	color: #fb5;
+	position: relative;
+	border-bottom: 1px solid #357;
+	padding-left: 2px;
+	cursor: pointer;
+}
+#permissionsBox div:hover {
+	background-color: #68b;	
+	color: #fff;
+}
+.drag {
+	font-family: Tahoma, Arial, Helvetica;
+	font-size: 10pt;
+	border: 1px outset #acf;
+	color: #000;
+	opacity: 0.7;
+	filter: alpha(opacity=70);
+	z-index: 5;
+	padding: 0px 2px 0px 2px;
+	background-color: #acf;
+	cursor: default;
+}
+.noDrop {
+	background-color: #600 !important;
+	color: #fff !important;
+	border-color: #600 !important;
+}

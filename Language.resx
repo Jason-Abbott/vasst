@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+    <!-- 
+    Microsoft ResX Schema 
+    
+    Version 1.3
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">1.3</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1">this is my long string</data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        [base64 mime encoded serialized .NET Framework object]
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        [base64 mime encoded string representing a byte array form of the .NET Framework object]
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used forserialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Acronym.AMP">
+        <value>&lt;acronym title="Video, Audio, Surround, Streaming Training"&gt;AMP&lt;/acronym&gt;</value>
+    </data>
+    <data name="Action.ApproveAsset">
+        <value>Approve</value>
+    </data>
+    <data name="Action.Cancel">
+        <value>Cancel</value>
+    </data>
+    <data name="Action.Clear">
+        <value>clear</value>
+    </data>
+    <data name="Action.Delete">
+        <value>Delete</value>
+    </data>
+    <data name="Action.DenyAsset">
+        <value>Deny</value>
+    </data>
+    <data name="Action.Download">
+        <value>Download</value>
+    </data>
+    <data name="Action.Edit">
+        <value>Edit</value>
+    </data>
+    <data name="Action.EnterContest">
+        <value>Enter to Win</value>
+    </data>
+    <data name="Action.Finish">
+        <value>Finish</value>
+    </data>
+    <data name="Action.NewPassword">
+        <value>Forgot your password?</value>
+    </data>
+    <data name="Action.Next">
+        <value>Next</value>
+    </data>
+    <data name="Action.PreviewVideo">
+        <value>Preview Video</value>
+    </data>
+    <data name="Action.Previous">
+        <value>Previous</value>
+    </data>
+    <data name="Action.Read">
+        <value>Read</value>
+    </data>
+    <data name="Action.Register">
+        <value>Need to sign up for a password?</value>
+    </data>
+    <data name="Action.Save">
+        <value>Save</value>
+    </data>
+    <data name="Action.SaveComment">
+        <value>Save Comment</value>
+    </data>
+    <data name="Action.Search">
+        <value>Search</value>
+    </data>
+    <data name="Action.Upload">
+        <value>Upload</value>
+    </data>
+    <data name="Action.Vote">
+        <value>Cast Vote</value>
+    </data>
+    <data name="CompanyName">
+        <value>Sundance Media Group</value>
+    </data>
+    <data name="Error.BadCredentials">
+        <value>That e-mail address and password do not match our records</value>
+    </data>
+    <data name="Error.BadUrl">
+        <value>The specified web address could not be opened</value>
+    </data>
+    <data name="Error.CouldNotApprove">
+        <value>Could not approve resource</value>
+    </data>
+    <data name="Error.FileNotFound">
+        <value>Sorry, that file could not be found</value>
+    </data>
+    <data name="Error.FileSave">
+        <value>Your file could not be saved</value>
+    </data>
+    <data name="Error.Permissions">
+        <value>You do not have permission for that operation</value>
+    </data>
+    <data name="Error.Registering">
+        <value>There was an error saving your information</value>
+    </data>
+    <data name="Label.AboutYou">
+        <value>About You</value>
+    </data>
+    <data name="Label.Active">
+        <value>Make resource active without further approval</value>
+    </data>
+    <data name="Label.AllowedContestEntries">
+        <value>Entries Allowed</value>
+    </data>
+    <data name="Label.AnonymousEntries">
+        <value>Author is anonymous until voting finishes</value>
+    </data>
+    <data name="Label.ArticleType">
+        <value>Article Type</value>
+    </data>
+    <data name="Label.Categories">
+        <value>Categories</value>
+    </data>
+    <data name="Label.ConfirmationCode">
+        <value>Confirmation</value>
+    </data>
+    <data name="Label.Description">
+        <value>Description</value>
+    </data>
+    <data name="Label.EmailAddress">
+        <value>E-mail Address</value>
+    </data>
+    <data name="Label.EndDate">
+        <value>Stop Displaying</value>
+    </data>
+    <data name="Label.EndVoteDate">
+        <value>Finish Voting On</value>
+    </data>
+    <data name="Label.File">
+        <value>File</value>
+    </data>
+    <data name="Label.FileTypes">
+        <value>Allowed Files</value>
+    </data>
+    <data name="Label.FreePlugins">
+        <value>Only free plugins</value>
+    </data>
+    <data name="Label.GeneratedMediaOnly">
+        <value>Only generated media</value>
+    </data>
+    <data name="Label.HideEmail">
+        <value>hide e-mail address from other members</value>
+    </data>
+    <data name="Label.MaxContestFileSize">
+        <value>Max File Size</value>
+    </data>
+    <data name="Label.MediaUrl">
+        <value>Media URL</value>
+    </data>
+    <data name="Label.Name">
+        <value>Name</value>
+    </data>
+    <data name="Label.Password">
+        <value>Password</value>
+    </data>
+    <data name="Label.PasswordRepeat">
+        <value>Again</value>
+    </data>
+    <data name="Label.Plugins">
+        <value>Plugins</value>
+    </data>
+    <data name="Label.Privacy">
+        <value>Privacy</value>
+    </data>
+    <data name="Label.RealName">
+        <value>Real Name</value>
+    </data>
+    <data name="Label.RenderedUrl">
+        <value>Rendered URL</value>
+    </data>
+    <data name="Label.ScreenName">
+        <value>Screen Name</value>
+    </data>
+    <data name="Label.Sections">
+        <value>Sections</value>
+    </data>
+    <data name="Label.SoftwareSelection">
+        <value>For Use With</value>
+    </data>
+    <data name="Label.StartDate">
+        <value>Start</value>
+    </data>
+    <data name="Label.Status">
+        <value>Status</value>
+    </data>
+    <data name="Label.Title">
+        <value>Title</value>
+    </data>
+    <data name="Label.Type">
+        <value>Type</value>
+    </data>
+    <data name="Label.VotesAllowed">
+        <value>Votes Allowed</value>
+    </data>
+    <data name="Label.VoteWeight">
+        <value>Vote Weight</value>
+    </data>
+    <data name="Label.WebSite">
+        <value>Web site</value>
+    </data>
+    <data name="Label.Winners">
+        <value>Winners</value>
+    </data>
+    <data name="Msg.AccountUpdated">
+        <value>Your account has been updated</value>
+    </data>
+    <data name="Msg.AfterVoting">
+        <value>Thank you for voting!</value>
+    </data>
+    <data name="Msg.AssetSaved">
+        <value>Your resource has been saved</value>
+    </data>
+    <data name="Msg.ShareThanks">
+        <value>Thank you for sharing your resource.  We will notify you by e-mail when it has been approved.</value>
+    </data>
+    <data name="Msg.Signin">
+        <value>Welcome back</value>
+    </data>
+    <data name="Msg.Signout">
+        <value>You have signed out and are now viewing the site as a guest</value>
+    </data>
+    <data name="Note.ConfirmationCode">
+        <value>the code sent after your e-mail address is entered</value>
+    </data>
+    <data name="Note.DateFormat">
+        <value>month/day/year</value>
+    </data>
+    <data name="Note.EmailAddressChange">
+        <value>changing your e-mail address will require re-verification</value>
+    </data>
+    <data name="Note.EndDate">
+        <value>display winners until this date</value>
+    </data>
+    <data name="Note.FileEdit">
+        <value>leave blank except to upload a new version of the file</value>
+    </data>
+    <data name="Note.FileUpload">
+        <value>a file to be uploaded</value>
+    </data>
+    <data name="Note.MaxContestFileSize">
+        <value>kilobytes</value>
+    </data>
+    <data name="Note.MediaUrl">
+        <value>link to any extra media files used by project</value>
+    </data>
+    <data name="Note.MultiSelectNote">
+        <value>hold &lt;b&gt;Ctrl&lt;/b&gt; while clicking to select multiple</value>
+    </data>
+    <data name="Note.Password">
+        <value>at least six characters</value>
+    </data>
+    <data name="Note.PasswordRepeat">
+        <value>please type your password again</value>
+    </data>
+    <data name="Note.PlainText">
+        <value>plain text only</value>
+    </data>
+    <data name="Note.Privacy">
+        <value>hide e-mail address from other members</value>
+    </data>
+    <data name="Note.RealName">
+        <value>first and last</value>
+    </data>
+    <data name="Note.RenderedUrl">
+        <value>link to video rendering of project</value>
+    </data>
+    <data name="Label.ScrapeLink">
+        <value>Scrape content into VASST site</value>
+    </data>
+    <data name="Note.ScreenName">
+        <value>leave blank to use only your real name</value>
+    </data>
+    <data name="Note.Sections">
+        <value>see contests, products, resources and news only for selected sections</value>
+    </data>
+    <data name="Note.StartDate">
+        <value>month/day/year</value>
+    </data>
+    <data name="Note.Status">
+        <value>uncheck to require approval before making visible</value>
+    </data>
+    <data name="Note.VotesAllowed">
+        <value>for different entries</value>
+    </data>
+    <data name="Note.VoteWeight">
+        <value>see sidebar</value>
+    </data>
+    <data name="Note.WebSite">
+        <value>address of a tutorial or review to be linked to</value>
+    </data>
+    <data name="Note.Winners">
+        <value>number to be named</value>
+    </data>
+    <data name="Number.Eight">
+        <value>Eight</value>
+    </data>
+    <data name="Number.Eleven">
+        <value>Eleven</value>
+    </data>
+    <data name="Number.Fifteen">
+        <value>Fifteen</value>
+    </data>
+    <data name="Number.Five">
+        <value>Five</value>
+    </data>
+    <data name="Number.Four">
+        <value>Four</value>
+    </data>
+    <data name="Number.Fourteen">
+        <value>Fourteen</value>
+    </data>
+    <data name="Number.Nine">
+        <value>Nine</value>
+    </data>
+    <data name="Number.One">
+        <value>One</value>
+    </data>
+    <data name="Number.Seven">
+        <value>Seven</value>
+    </data>
+    <data name="Number.Six">
+        <value>Six</value>
+    </data>
+    <data name="Number.Ten">
+        <value>Ten</value>
+    </data>
+    <data name="Number.Thirteen">
+        <value>Thirteen</value>
+    </data>
+    <data name="Number.Three">
+        <value>Three</value>
+    </data>
+    <data name="Number.Twelve">
+        <value>Twelve</value>
+    </data>
+    <data name="Number.Two">
+        <value>Two</value>
+    </data>
+    <data name="Number.Zero">
+        <value>Zero</value>
+    </data>
+    <data name="SiteName">
+        <value>VASST</value>
+    </data>
+    <data name="Title.Contests">
+        <value>Contests!</value>
+    </data>
+    <data name="Title.Credentials">
+        <value>Credentials</value>
+    </data>
+    <data name="Title.Dates">
+        <value>Dates</value>
+    </data>
+    <data name="Title.EntryRestrictions">
+        <value>Entry Restrictions</value>
+    </data>
+    <data name="Title.FreeResources">
+        <value>Free Resources</value>
+    </data>
+    <data name="Title.NewResources">
+        <value>Newest Resources</value>
+    </data>
+    <data name="Title.SearchResults">
+        <value>Search Results</value>
+    </data>
+    <data name="Title.Sections">
+        <value>Sections</value>
+    </data>
+    <data name="Title.Share1">
+        <value>Select your resource</value>
+    </data>
+    <data name="Title.Share2">
+        <value>Describe your resource</value>
+    </data>
+    <data name="Title.Share3">
+        <value>Classify your resource</value>
+    </data>
+    <data name="Title.Share4">
+        <value>Let us know who to credit for this resource</value>
+    </data>
+    <data name="Title.Signin">
+        <value>Sign In or Up</value>
+    </data>
+    <data name="Title.SiteStatistics">
+        <value>Site Statistics</value>
+    </data>
+    <data name="Title.Tips">
+        <value>Tips &amp; Help</value>
+    </data>
+    <data name="Title.Tours">
+        <value>Training Tours</value>
+    </data>
+    <data name="Title.UnapprovedResources">
+        <value>Unapproved Resources</value>
+    </data>
+    <data name="Title.UploadTerms">
+        <value>Terms and Conditions</value>
+    </data>
+    <data name="Title.Vote">
+        <value>Vote</value>
+    </data>
+    <data name="Validate.AllowedContestEntries">
+        <value>Allowed Entries must be one or more</value>
+    </data>
+    <data name="Validate.EndDate">
+        <value>Contest end date</value>
+    </data>
+    <data name="Validate.EndVoteDate">
+        <value>Finish voting date</value>
+    </data>
+    <data name="Validate.File">
+        <value>Upload File (Windows file names may not contain / \\ : * ? &lt; &gt; | )</value>
+    </data>
+    <data name="Validate.Password">
+        <value>Password (at least six characters)</value>
+    </data>
+    <data name="Validate.StartDate">
+        <value>Contest start date</value>
+    </data>
+    <data name="Validate.VotesAllowed">
+        <value>Number of votes allowed must be one or more</value>
+    </data>
+    <data name="Validate.VoteWeight">
+        <value>Vote weight must be one or more</value>
+    </data>
+    <data name="Validate.Winners">
+        <value>Number of winners must be one or more</value>
+    </data>
+    <data name="Error.ConfirmationCode">
+        <value>The confirmation code you entered does not match the one e-mailed</value>
+    </data>
+    <data name="Label.ProjectLinks">
+        <value>Supplemental Links</value>
+    </data>
+    <data name="Validate.Title">
+        <value>Title (plain text only)</value>
+    </data>
+    <data name="Msg.EnterContest">
+        <value>Your contest entry has been saved.  We will notify you by e-mail when it has been approved.</value>
+    </data>
+    <data name="Error.SelfVote">
+        <value>You may not vote for your own entry.  Any other votes were saved.</value>
+    </data>
+    <data name="Error.EntryCount">
+        <value>You have already submitted as many entries as this contest allows</value>
+    </data>
+    <data name="Error.ExistingEmail">
+        <value>Someone has already signed up with that e-mail address</value>
+    </data>
+    <data name="Subject.Confirmation">
+        <value>Your {0} Confirmation Code</value>
+    </data>
+    <data name="Subject.CriticalError">
+        <value>Critical {0}.com error</value>
+    </data>
+    <data name="Subject.NewPassword">
+        <value>Your {0} Password</value>
+    </data>
+    <data name="Subject.ContestEntry">
+        <value>{0} contest entry: {1}</value>
+    </data>
+    <data name="Subject.AssetContribution">
+        <value>{0} contribution: {1}</value>
+    </data>
+    <data name="Label.Picture">
+        <value>Picture</value>
+    </data>
+    <data name="Validate.Picture">
+        <value>Picture (Windows file names may not contain / \\ : * ? &lt; &gt; | )</value>
+    </data>
+    <data name="Error.LargeFile">
+        <value>File larger than {0}KB</value>
+    </data>
+    <data name="Error.FileType">
+        <value>{0} is not an allowed file type</value>
+    </data>
+    <data name="Action.ShowAll">
+        <value>Show All</value>
+    </data>
+</root>

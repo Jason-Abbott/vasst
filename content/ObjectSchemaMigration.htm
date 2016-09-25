@@ -1,0 +1,428 @@
+<!--------------------------------------------------------------------------->  
+<!--                           INTRODUCTION                                
+
+ The Code Project article submission template (HTML version)
+
+Using this template will help us post your article sooner. To use, just 
+follow the 3 easy steps below:
+ 
+     1. Fill in the article description details
+     2. Add links to your images and downloads
+     3. Include the main article text
+
+That's all there is to it! All formatting will be done by our submission
+scripts and style sheets. 
+
+-->  
+<!--------------------------------------------------------------------------->  
+<!--                        IGNORE THIS SECTION                            -->
+<html>
+<head>
+<title>The Code Project</title>
+<Style>
+BODY, P, TD { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt }
+H2,H3,H4,H5 { color: #ff9900; font-weight: bold; }
+H2 { font-size: 13pt; }
+H3 { font-size: 12pt; }
+H4 { font-size: 10pt; color: black; }
+PRE { BACKGROUND-COLOR: #FBEDBB; FONT-FAMILY: "Courier New", Courier, mono; WHITE-SPACE: pre; }
+CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
+</style>
+<link rel="stylesheet" type=text/css href="http://www.codeproject.com/styles/global.css">
+</head>
+<body bgcolor="#FFFFFF" color=#000000>
+<!--------------------------------------------------------------------------->  
+
+
+<!-------------------------------     STEP 1      --------------------------->
+<!--  Fill in the details (CodeProject will reformat this section for you) -->
+
+<pre>
+Title:       Automated Object Schema Migration
+Author:      Jason Abbott 
+Email:       codeproject@webott.com
+Environment: VB.NET
+Keywords:    serialization, surrogate, schema, object, reflection, migration, version
+Level:       Intermediate&quot;
+Description: Use reflection and a serialization surrogate in .NET to automate basic object schema migration
+Section      .NET General
+SubSection   VB.NET
+</pre>
+
+<!-------------------------------     STEP 2      --------------------------->
+<!--  Include download and sample image information.                      
+
+<ul class=download>
+<li><a href="Article_demo.zip">Download demo project - XXX Kb </a></li>
+<li><a href="Article_src.zip">Download source - XXX Kb</a></li>
+</ul>
+
+<p><img src="Article.gif" alt="Sample Image - maximum width is 600 pixels" width=400 height=200></p>
+--> 
+
+<!-------------------------------     STEP 3      --------------------------->
+<!--  Add the article text. Please use simple formatting (<h2>, <p> etc)   --> 
+
+<h2>Introduction</h2>
+
+This article demonstrates a simple means of automating object schema migration using a serialization surrogate and reflection.  Or, in other words, what to do when .NET says "Possible Version mismatch. Type [whatever] has <i>x</i> members, number of members deserialized is <i>y</i>."
+
+<h2>Background</h2>
+
+After years of writing custom ORM-type solutions, or contenting myself with using ADO for business entities, I finally hit my breaking point and decided it was time to enter the shadowy world of object persistence.  And so began my first foray into <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfsystemruntimeserialization.asp">.NET's Serialization namespace</a>.
+
+<p>I was pleasantly surprised with the ease with which I could begin serializing my business objects directly to disk or any persistent store (documented plenty <a href="http://www.google.com/search?q=.net+binary+object+serialization">elsewhere</a>).  Everything was sunshine and rainbows.  I had traded what probably would have been a few days of work setting up tables, and mapping fields between tables and objects, with just a couple hours of work implementing serialization, as follows.</p>
+
+<pre lang=vbnet>
+[ MyClass.vb ]
+&lt;Serializable()&gt; Public Class MyClass
+	. create some members
+	.
+	.
+	Public Sub Save()
+		Dim util As New CouldBeAnotherClass
+		Dim bytes As Byte() = util.SerializeObject(Me)
+		' now save it to disk, database, cache, whatever
+	End Sub
+End Class
+
+[ CouldBeAnotherClass.vb ]
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+
+Public Class CouldBeAnotherClass
+	Public Function SerializeObject(obj As Object) As Byte()
+		Dim stream As New MemoryStream ' or file stream, any stream
+		Dim bf As New BinaryFormatter
+		Dim bytes As Byte()
+
+		bf.Serialize(stream, obj)
+		stream.Seek(0, SeekOrigin.Begin)
+		bytes = stream.ToArray
+		stream.Close()
+		Return bytes
+	End Function
+End Class
+</pre>
+
+<h2>The Problem</h2>
+
+Then the rain came and my parade disbanded.  I added a field to one of my objects.  You know what happened then:  the dreaded "Possible Version mismatch. Type [whatever] has <i>x</i> members, number of members deserialized is <i>y</i>."  Crap.
+
+<p>To make matters worse, Google wasn't turning up an answer for me (gasp).  I found lots of reasons why maybe I should have used an existing product like <a href="http://www.db4o.com/">db4o</a> or <a href="http://bbooprevalence.sourceforge.net/">Bamboo Prevalence</a> but those, though easier than ORMish solutions, were still overkill for my purpose.  And besides, I wanted to figure this out!</p>
+
+<p>My searches led me to implementing <code>ISerializable</code> on my root objects as a means of creating custom mappings between serialized fields and the objects' fields with a custom constructor and <code>GetObjectData()</code>.  I was dismayed, though, to be spending time creating the very sorts of mappings I was trying to avoid.  If I was going to write all that tedious code, why not just setup traditional database tables and map the fields from there?  I felt like I had come full circle.  I was now wasting time doing stuff like this:</p>
+
+<pre lang=vbnet>
+Imports System.Security.Permissions
+Imports System.Runtime.Serialization
+
+&lt;Serializable()&gt; Public Class MyClass
+	Implements ISerializable
+	. create some members
+	.
+	.
+	Public Sub Save()
+		Dim util As New CouldBeAnotherClass
+		Dim bytes As Byte() = util.SerializeObject(Me)
+		' now save it to disk, database, cache, whatever
+	End Sub
+	
+	Public Sub New()
+		' an empty constructor for standard object initialization
+	End Sub
+	
+	Private Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
+		' a private constructor used automatically by the deserialization process
+		Me.SomeField = DirectCast(info.GetValue("SomeField", Me.SomeField.GetType), [SomeType])
+		Me.AnotherField = info.GetString("AnotherField")
+		.
+		.	and on and on with the possibility of conditional mappings
+		.
+	End Sub
+
+	&lt;SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter:=True)&gt; _
+	Public Sub GetObjectData(ByVal info As SerializationInfo, ByVal context As StreamingContext _
+		Implements ISerializable.GetObjectData
+		
+		info.AddValue("SomeField", Me.SomeField)
+		info.AddValue("AnotherField", Me.AnotherField)
+		.
+		.	and on and on with the possibility of conditional mappings
+		.
+	End Sub
+End Class
+</pre>
+
+<p>But, umbrella in hand, I trudged on, confident there had to be a break in the clouds.  I found it in the Bamboo source&mdash;some orphaned methods, long left out of that project's test plan, part of the <a href="https://sourceforge.net/mailarchive/message.php?msg_id=5892341">author's early efforts</a> now supplanted by a different approach, but a start for me.  Why hadn't Google found that?
+
+<h2>The Solution</h2>
+
+The current Bamboo approach to object schema migration is to read in an XML file that defines the object and field mappings between what was serialized and the current objects, then use that information to create appropriate initializers called within an implementation of <code><nobr>ISerializationSurrogate.SetObjectData</nobr></code>.  An object implementing <code>ISerializationSurrogate</code> is simply one that does that tedious field mapping on behalf of other objects, so your business objects themselves don't have to implement <code>ISerializable</code>.  It's a clever solution, and one that the Java equivalent to Bamboo <a href="http://www.prevayler.org/wiki.jsp?topic=SchemaEvolution">apparently lacks</a>.  But it's a lot more than I need.
+
+<p>I took my direction from another place in the Bamboo source, in a class apparently written prior to the XML mapping approach, and now largely abandoned.  It looked something like this (the key method being <code>SetObjectData()</code>):</p>
+
+<pre lang=vbnet>
+Imports System.Reflection
+Imports System.Runtime.Serialization
+
+Public Class MySurrogate
+	Implements ISerializationSurrogate
+	Implements ISurrogateSelector
+
+	Private _assemblyToMigrate As System.Reflection.Assembly
+
+	Public Sub New(ByVal assemblyToMigrate As System.Reflection.Assembly)
+		_assemblyToMigrate = assemblyToMigrate
+	End Sub
+	
+	Function SetObjectData(ByVal obj As Object, ByVal info As SerializationInfo, _
+		ByVal context As StreamingContext, ByVal selector As ISurrogateSelector) As Object _
+		Implements ISerializationSurrogate.SetObjectData
+
+		Dim entityType As Type = obj.GetType
+
+		For Each entry As SerializationEntry In info
+			Dim members As MemberInfo() = entityType.GetMember(fieldName, MemberTypes.Field, _
+				BindingFlags.NonPublic Or BindingFlags.Public Or BindingFlags.Instance)
+
+			If members.Length > 0 Then
+				Dim newField As FieldInfo = CType(members(0), FieldInfo)
+				Dim value As Object = entry.Value
+				If Not value Is Nothing Then
+					If Not newField.FieldType.IsInstanceOfType(value) Then
+						value = Convert.ChangeType(value, newField.FieldType)
+					End If
+				End If
+				newField.SetValue(obj, value)
+			End If
+		Next
+		Return Nothing
+	End Function
+	
+	Sub GetObjectData(ByVal entity As Object, ByVal info As SerializationInfo, _
+		ByVal context As StreamingContext) Implements ISerializationSurrogate.GetObjectData
+
+		Throw New NotImplementedException
+	End Sub
+
+	Function GetSurrogate(ByVal type As System.Type, ByVal context As StreamingContext, _
+		ByRef selector As ISurrogateSelector) As ISerializationSurrogate _
+		Implements ISurrogateSelector.GetSurrogate
+
+		If type.Assembly Is _assemblyToMigrate Then
+			selector = Me
+			Return Me
+		Else
+			selector = Nothing
+			Return Nothing
+		End If
+	End Function
+	
+	Function GetNextSelector() As ISurrogateSelector Implements ISurrogateSelector.GetNextSelector
+		Return Nothing
+	End Function
+
+	Sub ChainSelector(ByVal selector As System.Runtime.Serialization.ISurrogateSelector) _
+		Implements ISurrogateSelector.ChainSelector
+
+		Throw New NotImplementedException("ChainSelector not supported")
+	End Sub
+End Class
+</pre>
+
+The <code>ISurrogateSelector</code> implementation that you see here is required when constructing the <code>BinaryFormatter</code> (which we'll do next) that is used to serialize and deserialize your business objects, and with which we want to use an <code>ISerializationSurrogate</code> so we can customize the field mappings to avoid version mismatch errors.
+
+<p>An <code>ISurrogateSelector</code> could be used to choose among many <code>ISerializationSurrogate</code> implementations, if your various business objects need different serialization formats.  In this case, however, we specifically want to create an <code>ISerializationSurrogate</code> that works with all of our objects, so the <code>ISurrogateSelector</code> is written to return that or nothing, based on a trivial condition.  As such, subsequent code blocks will omit the <code>ISurrogateSelector</code> implementation, necessary though it is.</p>
+
+<p>Unfortunately, while that <code>MySurrogate</code> class (name changed to protect the innocent) looked promising, it failed when I attempted to deserialize with it, even when testing with object schemas that hadn't actually changed!  Before we get into that, I'll show you <i>how</i> to use a surrogate.  There was a bit of code above showing how to serialize.  Deseralizing is just as easy.</p>
+
+<pre lang=vbnet>
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+
+Public Class CouldBeAnotherClass
+
+	Public Function DeserializeObject(ByVal type As System.Type) As Object
+		Dim stream As FileStream = file.OpenRead
+		Dim selector As New MySurrogate(type.Assembly)
+		Dim bf As BinaryFormatter(selector, New StreamingContext(StreamingContextStates.All))
+		Dim obj As Object = bf.Deserialize(stream)
+		stream.Close
+		Return obj
+	End Function
+
+	Public Function SerializeObject(obj As Object) As Byte()
+		.
+		.	as above
+		.
+	End Function
+End Class
+</pre>
+
+In this case, I'm deserializing from a file (and some syntax for that is missing), but you could deserialize from memory, from a database field, or a variety of sources.  Here we are attempting to use the surrogate created above.  If we wanted to deserialize without using our surrogate, we could omit the dimensioning of <code>selector</code> and create <code>BinaryFormatter</code> without arguments.  Once you have a functioning surrogate, using or not using it with a given <code>BinaryFormatter</code> is easy.
+
+<h3>Overcoming The New Problem</h3>
+
+The problem with our surrogate, the one following a pattern in legacy Bamboo code, is that it only works with very simple objects.  If our business object uses a field from a base class, this surrogate will fail.  The reason it will fail is simply because the <code>Type.GetMember()</code> method does not return the private members of base classes, even though the standard <code>BinaryFormatter</code> has successfully serialized those same members.  So as that code loops through the entries in the deserialized information, it won't find a match in our target object, and that field of our object will be left uninitialized.
+
+<p>One way we might avoid that problem is to make those base class members non-private, such as <code>Protected</code>.  Indeed, that will work.  Those members are then visible to <code>GetMember()</code> on the derived type, and will get the value from the matching serialization entry.  But, if like me, you've created some collections by inheriting from <code>CollectionBase</code>, then you don't have the option to change the accessibility of its private <code>list</code>.  Getting a serialized collection back without any of its members is a bummer.  No doubt this applies to myriad other classes that you might inherit from.  So, what to do?</p>
+
+<p>Since I was new to this namespace, the first thing I did was feel much consternation.  The whole purpose of these efforts was to come up with a pattern of object persistence that would avoid tedious field mapping.  I couldn't seem to get there.  So I did what any good programmer with Intellisense would do, and began hitting "." on the stuff in <code>SetObjectData()</code> to see what options I had.  Without detailing those many adventures, I'll get (finally!) to the solution.</p>
+
+<pre lang=vbnet>
+Imports System.Reflection
+Imports System.Runtime.Serialization
+
+Public Class MySurrogate
+	Implements ISerializationSurrogate
+	Implements ISurrogateSelector
+	
+	Function SetObjectData(ByVal obj As Object, ByVal info As SerializationInfo, _
+		ByVal context As StreamingContext, ByVal selector As ISurrogateSelector) As Object _
+		
+		Implements ISerializationSurrogate.SetObjectData
+
+		Dim fieldName As String = String.Empty
+		Dim entityType As Type
+
+		For Each entry As SerializationEntry In info
+			' for each member that was serialized, get matching member in new type
+			fieldName = entry.Name
+			If fieldName.IndexOf("+") <> -1 Then
+				' serialized field comes from a base class
+				Dim name As String() = fieldName.Split("+"c)
+				Dim baseType As String = name(0)
+
+				fieldName = name(1)
+				entityType = obj.GetType
+
+				' drill into base classes until type found
+				Do While entityType.Name <> baseType
+					entityType = entityType.BaseType
+				Loop
+			Else
+				entityType = obj.GetType
+			End If
+
+			Dim members As MemberInfo() = entityType.GetMember(fieldName, MemberTypes.Field, _
+				BindingFlags.NonPublic Or BindingFlags.Public Or BindingFlags.Instance)
+
+			If members.Length > 0 Then
+				' entity has a member matching the serialized info
+				Dim newField As FieldInfo = CType(members(0), FieldInfo)
+				Dim value As Object = entry.Value
+				If Not value Is Nothing Then
+					' don't bother adding serialized members with null values
+					If Not newField.FieldType.IsInstanceOfType(value) Then
+						' convert type if changed in new member
+						value = Convert.ChangeType(value, newField.FieldType)
+					End If
+				End If
+				newField.SetValue(entity, value)
+			End If
+		Next
+		Return Nothing
+	End Function
+	
+	' ISurrogateSelector implementations not shown
+End Class
+</pre>
+
+<h3>Why It Works</h3>
+
+You can see that this is the same <code>ISerializationSurrogate</code> implementation as above, but with this new block of code within <code>SetObjectData()</code>:
+
+<pre lang=vbnet>
+fieldName = entry.Name
+If fieldName.IndexOf("+") <> -1 Then
+	Dim name As String() = fieldName.Split("+"c)
+	Dim baseType As String = name(0)
+
+	fieldName = name(1)
+	entityType = obj.GetType
+
+	Do While entityType.Name <> baseType
+		entityType = entityType.BaseType
+	Loop
+Else
+	entityType = obj.GetType
+End If
+</pre>	
+
+During the many times I stepped through this code in debug mode, I noticed that private fields from base classes always had a <code>.Name</code> of [BaseClass]+[Field] rather than just [Field].  For example, while deserializing my <code>CollectionBase</code> derived object, I would see <code>CollectionBase+list</code> go by ... and not match anything.  Then Intellisense showed me <code>Type.BaseType</code>.
+
+<p>The approach I've arrived at is a bit brute-force, but has worked well for me so far.  If I run across a field that belongs to a base class, indicated by the presence of "+", I split out the name of its base type and use that name to drill into my target object type, with <code>Type.BaseType</code>, until I find the match.  This type, and the split-off field name, then become the type and name used by the field matching logic in the remainder of the for-loop.</p>
+
+<h2>Using The Code</h2>
+
+Without doing any performance testing, I have nonetheless imagined that this surrogate is slower than using the standard <code>BinaryFormatter</code> for object deserialization.  So I wanted only to use this <code>ISerializationSurrogate</code> when the standard deserialization threw the "Possible Version mismatch" error.  I handled it as follows.
+
+<pre lang=vbnet>
+Imports System.Runtime.Serialization
+Imports System.Runtime.Serialization.Formatters.Binary
+
+Public Class MyPersistenceClass
+
+	Public Function Load(ByVal filename As String, ByVal type As System.Type, _
+		ByRef schemaChange As Boolean) As Object
+
+        Dim obj As Object
+        schemaChange = False
+
+        Dim file As New FileInfo(filename)
+        If file.Exists Then
+            Dim stream As FileStream = file.OpenRead
+            Dim bf As BinaryFormatter
+
+            bf = Me.CreateFormatter()
+
+            Try
+                obj = bf.Deserialize(stream)
+            Catch ex As SerializationException
+                ' standad deserialization didn't work so attempt schema migration
+                stream.Seek(0, SeekOrigin.Begin)
+                bf = Me.CreateFormatter(type)
+                obj = bf.Deserialize(stream)
+                schemaChange = True
+            Finally
+                stream.Close()
+            End Try
+        End If
+
+        Return obj
+    End Function
+    
+    Private Function CreateFormatter(ByVal type As System.Type) As BinaryFormatter
+		Dim selector As New MySurrogate(type.Assembly)
+		Return New BinaryFormatter(selector, _
+			New StreamingContext(StreamingContextStates.All))
+    End Function
+
+    Private Function CreateFormatter() As BinaryFormatter
+        Dim formatter As New BinaryFormatter
+        formatter.Context = New StreamingContext(StreamingContextStates.Persistence)
+        Return formatter
+    End Function
+End Class
+</pre>
+
+As you can see, this example also assumes file-based persistence.  Any data store would work, though.  When <code>Load()</code> is called, it first attempts to deserialize the specified object type from the specified file using the standard <code>BinaryFormatter</code>, created by a private method.  For my use, this will work 99.9% of the time, or more.  The business object schemas for the project I developed this for change only a couple times per year.
+
+<p>But if it fails, it loads the alternate <code>BinaryFormatter</code> from the overloaded <code>CreateFormatter()</code>, which uses our <code>ISurrogateSelector</code> to grab our implementation of <code>ISerializationSurrogate</code>.  This formatter is then used for a second deserialization attempt.</p>
+
+<p>A boolean <code>schemaChange</code> variable is passed by reference to <code>Load()</code> so that the calling method can decide what to do when a schema change is detected.  In my case, the calling method immediately calls a new <code>.Save</code> on the object so that the serialized version will subsequently match the new schema.</p>
+
+<h2>Caveats</h2>
+
+The <code>ISerializationSurrogate</code> implementation arrived at above will not handle all schema changes.  The Bamboo approach is more robust in this regard, handling a range of field mappings with custom initializers.  But it too, as far as I can tell, would require writing custom field initializers for many kinds of schema changes.
+
+<p>The changes handled by this implementation are field deletions and additions, and simple type changes.  For me, that means it will automatically handle almost every schema change I anticipate.  And since a schema change means moving new assemblies, I can easily, at the same time, add additional logic into <code><nobr>ISurrogateSelector.SetObjectData()</nobr></code> to handle any odd field mapping requirements.  Such an approach may not be appropriate for your application, and you should certainly consider alternatives if you expect frequent and complex object schema changes.</p>
+
+<h2>Conclusion</h2>
+
+All this talk around object persistence, and little mention of important features like concurrency and resilience.  I do have something working there, a possible follow-up article, but I'm waiting to see if it goes up in flames before I talk of it.  Here too, <a href="http://www.db4o.com/">db4o</a> and <a href="http://bbooprevalence.sourceforge.net/">Bamboo Prevalence</a> have strong solutions, but I didn't wish to deal with a third-party layer, wanted to keep it simple, and wanted to figure it out for myself.  So stay tuned.
+
+<!-------------------------------    That's it!   --------------------------->
+</body>
+</html>

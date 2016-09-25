@@ -1,5 +1,5 @@
 ## VASST
-- Platform: ASP upgraded to C# ASPX
+- Platform: ASP upgraded to VB.Net
 - Created: 2002
 
 ![Main](./main_logo.jpg)

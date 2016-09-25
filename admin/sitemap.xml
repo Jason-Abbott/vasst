@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<siteMap>
+	<siteMapNode title="Site" url="">
+		<siteMapNode title="Roles" url="~/admin/roles.aspx" />
+		<siteMapNode title="Categories" url="~/admin/categories.aspx" />
+		<siteMapNode title="Data Files" url="~/admin/categories.aspx" newSection="true" />
+		<siteMapNode title="Quotes" url="~/admin/default.aspx" newSection="true" />
+		<siteMapNode title="Featured Products" url="~/admin/default.aspx" />
+		<siteMapNode title="Mission Statement" url="~/admin/default.aspx" />
+		<siteMapNode title="Resource Sharing Tips" url="~/admin/default.aspx" />
+		<siteMapNode title="Activity Logs" url="~/admin/default.aspx" newSection="true" />
+		<siteMapNode title="Visits Graph" url="~/admin/default.aspx" />
+		<siteMapNode title="Error Logs" url="~/admin/default.aspx" />
+    </siteMapNode>
+    <siteMapNode title="Products" url="~/admin/products.aspx">
+		<siteMapNode title="Manage (legacy system)" url="http://vasst.com/cart/admin/index.asp" />
+	 </siteMapNode>
+    <siteMapNode title="Contests" url="~/admin/contests.aspx">
+		<siteMapNode title="New Entries" url="~/admin/contest-entries.aspx" />
+    </siteMapNode>
+    <siteMapNode title="Users" url="~/admin/users.aspx" />
+    <siteMapNode title="Resources" url="~/admin/resources.aspx" >
+		<siteMapNode title="New Submissions" url="~/admin/resources.aspx" />
+	</siteMapNode>
+    <siteMapNode title="Tours" url="~/admin/tours.aspx" />
+</siteMap>
