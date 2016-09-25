@@ -1,0 +1,19 @@
+DIV.AdTopRight {
+	font-size: 9pt;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: left;
+	width: 80%;
+}
+DIV.SundanceFooter {
+	text-align: right;
+	font-size: 8pt;
+	color: #aaaaaa;
+	margin-right: 15px;
+	margin-top: 15px;
+}
+DIV.PageHeader {
+	padding-right: 6px;
+	width: 100%;
+	font-size: 8pt;
+}
