@@ -1,6 +1,6 @@
 ## VASST
-- Platform: C# ASPX
-- Created: 1994
+- Platform: ASP upgraded to C# ASPX
+- Created: 2002
 
 ![Main](./main_logo.jpg)
 

@@ -1,0 +1,10 @@
+create table tblForumHosts (
+lForumHostID INT PRIMARY KEY,
+vsHostURL CHAR(50) NOT NULL,
+vsHostName CHAR(50) NOT NULL
+)
+
+alter table tblforums add column lForumHostID smallint not null
+alter table tblforums add column bModerated bit
+create index idxForumHostID on tblforums (lForumHostID ASC) with disallow null
+alter table tblforumhosts alter column lForumHostID counter (1,1)
