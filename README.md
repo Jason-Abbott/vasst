@@ -9,8 +9,8 @@ This repository is an historical record of work done for VASST, which sold video
 
 The links below are to source files.
 
-- Built an open-ended retail promotional system with [interfaces and base classs](/Code/PromotionCriterion.vb) to allow arbitrary combinations of criteria and rewards (since the client kept dreaming up new ones). Criteria included things like sign-up date, particular item in cart and cart total over threshold.
-- Used reflection to read the criteria classes and generate a friendly form to manage promotions without having to write HTML for each case.
+- Built an open-ended retail promotional system with [interfaces and base classs](/Code/entity/PromotionCriterion.vb) to allow arbitrary combinations of criteria and rewards (since the client kept dreaming up new ones). Criteria included things like sign-up date, particular item in cart and cart total over threshold.
+- Built suite of custom HTML controls (and [setup IntelliSense for them](/Code/control/intellisense.xsd)) that used reflection to read the criteria and other classes to generate friendly, easily managed forms.
 - In order to support arbitrary criteria and rewards, built a [custom binary serialization solution](Code/data/File.vb) that could handle [deserializing old versions](Code/data/Migration.vb) of objects to instances having new fields (NoSQL solutions didn't exist yet).
-- Used [graphics libraries](/Code/Draw.vb) to programatically enhance images and draw assets, like ratings stars, on-the-fly (no usable `SVG` or `canvas` at the time).
+- Used [graphics libraries](/Code/Draw.vb) to programatically enhance images and draw assets, like [ratings stars](/Code/control/Star.vb), on-the-fly (no usable `SVG` or `canvas` at the time).
 
