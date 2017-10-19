@@ -2,7 +2,7 @@
 
 This repository is an historical record of work done for VASST, which sold video software plugins, ran video contests, and hosted a catalog of downloadable video recipes and templates that users could contribute to, rate and comment on.
 
-- Created: 2002
+- Created: **2002**
 - Platform: ASP upgraded to VB.Net
 
 # Innovations
